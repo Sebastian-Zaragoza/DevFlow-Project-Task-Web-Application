@@ -1,4 +1,4 @@
-import {json, Request, Response} from "express";
+import {Request, Response} from "express";
 import Project from "../models/project";
 
 export class ProjectController{
