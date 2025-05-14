@@ -31,7 +31,7 @@ export default function ProjectForm({errors, register}: ProjectFormProps) {
 
             <div className="mb-5 space-y-3">
                 <label htmlFor="clientName" className="text-sm uppercase font-bold">
-                    Nombre del proyecto
+                    Nombre del cliente
                 </label>
                 <input
                     id="clientName"
@@ -57,7 +57,7 @@ export default function ProjectForm({errors, register}: ProjectFormProps) {
                     className="w-full p-3  border border-gray-200"
                     placeholder="Descripción"
                     {...register("description", {
-                        required: "La description del projecto es requerida",
+                        required: "La descripción del projecto es requerida",
                     })}
                 />
 

@@ -1,18 +1,32 @@
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import {useForm} from "react-hook-form"
 import ProjectForm from "../../components/projects/ProjectForm.tsx";
 import type {ProjectFormData} from "../../types";
 import {createProject} from "../../api/ProjectApi.ts";
+import {toast} from "react-toastify";
+import {useMutation} from "@tanstack/react-query";
 
 export default function CreateProjectView() {
+    const navigate = useNavigate()
     const initialValues= {
         "projectName":"",
         "clientName":"",
         "description":""
     }
+    const mutation = useMutation({
+        mutationFn: createProject,
+        onError:(error)=>{
+            toast.error(error.message)
+        },
+        onSuccess:(data)=>{
+            toast.success(data)
+            navigate('/')
+        }
+    })
+
     const {register, handleSubmit, formState:{errors}} = useForm({defaultValues:initialValues})
-    const handleForm = (data: ProjectFormData) => {
-        createProject(data)
+    const handleForm = (formData: ProjectFormData) => {
+        mutation.mutate(formData)
     }
     return (
         <>
@@ -20,7 +34,7 @@ export default function CreateProjectView() {
                 <h1 className="text-5xl font-black">Crear Proyecto</h1>
                 <p className="text-2xl font-light text-gray-500 mt-5">Completa el siguiente formulario para crear el proyecto</p>
 
-                <nav className="my-5">
+                <nav className="my-10">
                     <Link className="bg-blue-400 hover:bg-blue-500 px-10 py-3 text-white text-xl font-bold
                 cursor-pointer transition-colors" to='/'>
                         Regresar a Proyectos
