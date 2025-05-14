@@ -2,11 +2,11 @@ import mongoose, {Schema, Document, PopulatedDoc, Types} from "mongoose";
 import {IUser} from "./user";
 
 const tasksStatus = {
-    PENDING: "pending",
-    COMPLETED: "completed",
-    ON_HOLD: "onHold",
-    IN_PROGRESS: "inProgress",
-    UNDER_REVIEWS: "underReview",
+    PENDING: "pendiente",
+    COMPLETED: "completado",
+    ON_HOLD: "en espera",
+    IN_PROGRESS: "en progreso",
+    UNDER_REVIEWS: "en revisión",
 } as const
 
 export type TaskStatus = typeof tasksStatus[keyof typeof tasksStatus];

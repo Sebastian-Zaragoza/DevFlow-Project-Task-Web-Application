@@ -1,5 +1,8 @@
 import {Link} from "react-router-dom"
 import {useForm} from "react-hook-form"
+import ProjectForm from "../../components/projects/ProjectForm.tsx";
+import type {ProjectFormData} from "../../types";
+import {createProject} from "../../api/ProjectApi.ts";
 
 export default function CreateProjectView() {
     const initialValues= {
@@ -8,8 +11,8 @@ export default function CreateProjectView() {
         "description":""
     }
     const {register, handleSubmit, formState:{errors}} = useForm({defaultValues:initialValues})
-    const handleForm = (data) => {
-        console.log(data)
+    const handleForm = (data: ProjectFormData) => {
+        createProject(data)
     }
     return (
         <>
@@ -23,8 +26,8 @@ export default function CreateProjectView() {
                         Regresar a Proyectos
                     </Link>
                 </nav>
-                <form className="mt-10 bg-white shadow-lg p-10 rounded-lg" onSubmit={handleForm} noValidate>
-
+                <form className="mt-10 bg-white shadow-lg p-10 rounded-lg" onSubmit={handleSubmit(handleForm)} noValidate>
+                    <ProjectForm register={register} errors={errors}/>
                     <input type="submit" value="Crear Proyecto" className="bg-blue-500 hover:bg-blue-600 w-full p-3
                     text-white uppercase font-bold cursor-pointer transition-colors"/>
                 </form>

@@ -2,14 +2,16 @@ import express from "express";
 import dotenv from "dotenv";
 import {connect_database} from "./config/db";
 import projectRoutes from "./routes/projectRoutes";
+import {corsConfig} from "./config/cors";
+import cors from 'cors';
 
-/*Connect to DataBase*/
 dotenv.config()
 connect_database()
 
-/*Create the instance of express*/
 const app = express()
+app.use(cors(corsConfig))
 
+app.use(express.json())
 app.use('/api/projects', projectRoutes)
 
 export default app
