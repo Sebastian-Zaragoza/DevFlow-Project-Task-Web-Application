@@ -35,7 +35,6 @@ const TaskSchema = new Schema({
     project: {
         type: Schema.Types.ObjectId,
         ref: "Project",
-        required: true
     },
     rol: {
         type: String,
@@ -45,7 +44,7 @@ const TaskSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: "User",
-        /**required: true**/
+        required: true
     },
     relation: {
         type: Schema.Types.ObjectId,

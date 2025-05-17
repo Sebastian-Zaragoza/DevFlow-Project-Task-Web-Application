@@ -3,14 +3,14 @@ import {CorsOptions} from 'cors'
 export const corsConfig: CorsOptions = {
     origin: function (origin, callback){
         const whitelist = [process.env.FRONTEND_URL]
-        /*if(!origin){
+        if(!origin){
             return callback(null, true)
-        }*/
+        }
         if(whitelist.includes(origin)){
             return callback(null, true)
         }else{
             callback(new Error('Blocked connection'))
         }
     },
-    /*credentials: true*/
+    credentials: true
 }
