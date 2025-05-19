@@ -16,11 +16,11 @@ export class TaskController {
                 task.relation = null
             }
             else{
-                const relation = await Task.findOne(req.body.relation)
+                const relation = await Task.findById(req.body.relation)
                 if(!relation){
                     res.status(404).send('No relation found')
                 }
-                task.relation = relation.id
+                task.relation = relation
             }
             task.project = req.project.id
             req.project.tasks.push(task.id)

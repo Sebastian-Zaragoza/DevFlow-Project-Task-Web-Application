@@ -30,7 +30,7 @@ export default function TaskForm({errors, register, projectId} : TaskFormProps) 
             } finally {
                 setLoadingTasks(false);
             }
-        };
+        }
         loadTasks()
     }, [projectId])
     return (
