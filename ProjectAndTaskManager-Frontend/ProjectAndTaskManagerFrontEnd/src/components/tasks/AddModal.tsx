@@ -9,6 +9,7 @@ import {useParams} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 import {createTask} from "../../api/TaskApi.ts";
 import {toast} from "react-toastify";
+import {useQueryClient} from "@tanstack/react-query";
 
 export default function AddTaskModal() {
     const navigate = useNavigate()
@@ -29,7 +30,8 @@ export default function AddTaskModal() {
         relation: 'Ninguna'
     }
 
-    const {register, handleSubmit, formState:{errors}} = useForm({defaultValues: initialValues})
+    const {register, handleSubmit, formState:{errors}, reset} = useForm({defaultValues: initialValues})
+    const queryClient = useQueryClient()
     const {mutate} = useMutation({
         mutationFn: createTask,
         onError: (error)=>{
@@ -37,7 +39,10 @@ export default function AddTaskModal() {
             console.log(error.message)
         },
         onSuccess: (data)=>{
+            queryClient.invalidateQueries({queryKey: ['editProject', projectId]})
             toast.success(data)
+            reset()
+            navigate(location.pathname, {replace: true})
         }
     })
     const handleCreateTask = (formData: TaskFormData) => {

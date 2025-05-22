@@ -4,9 +4,9 @@ import {IUser} from "./user";
 const tasksStatus = {
     PENDING: "pendiente",
     COMPLETED: "completado",
-    ON_HOLD: "en espera",
-    IN_PROGRESS: "en progreso",
-    UNDER_REVIEWS: "en revisión",
+    ON_HOLD: "en_espera",
+    IN_PROGRESS: "en_progreso",
+    UNDER_REVIEWS: "en_revision",
 } as const
 
 export type TaskStatus = typeof tasksStatus[keyof typeof tasksStatus];

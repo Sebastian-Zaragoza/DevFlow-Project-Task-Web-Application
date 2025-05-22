@@ -2,6 +2,8 @@ import {Navigate, useNavigate, useParams} from "react-router-dom"
 import {useQuery} from "@tanstack/react-query"
 import {getProjectById} from "../../api/ProjectApi.ts";
 import AddTaskModal from "../../components/tasks/AddModal.tsx";
+import TaskList from "../../components/tasks/TaskList.tsx";
+import EditTaskData from "../../components/tasks/EditTaskData.tsx";
 
 export default function ProjectDetailsView() {
     const navigate = useNavigate()
@@ -16,7 +18,7 @@ export default function ProjectDetailsView() {
 
     if(isLoading) return 'Loading..'
     if(isError) return <Navigate to='/404'/>
-    if(data) return (
+    if(data) return(
         <>
             <h1 className="text-5xl font-black">{data.projectName}</h1>
             <p className="text-2xl font-light text-gray-500 mt-5">{data.description}</p>
@@ -27,7 +29,11 @@ export default function ProjectDetailsView() {
                     onClick={()=>navigate(location.pathname + '?newTask=true')}
                 >Agregar Tarea</button>
             </nav>
+            <TaskList
+                tasks={data.tasks}
+            />
             <AddTaskModal/>
+            <EditTaskData/>
         </>
     )
 }
