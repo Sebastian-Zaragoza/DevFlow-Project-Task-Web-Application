@@ -10,7 +10,9 @@ export const taskSchema = z.object({
     rol: z.string(),
     user: z.string(),
     relation: z.string() || z.null(),
-    status: taskStatusSchema
+    status: taskStatusSchema,
+    createdAt: z.string(),
+    updatedAt: z.string()
 })
 
 export type Task = z.infer<typeof taskSchema>
