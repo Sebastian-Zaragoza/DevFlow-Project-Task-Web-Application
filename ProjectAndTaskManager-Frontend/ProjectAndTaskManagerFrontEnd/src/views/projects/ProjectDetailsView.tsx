@@ -4,6 +4,7 @@ import {getProjectById} from "../../api/ProjectApi.ts";
 import AddTaskModal from "../../components/tasks/AddModal.tsx";
 import TaskList from "../../components/tasks/TaskList.tsx";
 import EditTaskData from "../../components/tasks/EditTaskData.tsx";
+import ModalDetails from "../../components/tasks/ModalDetails.tsx";
 
 export default function ProjectDetailsView() {
     const navigate = useNavigate()
@@ -34,6 +35,7 @@ export default function ProjectDetailsView() {
             />
             <AddTaskModal/>
             <EditTaskData/>
+            <ModalDetails/>
         </>
     )
 }

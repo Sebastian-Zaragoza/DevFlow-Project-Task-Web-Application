@@ -1,9 +1,55 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import {useNavigate} from "react-router-dom";
+import type {Task, TaskFormData} from "../../types";
+import {useForm} from "react-hook-form";
+import TaskForm from "./TaskForm.tsx";
+import {useParams} from "react-router-dom";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {updateTask} from "../../api/TaskApi.ts";
+import {toast} from "react-toastify";
 
-export default function EditTaskModal() {
+type EditTaskModalProps = {
+    data: Task,
+    taskId: Task['_id']
+}
+
+export default function EditTaskModal({data, taskId}: EditTaskModalProps) {
     const navigate = useNavigate()
+    const params = useParams()
+    const projectId = params.projectId!
+    const {register, handleSubmit, formState:{errors}, reset} = useForm<TaskFormData>({defaultValues:
+            {
+                name: data.name,
+                description: data.description,
+                rol: data.rol,
+                user: data.user,
+                relation: data.relation
+            }
+    })
+    const queryClient = useQueryClient()
+
+    const {mutate} = useMutation({
+        mutationFn: updateTask,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({queryKey: ['editProject', projectId]})
+            toast.success(data)
+            reset()
+            navigate(location.pathname, {replace: true})
+        }
+    })
+
+    const handleEditTask = (formData: TaskFormData) => {
+        const data = {
+            projectId,
+            taskId,
+            formData
+        }
+        mutate(data)
+    }
     return (
         <Transition appear show={true} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={() => navigate(location.pathname, {replace:true}) }>
@@ -44,11 +90,10 @@ export default function EditTaskModal() {
 
                                 <form
                                     className="mt-10 space-y-3"
+                                    onSubmit={handleSubmit(handleEditTask)}
                                     noValidate
                                 >
-
-
-
+                                    <TaskForm projectId={projectId} errors={errors} register={register}/>
                                     <input
                                         type="submit"
                                         className=" bg-blue-600 hover:bg-blue-700 w-full p-3  text-white font-black  text-xl cursor-pointer"
