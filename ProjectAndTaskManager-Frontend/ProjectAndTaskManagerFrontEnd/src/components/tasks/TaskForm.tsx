@@ -4,6 +4,7 @@ import ErrorMessage from "../ErrorMessage";
 import {useState} from "react";
 import {useEffect} from "react";
 import api from "../../lib/axios.ts";
+import {useLocation} from "react-router";
 
 type TaskFormProps = {
     projectId: string
@@ -19,14 +20,15 @@ type Task = {
 export default function TaskForm({errors, register, projectId} : TaskFormProps) {
     const [tasks, setTasks] = useState<Task[]>([])
     const [loadingTasks, setLoadingTasks] = useState<boolean>(true)
+    const location = useLocation()
+    const query = new URLSearchParams(location.search)
+    const currentTaskId = query.get("editTask")
 
     useEffect(() => {
         const loadTasks = async () => {
             try {
                 const { data } = await api.get<Task[]>(`/projects/${projectId}/tasks`);
                 setTasks(data)
-            } catch (error) {
-                console.error("Error al cargar tareas:", error)
             } finally {
                 setLoadingTasks(false);
             }
@@ -129,15 +131,17 @@ export default function TaskForm({errors, register, projectId} : TaskFormProps) 
                             "Elige la tarea de la cual depende. Si no, selecciona 'Ninguna'",
                     })}
                     defaultValue="Ninguna"
-                    disabled={loadingTasks}
+                    defaultChecked={loadingTasks}
                 >
                     <option value="Ninguna">Ninguna</option>
 
-                    {tasks.map((task) => (
-                        <option key={task._id} value={task._id}>
-                            {task.name}
-                        </option>
-                    ))}
+                    {tasks
+                        .filter(task => task._id !== currentTaskId)
+                        .map((task) => (
+                            <option key={task._id} value={task._id}>
+                                {task.name}
+                            </option>
+                        ))}
                 </select>
                 {errors.relation && (
                     <ErrorMessage>{errors.relation.message}</ErrorMessage>

@@ -81,7 +81,7 @@ export class TaskController {
         try{
             req.project.tasks = req.project.tasks.filter(task => task.toString() !== req.task.id.toString())
             await Promise.allSettled([req.task.deleteOne(), req.project.save()])
-            res.send('Task eliminada')
+            res.send('Tarea eliminada')
         }catch (error){
             res.status(500).json({error: 'Error ocurrido'})
         }
@@ -93,7 +93,7 @@ export class TaskController {
             await req.task.save()
             res.send('Tarea actualizada')
         }catch (error){
-            res.status(500).json({error: error.message})
+            res.status(500).json({error: 'Error ocurrido'})
         }
     }
 }

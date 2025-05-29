@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import {useNavigate} from "react-router-dom";
 import type {Task, TaskFormData} from "../../types";
