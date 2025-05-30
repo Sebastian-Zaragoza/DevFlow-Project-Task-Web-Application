@@ -1,6 +1,7 @@
 import api from "../lib/axios.ts"
 import {isAxiosError} from "axios"
 import type {ConfirmToken, UserRegistrationForm, RequestConfirmationCodeForm, UserLoginForm, ForgotPasswordForm, NewPasswordFormToken} from "../types/auth.ts";
+import {userSchema} from "../types/auth.ts";
 
 export async function createAccount(formData: UserRegistrationForm){
     try{
@@ -45,7 +46,6 @@ export async function authenticateUser(formData: UserLoginForm){
         const url = '/auth/login'
         const {data} = await api.post<string>(url, formData)
         localStorage.setItem('AuthDevFlow', data)
-        return data
     }
     catch(error){
         if(isAxiosError(error)&&error.response){
@@ -94,7 +94,6 @@ export async function updatePasswordWithToken({formData, token}: {formData: NewP
     }
 }
 
-/**
 export async function getUser(){
     try{
         const {data} = await api('/auth/user')
@@ -109,4 +108,3 @@ export async function getUser(){
         }
     }
 }
-**/

@@ -5,8 +5,21 @@ import {
     FolderIcon,
     ArrowRightOnRectangleIcon,
 } from '@heroicons/react/24/solid'
+import type {User} from '../types/auth.ts'
+import {useQueryClient} from "@tanstack/react-query";
 
-export default function NavMenu() {
+type NavMenuProps = {
+    name: User['name']
+}
+
+export default function NavMenu({name}: NavMenuProps) {
+    const queryClient = useQueryClient()
+
+    const logout = () =>{
+        localStorage.removeItem('AuthDevFlow')
+        queryClient.invalidateQueries({queryKey: ['user']})
+    }
+
     return (
         <Menu as="div" className="relative inline-block text-left">
             <Menu.Button className="
@@ -16,7 +29,7 @@ export default function NavMenu() {
         hover:bg-gray-50 focus:outline-none
 
       ">
-                <span>¿Qué desarrollarás hoy Zaragoza?</span>
+                <span>¿Qué desarrollarás hoy {name}?</span>
                 <ChevronDownIcon className="w-4 h-4 text-gray-500" aria-hidden="true" />
             </Menu.Button>
 
@@ -59,6 +72,7 @@ export default function NavMenu() {
                             className={`group flex items-center w-full px-4 py-2 text-sm text-blue-600 ${
                                 active ? 'bg-gray-100' : ''
                             }`}
+                            onClick={logout}
                         >
                             <ArrowRightOnRectangleIcon className="w-5 h-5 mr-2 text-blue-600 group-hover:text-blue-700" />
                             Cerrar Sesión
