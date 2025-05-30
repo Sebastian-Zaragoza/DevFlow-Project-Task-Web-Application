@@ -9,7 +9,7 @@ export const corsConfig: CorsOptions = {
         if(whitelist.includes(origin)){
             return callback(null, true)
         }else{
-            callback(new Error('Blocked connection'))
+            callback(new Error('Conexión bloqueada'))
         }
     },
     credentials: true

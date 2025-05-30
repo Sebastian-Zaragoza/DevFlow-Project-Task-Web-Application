@@ -36,7 +36,7 @@ const ProjectSchema = new Schema({
     manager: {
         type: Schema.Types.ObjectId,
         ref: "User",
-        /**required: true**/
+        required: true
     }
 }, {timestamps: true})
 

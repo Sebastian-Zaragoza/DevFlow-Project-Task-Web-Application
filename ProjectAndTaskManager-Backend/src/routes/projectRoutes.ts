@@ -1,98 +1,125 @@
-import {Router} from "express";
-import {body, param} from "express-validator";
-import {ProjectController} from "../controllers/projectController";
-import {handleInputErrors} from "../middleware/validation";
-import {validateProjectExists} from "../middleware/projects";
-import {TaskController} from "../controllers/taskController";
-import {validateTaskId} from "../middleware/task";
-import {taskBelongsToProject} from "../middleware/task";
+import { Router } from "express";
+import { body, param } from "express-validator";
+import { ProjectController } from "../controllers/projectController";
+import { handleInputErrors } from "../middleware/validation";
+import { validateProjectExists } from "../middleware/projects";
+import { TaskController } from "../controllers/taskController";
+import { validateTaskId } from "../middleware/task";
+import { taskBelongsToProject } from "../middleware/task";
+import {authenticate} from "../middleware/auth";
 
 const router = Router()
-router.post('/',
-    body('projectName')
+router.use(authenticate)
+router.post(
+    "/",
+    body("projectName")
         .notEmpty()
-        .withMessage("Project name is required"),
-    body('clientName')
+        .withMessage("El nombre del proyecto es obligatorio"),
+    body("clientName")
         .notEmpty()
-        .withMessage("Client name is required"),
-    body('description')
+        .withMessage("El nombre del cliente es obligatorio"),
+    body("description")
         .notEmpty()
-        .withMessage("Description is required"),
+        .withMessage("La descripción es obligatoria"),
     handleInputErrors,
     ProjectController.createProject
 )
-router.get('/',
-    ProjectController.getProjects
-)
-router.get('/:id',
-    param('id').isMongoId().withMessage("Project id is required"),
+
+router.get("/", ProjectController.getProjects);
+
+router.get(
+    "/:id",
+    param("id").isMongoId().withMessage("El ID del proyecto es obligatorio"),
     handleInputErrors,
     ProjectController.getProjectById
 )
-router.put('/:id',
-    param('id').isMongoId().withMessage("Project id is required"),
-    body('projectName')
+
+router.put(
+    "/:id",
+    param("id").isMongoId().withMessage("El ID del proyecto es obligatorio"),
+    body("projectName")
         .notEmpty()
-        .withMessage("Project name is required"),
-    body('clientName')
+        .withMessage("El nombre del proyecto es obligatorio"),
+    body("clientName")
         .notEmpty()
-        .withMessage("Client name is required"),
-    body('description')
+        .withMessage("El nombre del cliente es obligatorio"),
+    body("description")
         .notEmpty()
-        .withMessage("Description is required"),
+        .withMessage("La descripción es obligatoria"),
     handleInputErrors,
     ProjectController.updateProjectById
 )
-router.delete('/:id',
-    param('id').isMongoId().withMessage("Project id is required"),
+
+router.delete(
+    "/:id",
+    param("id").isMongoId().withMessage("El ID del proyecto es obligatorio"),
     handleInputErrors,
     ProjectController.deleteProjectById
 )
 
 
-router.param('projectId', validateProjectExists)
-router.post('/:projectId/tasks',
-    body('name')
-        .notEmpty().withMessage('Task name is required'),
-    body('description')
-        .notEmpty().withMessage('Description is required'),
-    body('rol')
-        .notEmpty().withMessage('Rol is required'),
-    body ('user')
-        .notEmpty().withMessage('User is required'),
+router.param("projectId", validateProjectExists)
+
+router.post(
+    "/:projectId/tasks",
+    body("name")
+        .notEmpty()
+        .withMessage("El nombre de la tarea es obligatorio"),
+    body("description")
+        .notEmpty()
+        .withMessage("La descripción es obligatoria"),
+    body("rol")
+        .notEmpty()
+        .withMessage("El rol es obligatorio"),
+    body("user")
+        .notEmpty()
+        .withMessage("El usuario es obligatorio"),
     TaskController.createTask
 )
-router.get('/:projectId/tasks',
-    TaskController.getTasks
-)
-router.param('taskId', validateTaskId)
-router.param('taskId', taskBelongsToProject)
-router.get('/:projectId/tasks/:taskId',
-    param('taskId').isMongoId().withMessage('Project ID is required'),
+
+router.get("/:projectId/tasks", TaskController.getTasks)
+
+router.param("taskId", validateTaskId)
+router.param("taskId", taskBelongsToProject)
+
+router.get(
+    "/:projectId/tasks/:taskId",
+    param("taskId").isMongoId().withMessage("El ID del proyecto es obligatorio"),
     TaskController.getTaskById
 )
-router.put('/:projectId/tasks/:taskId',
-    param('taskId').isMongoId().withMessage('Task ID is required'),
-    body('name')
-        .notEmpty().withMessage('Task name is required'),
-    body('description')
-        .notEmpty().withMessage('Description is required'),
-    body('rol')
-        .notEmpty().withMessage('Rol is required'),
-    body ('user')
-        .notEmpty().withMessage('User is required'),
+
+router.put(
+    "/:projectId/tasks/:taskId",
+    param("taskId").isMongoId().withMessage("El ID de la tarea es obligatorio"),
+    body("name")
+        .notEmpty()
+        .withMessage("El nombre de la tarea es obligatorio"),
+    body("description")
+        .notEmpty()
+        .withMessage("La descripción es obligatoria"),
+    body("rol")
+        .notEmpty()
+        .withMessage("El rol es obligatorio"),
+    body("user")
+        .notEmpty()
+        .withMessage("El usuario es obligatorio"),
     handleInputErrors,
     TaskController.putTaskById
 )
-router.delete('/:projectId/tasks/:taskId',
-    param('taskId').isMongoId().withMessage('Task ID is required'),
+
+router.delete(
+    "/:projectId/tasks/:taskId",
+    param("taskId").isMongoId().withMessage("El ID de la tarea es obligatorio"),
     TaskController.deleteById
 )
-router.post('/:projectId/tasks/:taskId/status',
-    param('taskId').isMongoId().withMessage('Task ID is required'),
-    body('status')
-        .notEmpty().withMessage('Status is required'),
+
+router.post(
+    "/:projectId/tasks/:taskId/status",
+    param("taskId").isMongoId().withMessage("El ID de la tarea es obligatorio"),
+    body("status")
+        .notEmpty()
+        .withMessage("El estado es obligatorio"),
     handleInputErrors,
     TaskController.updateStatus
 )
-export default router
+export default router;

@@ -14,19 +14,19 @@ export async function validateTaskId(req: Request, res: Response, next: NextFunc
         const {taskId} = req.params
         const task = await Task.findById(taskId)
         if(!task){
-            const error = new Error('Task not found')
+            const error = new Error('Tarea no encotrada')
             res.status(404).json({error: error.message})
         }
         req.task = task
         next()
     }catch (error){
-        res.status(500).json({error: 'Error occurred'})
+        res.status(500).json({error: 'Error ocurrido'})
     }
 }
 
 export function taskBelongsToProject(req: Request, res: Response, next: NextFunction){
     if(req.task.project.toString() !== req.project.id.toString()){
-        const error = new Error('Action invalid')
+        const error = new Error('Acción inválida')
         res.status(400).json({error: error.message})
     }
     next()
