@@ -29,33 +29,44 @@ export default function ConfirmAccountView() {
     }
     return (
         <>
-            <h1 className="text-5xl font-black text-white">Confirm Your Account</h1>
-            <p className="text-2xl font-light text-white mt-5">
-                Enter the code you received{" "}
-                <span className="text-red-500 font-bold">via email</span>
+            <h1 className="text-3xl font-extrabold text-gray-900 text-center">Confirmar cuenta</h1>
+            <p className="text-lg text-gray-600 mt-4 text-center">
+                Ingresa el código que recibiste{' '}
+                <span className="text-blue-600 font-semibold">vía email</span>
             </p>
-            <form className="space-y-8 p-10 bg-white mt-10" noValidate>
-                <label className="font-normal text-2xl text-center block">
-                    6-Digit Code
+
+            <form className="mt-8 space-y-6" noValidate>
+                <label className="text-sm font-medium text-gray-700 mb-1 block text-center">
+                    Código de 6 dígitos
                 </label>
-                <div className="flex justify-between gap-5">
+
+                <div className="flex justify-center gap-4">
                     <PinInput value={token} onChange={handleChange} onComplete={handleComplete}>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
                     </PinInput>
                 </div>
             </form>
 
-            <nav className="mt-10 flex flex-col space-y-4">
-                <Link
-                    to="/auth/request-code"
-                    className="text-center text-gray-300 font-normal"
-                >
-                    Request a New Code
+            <nav className="mt-8 flex flex-col space-y-3 text-center">
+                <Link to="/auth/request-code" className="text-sm text-blue-600 hover:underline">
+                    Solicitar un nuevo código
                 </Link>
             </nav>
         </>

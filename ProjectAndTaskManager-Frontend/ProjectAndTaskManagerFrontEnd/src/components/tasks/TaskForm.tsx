@@ -37,116 +37,105 @@ export default function TaskForm({errors, register, projectId} : TaskFormProps) 
     }, [projectId])
     return (
         <>
-            <div className="flex flex-col gap-5">
-                <label
-                    className="font-normal text-2xl"
-                    htmlFor="name"
-                >Nombre de la tarea</label>
+            {/* Nombre de la tarea */}
+            <div className="flex flex-col space-y-1">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    Nombre de la tarea
+                </label>
                 <input
                     id="name"
                     type="text"
                     placeholder="Nombre de la tarea"
-                    className="w-full p-3  border-gray-300 border"
-                    {...register("name", {
-                        required: "El nombre de la tarea es obligatorio",
+                    className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    {...register('name', {
+                        required: 'El nombre de la tarea es obligatorio',
                     })}
                 />
-                {errors.name && (
-                    <ErrorMessage>{errors.name.message}</ErrorMessage>
-                )}
+                {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
             </div>
 
-            <div className="flex flex-col gap-5">
-                <label
-                    className="font-normal text-2xl"
-                    htmlFor="description"
-                >Descripción de la tarea</label>
+            {/* Descripción de la tarea */}
+            <div className="flex flex-col space-y-1">
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                    Descripción de la tarea
+                </label>
                 <textarea
                     id="description"
+                    rows={4}
                     placeholder="Descripción de la tarea"
-                    className="w-full p-3  border-gray-300 border"
-                    {...register("description", {
-                        required: "La descripción de la tarea es obligatoria"
+                    className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    {...register('description', {
+                        required: 'La descripción de la tarea es obligatoria',
                     })}
                 />
-                {errors.description && (
-                    <ErrorMessage>{errors.description.message}</ErrorMessage>
-                )}
+                {errors.description && <ErrorMessage>{errors.description.message}</ErrorMessage>}
             </div>
 
-            <div className="flex flex-col gap-5">
-                <label
-                    className="font-normal text-2xl"
-                    htmlFor="rol"
-                >
+            {/* Rol del usuario */}
+            <div className="flex flex-col space-y-1">
+                <label htmlFor="rol" className="block text-sm font-medium text-gray-700">
                     Rol del usuario
                 </label>
                 <select
                     id="rol"
-                    className="w-full p-3 border-gray-300 border"
-                    {...register("rol", {
-                        required: "El rol es obligatorio",
+                    className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    {...register('rol', {
+                        required: 'El rol es obligatorio',
                     })}
                     defaultValue=""
                 >
-                    <option value="" disabled>Selecciona un rol</option>
+                    <option value="" disabled>
+                        Selecciona un rol
+                    </option>
                     <option value="Diseñador">Diseñador</option>
                     <option value="Desarrollador">Desarrollador</option>
                     <option value="Testeador">Testeador</option>
                 </select>
-                {errors.rol && (
-                    <ErrorMessage>{errors.rol.message}</ErrorMessage>
-                )}
+                {errors.rol && <ErrorMessage>{errors.rol.message}</ErrorMessage>}
             </div>
 
-
-            <div className="flex flex-col gap-5">
-                <label
-                    className="font-normal text-2xl"
-                    htmlFor="user"
-                >Correo del usuario</label>
+            {/* Correo del usuario */}
+            <div className="flex flex-col space-y-1">
+                <label htmlFor="user" className="block text-sm font-medium text-gray-700">
+                    Correo del usuario
+                </label>
                 <input
                     id="user"
                     type="text"
-                    placeholder="Nombre del usuario"
-                    className="w-full p-3  border-gray-300 border"
-                    {...register("user", {
-                        required: "El nombre del usuario es obligatorio",
+                    placeholder="Correo del usuario"
+                    className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    {...register('user', {
+                        required: 'El nombre del usuario es obligatorio',
                     })}
                 />
-                {errors.user && (
-                    <ErrorMessage>{errors.user.message}</ErrorMessage>
-                )}
+                {errors.user && <ErrorMessage>{errors.user.message}</ErrorMessage>}
             </div>
 
-            <div className="flex flex-col gap-5">
-                <label className="font-normal text-2xl" htmlFor="relation">
+            {/* Dependencia de tareas */}
+            <div className="flex flex-col space-y-1">
+                <label htmlFor="relation" className="block text-sm font-medium text-gray-700">
                     Dependencia de tareas
                 </label>
                 <select
                     id="relation"
-                    className="w-full p-3 border-gray-300 border"
-                    {...register("relation", {
-                        required:
-                            "Elige la tarea de la cual depende. Si no, selecciona 'Ninguna'",
+                    className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    {...register('relation', {
+                        required: 'Elige la tarea de la cual depende. Si no, selecciona \'Ninguna\'',
                     })}
                     defaultValue="Ninguna"
                     defaultChecked={loadingTasks}
                 >
                     <option value="Ninguna">Ninguna</option>
-
                     {tasks
-                        .filter(task => task._id !== currentTaskId)
-                        .map((task) => (
-                            <option key={task._id} value={task._id}>
-                                {task.name}
+                        .filter((taskItem) => taskItem._id !== currentTaskId)
+                        .map((taskItem) => (
+                            <option key={taskItem._id} value={taskItem._id}>
+                                {taskItem.name}
                             </option>
                         ))}
                 </select>
-                {errors.relation && (
-                    <ErrorMessage>{errors.relation.message}</ErrorMessage>
-                )}
+                {errors.relation && <ErrorMessage>{errors.relation.message}</ErrorMessage>}
             </div>
         </>
-    )
+    );
 }

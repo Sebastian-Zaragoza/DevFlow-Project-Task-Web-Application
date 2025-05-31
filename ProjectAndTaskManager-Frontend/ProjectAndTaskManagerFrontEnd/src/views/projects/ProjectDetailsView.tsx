@@ -1,41 +1,50 @@
-import {Navigate, useNavigate, useParams} from "react-router-dom"
-import {useQuery} from "@tanstack/react-query"
-import {getProjectById} from "../../api/ProjectApi.ts";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getProjectById } from "../../api/ProjectApi.ts";
 import AddTaskModal from "../../components/tasks/AddModal.tsx";
 import TaskList from "../../components/tasks/TaskList.tsx";
 import EditTaskData from "../../components/tasks/EditTaskData.tsx";
 import ModalDetails from "../../components/tasks/ModalDetails.tsx";
 
 export default function ProjectDetailsView() {
-    const navigate = useNavigate()
-    const params = useParams()
-    const projectId = params.projectId!
+    const navigate = useNavigate();
+    const { projectId } = useParams<{ projectId: string }>();
 
-    const {data, isLoading, isError} = useQuery({
-        queryKey: ['editProject', projectId],
-        queryFn: ()=> getProjectById(projectId),
-        retry: false
-    })
+    const { data, isError } = useQuery({
+        queryKey: ["editProject", projectId],
+        queryFn: () => getProjectById(projectId!),
+        retry: false,
+    });
 
-    if(isLoading) return 'Loading..'
-    if(isError) return <Navigate to='/404'/>
-    if(data) return(
-        <>
-            <h1 className="text-5xl font-black">{data.projectName}</h1>
-            <p className="text-2xl font-light text-gray-500 mt-5">{data.description}</p>
-            <nav className="my-10 flex gap-3">
-                <button
-                    type="button"
-                    className="bg-blue-400 hover:bg-blue-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors"
-                    onClick={()=>navigate(location.pathname + '?newTask=true')}
-                >Agregar Tarea</button>
-            </nav>
-            <TaskList
-                tasks={data.tasks}
-            />
-            <AddTaskModal/>
-            <EditTaskData/>
-            <ModalDetails/>
-        </>
-    )
+    if (isError) return <Navigate to="/404" replace />;
+    return (
+        <div className="min-h-screen">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+                <header className="mb-8">
+                    <h1 className="text-4xl font-extrabold text-gray-900">
+                        {data?.projectName}
+                    </h1>
+                    <p className="mt-2 text-lg text-gray-600">
+                        {data?.description}
+                    </p>
+                    <button
+                        type="button"
+                        onClick={() => navigate(`${location.pathname}?newTask=true`)}
+                        className="inline-flex items-center mt-4 bg-blue-500 hover:bg-blue-600 text-white font-medium px-5 py-2 rounded-md shadow transition-colors"
+                    >
+                        Agregar tarea
+                    </button>
+                </header>
+
+                <section>
+                    <TaskList tasks={data?.tasks || []} />
+                </section>
+
+                <AddTaskModal />
+                <EditTaskData />
+                <ModalDetails />
+            </div>
+        </div>
+    );
 }

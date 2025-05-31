@@ -51,64 +51,63 @@ export default function NewPasswordForm({token}: NewPasswordFormProps) {
         <>
             <form
                 onSubmit={handleSubmit(handleNewPassword)}
-                className="space-y-8 p-10 bg-white mt-10"
+                className="mt-8 space-y-6"
                 noValidate
             >
-
-                <div className="flex flex-col gap-5">
-                    <label
-                        className="font-normal text-2xl"
-                        htmlFor="password"
-                    >
-                        Password
+                <div className="flex flex-col">
+                    <label htmlFor="password" className="text-sm font-medium text-gray-700 mb-1">
+                        Contraseña
                     </label>
                     <input
                         id="password"
                         type="password"
-                        placeholder="Registration Password"
-                        className="w-full p-3 border-gray-300 border"
+                        placeholder="Nueva contraseña (min 8 caracteres)"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                         {...register("password", {
                             required: "Password is required",
                             minLength: {
                                 value: 8,
-                                message: "Password must be at least 8 characters"
-                            }
+                                message: "La contraseña debe tener al menos 8 caracteres",
+                            },
                         })}
                     />
                     {errors.password && (
-                        <ErrorMessage>{errors.password.message}</ErrorMessage>
+                        <ErrorMessage>
+                            {errors.password.message}
+                        </ErrorMessage>
                     )}
                 </div>
 
-                <div className="flex flex-col gap-5">
-                    <label
-                        className="font-normal text-2xl"
-                        htmlFor="password_confirmation"
-                    >
-                        Repeat Password
+                <div className="flex flex-col">
+                    <label htmlFor="password_confirmation" className="text-sm font-medium text-gray-700 mb-1">
+                        Repetir contraseña
                     </label>
                     <input
                         id="password_confirmation"
                         type="password"
-                        placeholder="Repeat Registration Password"
-                        className="w-full p-3 border-gray-300 border"
+                        placeholder="Repite la contraseña"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                         {...register("password_confirmation", {
                             required: "Repeat password is required",
-                            validate: value =>
-                                value === password || "Passwords do not match"
+                            validate: (value) =>
+                                value === password || "Passwords do not match",
                         })}
                     />
                     {errors.password_confirmation && (
-                        <ErrorMessage>{errors.password_confirmation.message}</ErrorMessage>
+                        <ErrorMessage>
+                            {errors.password_confirmation.message}
+                        </ErrorMessage>
                     )}
                 </div>
 
-                <input
+                <button
                     type="submit"
-                    value="Set Password"
-                    className="bg-red-500 hover:bg-red-600 w-full p-3 text-white font-black text-xl cursor-pointer"
-                />
+                    className="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-3 rounded-lg shadow transition-colors"
+                >
+                    Restablecer contraseña
+                </button>
             </form>
         </>
     );
+
 }

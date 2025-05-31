@@ -36,98 +36,131 @@ export default function RegisterView() {
 
     return (
         <>
-            <h1 className="text-5xl font-black text-white">Create Account</h1>
-            <p className="text-2xl font-light text-white mt-5">
-                Fill out the form to{' '}
-                <span className="text-red-400 font-bold">create your account</span>
+            <h1 className="text-3xl font-extrabold text-gray-900 text-center">Crear cuenta</h1>
+            <p className="text-lg text-gray-600 mt-4 text-center">
+                Completa el formulario para{' '}
+                <span className="text-blue-600 font-semibold">crear tu cuenta</span>
             </p>
 
             <form
                 onSubmit={handleSubmit(handleRegister)}
-                className="space-y-8 p-10 bg-white mt-10"
+                className="mt-8 space-y-6"
                 noValidate
             >
-                <div className="flex flex-col gap-5">
-                    <label className="font-normal text-2xl" htmlFor="email">
-                        Email
+                <div className="flex flex-col">
+                    <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1">
+                        Correo electrónico
                     </label>
                     <input
                         id="email"
                         type="email"
-                        placeholder="Registration Email"
-                        className="w-full p-3 border-gray-300 border"
+                        placeholder="ejemplo@dominio.com"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                         {...register("email", {
-                            required: "Registration email is required",
+                            required: "El correo es obligatorio",
                             pattern: {
                                 value: /\S+@\S+\.\S+/,
-                                message: "Invalid email address",
+                                message: "Correo inválido",
                             },
                         })}
                     />
-                    {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+                    {errors.email && (
+                        <ErrorMessage>
+                            {errors.email.message}
+                        </ErrorMessage>
+                    )}
                 </div>
 
-                <div className="flex flex-col gap-5">
-                    <label className="font-normal text-2xl">Name</label>
+                <div className="flex flex-col">
+                    <label htmlFor="name" className="text-sm font-medium text-gray-700 mb-1">
+                        Nombre de usuario
+                    </label>
                     <input
-                        type="name"
-                        placeholder="Registration Name"
-                        className="w-full p-3 border-gray-300 border"
+                        id="name"
+                        type="text"
+                        placeholder="Tu nombre"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                         {...register("name", {
-                            required: "Username is required",
+                            required: "El nombre es obligatorio",
                         })}
                     />
-                    {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+                    {errors.name && (
+                        <ErrorMessage>
+                            {errors.name.message}
+                        </ErrorMessage>
+                    )}
                 </div>
 
-                <div className="flex flex-col gap-5">
-                    <label className="font-normal text-2xl">Password</label>
+                <div className="flex flex-col">
+                    <label htmlFor="password" className="text-sm font-medium text-gray-700 mb-1">
+                        Contraseña
+                    </label>
                     <input
+                        id="password"
                         type="password"
-                        placeholder="Registration Password"
-                        className="w-full p-3 border-gray-300 border"
+                        placeholder="Nueva contraseña (min 8 caracteres)"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                         {...register("password", {
-                            required: "Password is required",
+                            required: "La contraseña es obligatoria",
                             minLength: {
                                 value: 8,
-                                message: "Password must be at least 8 characters",
+                                message: "Debe tener al menos 8 caracteres",
                             },
                         })}
                     />
                     {errors.password && (
-                        <ErrorMessage>{errors.password.message}</ErrorMessage>
+                        <ErrorMessage>
+                            {errors.password.message}
+                        </ErrorMessage>
                     )}
                 </div>
 
-                <div className="flex flex-col gap-5">
-                    <label className="font-normal text-2xl">Repeat Password</label>
+                <div className="flex flex-col">
+                    <label htmlFor="password_confirmation" className="text-sm font-medium text-gray-700 mb-1">
+                        Repetir contraseña
+                    </label>
                     <input
                         id="password_confirmation"
                         type="password"
-                        placeholder="Repeat Registration Password"
-                        className="w-full p-3 border-gray-300 border"
+                        placeholder="Repite tu contraseña"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                         {...register("password_confirmation", {
-                            required: "Password confirmation is required",
+                            required: "La confirmación es obligatoria",
                             validate: value =>
-                                value === password || "Passwords do not match",
+                                value === password || "Las contraseñas no coinciden",
                         })}
                     />
                     {errors.password_confirmation && (
-                        <ErrorMessage>{errors.password_confirmation.message}</ErrorMessage>
+                        <ErrorMessage>
+                            {errors.password_confirmation.message}
+                        </ErrorMessage>
                     )}
                 </div>
 
-                <input
+                <button
                     type="submit"
-                    value="Register"
-                    className="bg-red-500 hover:bg-red-600 w-full p-3 text-white font-black text-xl cursor-pointer"
-                />
+                    className="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-3 rounded-lg shadow transition-colors"
+                >
+                    Registrarse
+                </button>
             </form>
-            <nav className="mt-10 flex flex-col space-y-4">
-                <Link to={'/auth/login'} className="text-center text-gray-300 font-normal">Do have an account? Login</Link>
-                <Link to={'/auth/forgot-password'} className="text-center text-gray-300 font-normal">Don't remember the password? Reset</Link>
 
+            <nav className="mt-8 flex flex-col space-y-3 text-center">
+                <Link
+                    to="/auth/login"
+                    className="text-sm text-blue-600 hover:underline"
+                >
+                    ¿Ya tienes una cuenta? Inicia sesión
+                </Link>
+                <Link
+                    to="/auth/forgot-password"
+                    className="text-sm text-blue-600 hover:underline"
+                >
+                    ¿Olvidaste tu contraseña? Restablecer
+                </Link>
             </nav>
         </>
-    )
+    );
+
+
 }

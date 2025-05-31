@@ -38,10 +38,6 @@ export default function NavMenu({name}: NavMenuProps) {
         bg-white border border-gray-200
         rounded-md shadow-lg focus:outline-none
       ">
-
-                <div className="px-4 py-2 text-sm text-gray-500 cursor-default">
-                    Menu
-                </div>
                 <Menu.Item>
                     {({ active }) => (
                         <button

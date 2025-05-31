@@ -7,7 +7,7 @@ export class ProjectController{
         project.manager = req.user.id
         try{
             await project.save()
-            res.send("Proyecto creado exitosamente ")
+            res.send("Proyecto creado exitosamente")
         }catch (error){
             res.status(500).json({error: "Error al crear el proyecto"})
         }

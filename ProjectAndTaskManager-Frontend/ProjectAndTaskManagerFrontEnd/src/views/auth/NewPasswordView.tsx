@@ -8,13 +8,22 @@ export default function NewPasswordView() {
     const [isValidToken, setIsValidToken] = useState(false)
     return (
         <>
-            <h1 className="text-5xl font-black text-white">Reset Password</h1>
-            <p className="text-2xl font-light text-white mt-5">
-                Enter the code that you have received to {' '}
-                <span className="text-red-400 font-bold">reset your password</span>
+            <h1 className="text-3xl font-extrabold text-gray-900 text-center">Restablecer contraseña</h1>
+            <p className="text-lg text-gray-600 mt-4 text-center">
+                Ingresa el código que recibiste para{' '}
+                <span className="text-blue-600 font-semibold">restablecer tu contraseña</span>
             </p>
-            {!isValidToken? <NewPasswordToken token={token} setToken={setToken} setIsValidToken={setIsValidToken}/> :
-                <NewPasswordForm token={token}/>}
+
+            {!isValidToken ? (
+                <NewPasswordToken
+                    token={token}
+                    setToken={setToken}
+                    setIsValidToken={setIsValidToken}
+                />
+            ) : (
+                <NewPasswordForm token={token} />
+            )}
         </>
     );
+
 }

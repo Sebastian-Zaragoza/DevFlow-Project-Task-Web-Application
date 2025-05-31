@@ -14,7 +14,7 @@ declare global {
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
     const bearer = req.headers.authorization
     if(!bearer){
-        const error = new Error('Not authorized')
+        const error = new Error('Acceso no autorizado')
         res.status(401).send(error.message)
     }
     const [, token] = bearer.split(' ')
@@ -25,12 +25,12 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
             if(user){
                 req.user = user
             }else{
-                res.status(500).send({error: 'Token invalid'})
+                res.status(500).send({error: 'Token inválido'})
             }
         }
 
     }catch(error){
-        res.status(500).send({error: 'Token invalid'})
+        res.status(500).send({error: 'Token inválido'})
     }
     next()
 }

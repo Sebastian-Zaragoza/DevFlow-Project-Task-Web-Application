@@ -30,50 +30,59 @@ export default function ForgotPasswordView() {
 
     return (
         <>
-            <h1 className="text-5xl font-black text-white">Reset Password</h1>
-            <p className="text-2xl font-light text-white mt-5">
-                Fill out the form to{' '}
-                <span className="text-red-400 font-bold">reset your password</span>
+            <h1 className="text-3xl font-extrabold text-gray-900 text-center">Restablecer contraseña</h1>
+            <p className="text-lg text-gray-600 mt-4 text-center">
+                Completa el formulario para{' '}
+                <span className="text-blue-600 font-semibold">restablecer tu contraseña</span>
             </p>
+
             <form
                 onSubmit={handleSubmit(handleForgotPassword)}
-                className="space-y-8 p-10 mt-10 bg-white"
+                className="mt-8 space-y-6"
                 noValidate
             >
-                <div className="flex flex-col gap-5">
-                    <label
-                        className="font-normal text-2xl"
-                        htmlFor="email"
-                    >Email</label>
+                {/* Email */}
+                <div className="flex flex-col">
+                    <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1">
+                        Correo electrónico
+                    </label>
                     <input
                         id="email"
                         type="email"
-                        placeholder="Registry email"
-                        className="w-full p-3  border-gray-300 border"
+                        placeholder="ejemplo@dominio.com"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                         {...register("email", {
-                            required: "Email is required",
+                            required: "El correo es obligatorio",
                             pattern: {
                                 value: /\S+@\S+\.\S+/,
-                                message: "E-mail no válido",
+                                message: "Correo inválido",
                             },
                         })}
                     />
                     {errors.email && (
-                        <ErrorMessage>{errors.email.message}</ErrorMessage>
+                        <ErrorMessage>
+                            {errors.email.message}
+                        </ErrorMessage>
                     )}
                 </div>
 
-                <input
+                <button
                     type="submit"
-                    value='Send email'
-                    className="bg-red-500 hover:bg-red-600 w-full p-3  text-white font-black  text-xl cursor-pointer"
-                />
+                    className="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-3 rounded-lg shadow transition-colors"
+                >
+                    Enviar correo
+                </button>
             </form>
 
-            <nav className="mt-10 flex flex-col space-y-4">
-                <Link to={'/auth/register'} className="text-center text-gray-300 font-normal">Don't have an account? Create one</Link>
-                <Link to={'/auth/login'} className="text-center text-gray-300 font-normal">Do have an account? Login</Link>
+            <nav className="mt-8 flex flex-col space-y-3 text-center">
+                <Link to="/auth/register" className="text-sm text-blue-600 hover:underline">
+                    ¿No tienes cuenta? Regístrate
+                </Link>
+                <Link to="/auth/login" className="text-sm text-blue-600 hover:underline">
+                    ¿Ya tienes cuenta? Inicia sesión
+                </Link>
             </nav>
         </>
-    )
+    );
+
 }

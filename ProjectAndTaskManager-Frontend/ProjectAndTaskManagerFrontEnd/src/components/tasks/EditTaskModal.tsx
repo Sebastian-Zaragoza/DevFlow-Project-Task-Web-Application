@@ -51,8 +51,12 @@ export default function EditTaskModal({data, taskId}: EditTaskModalProps) {
         mutate(data)
     }
     return (
-        <Transition appear show={true} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={() => navigate(location.pathname, {replace:true}) }>
+        <Transition appear show as={Fragment}>
+            <Dialog
+                as="div"
+                className="relative z-10"
+                onClose={() => navigate(location.pathname, { replace: true })}
+            >
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -76,29 +80,22 @@ export default function EditTaskModal({data, taskId}: EditTaskModalProps) {
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all p-16">
-                                <Dialog.Title
-                                    as="h3"
-                                    className="font-black text-4xl  my-5"
-                                >
+                            <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white border-l-4  shadow-xl transition-all p-8 sm:p-10 text-left">
+                                <Dialog.Title className="text-3xl font-extrabold text-gray-900 mb-4">
                                     Editar Tarea
                                 </Dialog.Title>
-
-                                <p className="text-xl font-bold">Realiza cambios a una tarea en {''}
-                                    <span className="text-blue-600">este formulario</span>
+                                <p className="text-gray-700 mb-6">
+                                    Realiza cambios a la tarea usando el siguiente formulario:
                                 </p>
 
-                                <form
-                                    className="mt-10 space-y-3"
-                                    onSubmit={handleSubmit(handleEditTask)}
-                                    noValidate
-                                >
-                                    <TaskForm projectId={projectId} errors={errors} register={register}/>
-                                    <input
+                                <form onSubmit={handleSubmit(handleEditTask)} noValidate className="space-y-6">
+                                    <TaskForm projectId={projectId!} register={register} errors={errors} />
+                                    <button
                                         type="submit"
-                                        className=" bg-blue-600 hover:bg-blue-700 w-full p-3  text-white font-black  text-xl cursor-pointer"
-                                        value='Guardar Tarea'
-                                    />
+                                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow focus:outline-none transition-colors"
+                                    >
+                                        Guardar Cambios
+                                    </button>
                                 </form>
                             </Dialog.Panel>
                         </Transition.Child>
@@ -106,5 +103,6 @@ export default function EditTaskModal({data, taskId}: EditTaskModalProps) {
                 </div>
             </Dialog>
         </Transition>
-    )
+    );
+
 }

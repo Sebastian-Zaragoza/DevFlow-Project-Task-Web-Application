@@ -5,20 +5,13 @@ export class TaskController {
     static createTask = async (req: Request, res: Response) => {
         try{
             const task = new Task(req.body)
-            /**const user = await User.findOne(req.body.user)
-            if (user){
-                task.user = user.id
-            }
-            else{
-                res.status(404).json({error: 'User not found'})
-            }**/
             if (req.body.relation == 'Ninguna'){
                 task.relation = null
             }
             else{
                 const relation = await Task.findById(req.body.relation)
                 if(!relation){
-                    res.status(404).send('No relation found')
+                    res.status(404).send('No se encontró la relación')
                 }
                 task.relation = relation
             }
@@ -49,20 +42,13 @@ export class TaskController {
     }
     static putTaskById = async (req: Request, res: Response) => {
         try{
-            /**const user = await User.findOne(req.body.user)
-             if (user){
-             task.user = user.id
-             }
-             else{
-             res.status(404).json({error: 'User not found'})
-             }**/
             if (req.body.relation === 'Ninguna'){
                 req.body.relation = null
             }
             else{
                 const relation = await Task.findOne(req.body.relation)
                 if(!relation){
-                    res.status(404).send('No relation found')
+                    res.status(404).send('No se encontró la relación')
                 }
                 req.body.relation = relation.id
             }

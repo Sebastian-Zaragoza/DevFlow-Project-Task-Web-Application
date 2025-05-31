@@ -33,31 +33,41 @@ export default function NewPasswordToken({token, setToken, setIsValidToken}: New
 
     return (
         <>
-            <form
-                className="space-y-8 p-10 rounded-lg bg-white mt-10"
-            >
-                <label
-                    className="font-normal text-2xl text-center block"
-                >Code of 6 digits</label>
-                <div className="flex justify-center gap-5">
+            <form className="mt-8 space-y-6 bg-white rounded-2xl p-8" noValidate>
+                <label className="text-sm font-medium text-gray-700 block text-center mb-4">
+                    Código de 6 dígitos
+                </label>
+
+                <div className="flex justify-center gap-4">
                     <PinInput value={token} onChange={handleChange} onComplete={handleComplete}>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
-                        <PinInputField className="w-10 h-20 p-3 rounded-lg border-gray-300 border placeholder-white text-center"></PinInputField>
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
+                        <PinInputField
+                            className="w-12 h-14 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 text-center text-xl"
+                        />
                     </PinInput>
                 </div>
             </form>
-            <nav className="mt-10 flex flex-col space-y-4">
-                <Link
-                    to='/auth/forgot-password'
-                    className="text-center text-gray-300 font-normal"
-                >
-                    Request a new token
+
+            <nav className="mt-8 flex flex-col space-y-3 text-center">
+                <Link to="/auth/forgot-password" className="text-sm text-blue-600 hover:underline">
+                    Solicitar un nuevo código
                 </Link>
             </nav>
         </>
-    )
+    );
+
 }

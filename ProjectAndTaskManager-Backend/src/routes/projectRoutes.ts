@@ -29,14 +29,14 @@ router.get("/", ProjectController.getProjects);
 
 router.get(
     "/:id",
-    param("id").isMongoId().withMessage("El ID del proyecto es obligatorio"),
+    param("id").isMongoId().withMessage("El Id del proyecto es obligatorio"),
     handleInputErrors,
     ProjectController.getProjectById
 )
 
 router.put(
     "/:id",
-    param("id").isMongoId().withMessage("El ID del proyecto es obligatorio"),
+    param("id").isMongoId().withMessage("El Id del proyecto es obligatorio"),
     body("projectName")
         .notEmpty()
         .withMessage("El nombre del proyecto es obligatorio"),
@@ -52,7 +52,7 @@ router.put(
 
 router.delete(
     "/:id",
-    param("id").isMongoId().withMessage("El ID del proyecto es obligatorio"),
+    param("id").isMongoId().withMessage("El Id del proyecto es obligatorio"),
     handleInputErrors,
     ProjectController.deleteProjectById
 )
@@ -84,13 +84,13 @@ router.param("taskId", taskBelongsToProject)
 
 router.get(
     "/:projectId/tasks/:taskId",
-    param("taskId").isMongoId().withMessage("El ID del proyecto es obligatorio"),
+    param("taskId").isMongoId().withMessage("El Id del proyecto es obligatorio"),
     TaskController.getTaskById
 )
 
 router.put(
     "/:projectId/tasks/:taskId",
-    param("taskId").isMongoId().withMessage("El ID de la tarea es obligatorio"),
+    param("taskId").isMongoId().withMessage("El Id de la tarea es obligatorio"),
     body("name")
         .notEmpty()
         .withMessage("El nombre de la tarea es obligatorio"),
@@ -109,13 +109,13 @@ router.put(
 
 router.delete(
     "/:projectId/tasks/:taskId",
-    param("taskId").isMongoId().withMessage("El ID de la tarea es obligatorio"),
+    param("taskId").isMongoId().withMessage("El Id de la tarea es obligatorio"),
     TaskController.deleteById
 )
 
 router.post(
     "/:projectId/tasks/:taskId/status",
-    param("taskId").isMongoId().withMessage("El ID de la tarea es obligatorio"),
+    param("taskId").isMongoId().withMessage("El Id de la tarea es obligatorio"),
     body("status")
         .notEmpty()
         .withMessage("El estado es obligatorio"),

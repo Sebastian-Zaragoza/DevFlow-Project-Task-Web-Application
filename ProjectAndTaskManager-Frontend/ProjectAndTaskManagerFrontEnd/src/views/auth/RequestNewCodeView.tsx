@@ -32,60 +32,60 @@ export default function RequestNewCodeView() {
         mutate(formData)
         reset()
     };
-
     return (
         <>
-            <h1 className="text-5xl font-black text-white">
-                Request Confirmation Code
+            <h1 className="text-3xl font-extrabold text-gray-900 text-center">
+                Solicitar código de confirmación
             </h1>
-            <p className="text-2xl font-light text-white mt-5">
-                Enter your email to receive{' '}
-                <span className="text-red-500 font-bold">a new code</span>
+            <p className="text-lg text-gray-600 mt-4 text-center">
+                Ingresa tu correo para recibir{' '}
+                <span className="text-blue-600 font-semibold">un nuevo código</span>
             </p>
 
             <form
                 onSubmit={handleSubmit(handleRequestCode)}
-                className="space-y-8 p-10 rounded-lg bg-white mt-10"
+                className="mt-8 space-y-6"
                 noValidate
             >
-                <div className="flex flex-col gap-5">
-                    <label className="font-normal text-2xl" htmlFor="email">
-                        Email
+                <div className="flex flex-col">
+                    <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1">
+                        Correo electrónico
                     </label>
                     <input
                         id="email"
                         type="email"
-                        placeholder="Registration Email"
-                        className="w-full p-3 rounded-lg border-gray-300 border"
+                        placeholder="ejemplo@dominio.com"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                         {...register("email", {
-                            required: "Registration email is required",
+                            required: "El correo es obligatorio",
                             pattern: {
                                 value: /\S+@\S+\.\S+/,
-                                message: "Invalid email address",
+                                message: "Correo inválido",
                             },
                         })}
                     />
                     {errors.email && (
-                        <ErrorMessage>{errors.email.message}</ErrorMessage>
+                        <ErrorMessage>
+                            {errors.email.message}
+                        </ErrorMessage>
                     )}
                 </div>
 
-                <input
+                {/* Botón de envío */}
+                <button
                     type="submit"
-                    value="Send Code"
-                    className="bg-red-500 hover:bg-red-600 w-full p-3 rounded-lg text-white font-black text-xl cursor-pointer"
-                />
+                    className="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-3 rounded-lg shadow transition-colors"
+                >
+                    Enviar código
+                </button>
             </form>
 
-            <nav className="mt-10 flex flex-col space-y-4">
-                <Link to="/auth/login" className="text-center text-gray-300 font-normal">
-                    Already have an account? Log In
+            <nav className="mt-8 flex flex-col space-y-3 text-center">
+                <Link to="/auth/login" className="text-sm text-blue-600 hover:underline">
+                    ¿Ya tienes cuenta? Iniciar sesión
                 </Link>
-                <Link
-                    to="/auth/forgot-password"
-                    className="text-center text-gray-300 font-normal"
-                >
-                    Forgot your password? Reset
+                <Link to="/auth/forgot-password" className="text-sm text-blue-600 hover:underline">
+                    ¿Olvidaste tu contraseña? Restablecer
                 </Link>
             </nav>
         </>
