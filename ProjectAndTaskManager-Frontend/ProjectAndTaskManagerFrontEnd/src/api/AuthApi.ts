@@ -1,12 +1,12 @@
 import api from "../lib/axios.ts";
 import { isAxiosError } from "axios";
-import type {
-  ConfirmToken,
-  UserRegistrationForm,
-  RequestConfirmationCodeForm,
-  UserLoginForm,
-  ForgotPasswordForm,
-  NewPasswordFormToken,
+import {
+  type ConfirmToken,
+  type UserRegistrationForm,
+  type RequestConfirmationCodeForm,
+  type UserLoginForm,
+  type ForgotPasswordForm,
+  type NewPasswordFormToken, userInfoSchema,
 } from "../types/auth.ts";
 import { userSchema } from "../types/auth.ts";
 
@@ -99,6 +99,19 @@ export async function getUser() {
   try {
     const { data } = await api("/auth/user");
     const response = userSchema.safeParse(data);
+    if (response.success) {
+      return response.data;
+    }
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+export async function getUserById(userId: string) {
+  try {
+    const { data } = await api.get(`/auth/user/${userId}`);
+    const response = userInfoSchema.safeParse(data);
     if (response.success) {
       return response.data;
     }

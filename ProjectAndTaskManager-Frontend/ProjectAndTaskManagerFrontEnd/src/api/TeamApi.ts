@@ -4,17 +4,18 @@ import {type TeamMember, type TeamMemberForm, teamMembersSchema} from "../types/
 import type {Project} from "../types";
 
 
-export async function findUserByEmail({projectId, formData}: {projectId: Project['_id'], formData: TeamMemberForm}) {
-    try{
-        const url = `projects/${projectId}/team/find`;
-        const data = await api.post<string>(url, formData);
-        return data;
-    }catch(error){
-        if(isAxiosError(error) && error.response){
-            throw new Error(error.response.data.error);
-        }
-    }
+export async function findUserByEmail(args: {
+    projectId: string
+    formData: TeamMemberForm
+}): Promise<TeamMember> {
+    const { projectId, formData } = args
+    const { data } = await api.post<{ user: TeamMember }>(
+        `/projects/${projectId}/search-user`,
+        { email: formData.email }
+    )
+    return data.user
 }
+
 
 export async function addUserById({projectId, id}: {projectId: Project['_id'], id: TeamMember['_id']}) {
     try{

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import {Fragment, useEffect, useState} from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useLocation } from "react-router";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,6 +10,7 @@ import { formatDate } from "../../utils/utils.ts";
 import type { Task, TaskStatus } from "../../types";
 import api from "../../lib/axios.ts";
 import * as React from "react";
+import {getUserById} from "../../api/AuthApi.ts";
 
 export const optionsStatus: { [key: string]: string } = {
   pendiente: "Pendiente",
@@ -46,12 +47,11 @@ export default function ModalDetails() {
           setRelation(relatedTask);
         }
       } catch (error) {
-        console.error("Error loading related task:", error);
+        console.error("Error al cargar la tarea:", error);
       } finally {
         setLoading(false);
       }
     };
-
     loadRelation();
   }, [projectId, taskId]);
 
@@ -81,6 +81,13 @@ export default function ModalDetails() {
     console.log(status);
     mutate({ projectId, taskId, status });
   };
+
+  const { data: user_data } = useQuery({
+    queryKey: ["user_data_task", data?.user],
+    queryFn: () => getUserById(data!.user!),
+    enabled: Boolean(data?.user),
+    staleTime: 1000 * 60,
+  })
 
   const navigate = useNavigate();
   if (isError) {
@@ -146,7 +153,13 @@ export default function ModalDetails() {
                       <span className="font-semibold">
                         Usuario responsable:
                       </span>{" "}
-                      {data.user}
+                      {user_data?.name}
+                    </p>
+                    <p className="text-lg text-gray-700 mb-3">
+                      <span className="font-semibold">
+                        Email del usuario responsable:
+                      </span>{" "}
+                      {user_data?.email}
                     </p>
 
                     <p

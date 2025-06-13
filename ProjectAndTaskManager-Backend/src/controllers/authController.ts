@@ -169,4 +169,17 @@ export class AuthController {
   static user = async (req: Request, res: Response) => {
     res.json(req.user);
   };
+  static getUserById = async (req: Request, res: Response) => {
+    try {
+      const {userId} = req.params;
+      const user = await User.findById(userId);
+      if (!user) {
+        res.status(404).json({ error: "Usuario no existe" });
+      }
+      const {name, email} = user
+      res.send({name, email});
+    } catch (error) {
+      res.status(500).json({ error: "Ocurrió un error" });
+    }
+  };
 }

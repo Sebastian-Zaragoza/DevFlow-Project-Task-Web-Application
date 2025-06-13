@@ -75,4 +75,8 @@ router.post(
 );
 
 router.get("/user", authenticate, AuthController.user);
+router.get("/user/:userId",
+    param("userId").isMongoId().withMessage("El id del usuario es obligatorio"),
+    AuthController.getUserById
+)
 export default router;

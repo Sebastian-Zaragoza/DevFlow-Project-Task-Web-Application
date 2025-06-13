@@ -5,6 +5,7 @@ import ErrorMessage from "../ErrorMessage";
 import type { TeamMemberForm } from "../../types/team";
 import {findUserByEmail} from "../../api/TeamApi.ts";
 import SearchResult from "./SearchResult.tsx";
+import type {TeamMember} from "../../types/team";
 
 export default function AddMemberForm() {
     const initialValues: TeamMemberForm = {
@@ -15,9 +16,12 @@ export default function AddMemberForm() {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ defaultValues: initialValues })
 
-    const mutation = useMutation({
+    const mutation = useMutation<
+        TeamMember,
+        Error,
+        { projectId: string; formData: TeamMemberForm }
+    >({
         mutationFn: findUserByEmail
-
     })
 
     const handleSearchUser = async (formData: TeamMemberForm) => {
@@ -68,7 +72,7 @@ export default function AddMemberForm() {
             <div className="mt-10">
                 {mutation.isPending && <p className="text-center">Cargando...</p>}
                 {mutation.isError && <p className="text-center">{mutation.error.message}</p>}
-                {mutation.data && <SearchResult user={mutation.data.data} reset={resetData}/>}
+                {mutation.data && <SearchResult user={mutation.data} reset={resetData}/>}
             </div>
         </>
     );

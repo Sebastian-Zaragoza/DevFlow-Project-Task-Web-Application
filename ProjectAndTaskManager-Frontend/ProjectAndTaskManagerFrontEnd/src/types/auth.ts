@@ -7,19 +7,6 @@ export const authSchema = z.object({
   password_confirmation: z.string(),
   token: z.string(),
 });
-type Auth = z.infer<typeof authSchema>;
-export type UserLoginForm = Pick<Auth, "email" | "password">;
-export type UserRegistrationForm = Pick<
-  Auth,
-  "name" | "email" | "password" | "password_confirmation"
->;
-export type RequestConfirmationCodeForm = Pick<Auth, "email">;
-export type ForgotPasswordForm = Pick<Auth, "email">;
-export type NewPasswordFormToken = Pick<
-  Auth,
-  "password" | "password_confirmation"
->;
-export type ConfirmToken = Pick<Auth, "token">;
 
 export const userSchema = authSchema
   .pick({
@@ -30,4 +17,23 @@ export const userSchema = authSchema
     _id: z.string(),
   });
 
+export const userInfoSchema = authSchema
+    .pick({
+        name: true,
+        email: true,
+    })
+
+type Auth = z.infer<typeof authSchema>;
+export type UserLoginForm = Pick<Auth, "email" | "password">;
+export type UserRegistrationForm = Pick<
+    Auth,
+    "name" | "email" | "password" | "password_confirmation"
+>;
+export type RequestConfirmationCodeForm = Pick<Auth, "email">;
+export type ForgotPasswordForm = Pick<Auth, "email">;
+export type NewPasswordFormToken = Pick<
+    Auth,
+    "password" | "password_confirmation"
+>;
 export type User = z.infer<typeof userSchema>;
+export type ConfirmToken = Pick<Auth, "token">;

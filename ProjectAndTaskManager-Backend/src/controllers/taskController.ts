@@ -1,5 +1,8 @@
 import type { Request, Response } from "express";
 import Task from "../models/tasks";
+import User from "../models/user";
+import Project from "../models/project";
+import user from "../models/user";
 
 export class TaskController {
   static createTask = async (req: Request, res: Response) => {
@@ -14,7 +17,16 @@ export class TaskController {
         }
         task.relation = relation;
       }
+      const user_assigned =  await User.findOne({email: req.body.user})
+      if (!user_assigned) {
+        res.status(404).send("Usuario no existe")
+      }
+      const user_project = await Project.findOne({team: user_assigned.id});
+      if (!user_project) {
+        res.status(404).send("El usuario no pertenece al proyecto")
+      }
       task.project = req.project.id;
+      task.user = user_assigned;
       req.project.tasks.push(task.id);
       await Promise.allSettled([task.save(), req.project.save()]);
       res.send("Tarea guardada");

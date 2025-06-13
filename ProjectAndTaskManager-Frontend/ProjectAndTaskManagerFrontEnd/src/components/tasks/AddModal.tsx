@@ -18,7 +18,6 @@ export default function AddTaskModal() {
   const modalTask = queryParams.get("newTask");
   const show = modalTask ? true : false;
 
-  /**Extract the parameters of path, not ?..**/
   const params = useParams();
   const projectId = params.projectId!;
 
@@ -76,7 +75,6 @@ export default function AddTaskModal() {
           <div className="fixed inset-0 bg-black/60" />
         </Transition.Child>
 
-        {/* Modal panel */}
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child

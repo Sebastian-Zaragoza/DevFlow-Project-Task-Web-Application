@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import api from "../../lib/axios.ts";
 import { useLocation } from "react-router";
+import {useQuery} from "@tanstack/react-query";
+import {getProjectTeam} from "../../api/TeamApi.ts";
 
 type TaskFormProps = {
   projectId: string;
@@ -28,6 +30,12 @@ export default function TaskForm({
   const query = new URLSearchParams(location.search);
   const currentTaskId = query.get("editTask");
 
+  const {data: colaborators} = useQuery({
+    queryKey:['projectTeam', projectId],
+    queryFn: ()=>getProjectTeam(projectId),
+    retry: false
+  })
+
   useEffect(() => {
     const loadTasks = async () => {
       try {
@@ -41,7 +49,6 @@ export default function TaskForm({
   }, [projectId]);
   return (
     <>
-      {/* Nombre de la tarea */}
       <div className="flex flex-col space-y-1">
         <label
           htmlFor="name"
@@ -61,7 +68,6 @@ export default function TaskForm({
         {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
       </div>
 
-      {/* Descripción de la tarea */}
       <div className="flex flex-col space-y-1">
         <label
           htmlFor="description"
@@ -83,7 +89,6 @@ export default function TaskForm({
         )}
       </div>
 
-      {/* Rol del usuario */}
       <div className="flex flex-col space-y-1">
         <label
           htmlFor="rol"
@@ -109,27 +114,30 @@ export default function TaskForm({
         {errors.rol && <ErrorMessage>{errors.rol.message}</ErrorMessage>}
       </div>
 
-      {/* Correo del usuario */}
       <div className="flex flex-col space-y-1">
-        <label
-          htmlFor="user"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Correo del usuario
+        <label htmlFor="user" className="block text-sm font-medium text-gray-700">
+          Usuario asignado
         </label>
-        <input
-          id="user"
-          type="text"
-          placeholder="Correo del usuario"
-          className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-          {...register("user", {
-            required: "El nombre del usuario es obligatorio",
-          })}
-        />
+        <select
+            id="user"
+            className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+            {...register("user", {
+              required: "Debes seleccionar un usuario",
+            })}
+            defaultValue=""
+        >
+          <option value="" disabled>
+            Selecciona un usuario
+          </option>
+          {colaborators?.map((c) => (
+              <option key={c._id} value={c.email}>
+                {c.name} : {c.email}
+              </option>
+          ))}
+        </select>
         {errors.user && <ErrorMessage>{errors.user.message}</ErrorMessage>}
       </div>
 
-      {/* Dependencia de tareas */}
       <div className="flex flex-col space-y-1">
         <label
           htmlFor="relation"
