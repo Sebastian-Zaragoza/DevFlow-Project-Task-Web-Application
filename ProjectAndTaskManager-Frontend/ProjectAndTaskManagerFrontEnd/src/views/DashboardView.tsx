@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getProjects, deleteProject } from "../api/ProjectApi.ts";
 import { Menu, Transition } from "@headlessui/react";
@@ -10,9 +10,12 @@ import {
 } from "@heroicons/react/24/solid";
 import { Fragment } from "react";
 import { toast } from "react-toastify";
+import {useAuth} from "../hooks/useAuth.ts";
 
 export default function DashboardView() {
-  const { data } = useQuery({
+  const {data: user} = useAuth();
+
+  const { data, isError} = useQuery({
     queryKey: ["projects"],
     queryFn: getProjects,
   });
@@ -27,8 +30,8 @@ export default function DashboardView() {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
   });
-
-  return (
+  if (isError) return <Navigate to="/404" replace />;
+  if (data && user) return (
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -58,6 +61,13 @@ export default function DashboardView() {
                 <div className="flex">
                   <div className="w-1 bg-blue-500 rounded-l-lg" />
                   <div className="flex-1 px-6 py-5">
+                    {
+                      project.manager === user._id?
+                          <p className="font-bold text-xs uppercase bg-indigo-50 text-indigo-500 border-2 border-indigo-500
+                          rounded-lg inline-block py-2 mb-4 px-5">Administrador</p> :
+                          <p className="font-bold text-xs uppercase bg-purple-50 text-purple-500 border-2 border-purple-500
+                          rounded-lg inline-block py-2 mb-4 px-5">Colaborador</p>
+                    }
                     <div className="flex justify-between items-start">
                       <Link
                         to={`/projects/${project._id}`}
@@ -65,7 +75,6 @@ export default function DashboardView() {
                       >
                         {project.projectName}
                       </Link>
-
                       <Menu
                         as="div"
                         className="relative inline-block text-left z-10"
@@ -84,6 +93,32 @@ export default function DashboardView() {
                           leaveTo="transform opacity-0 scale-95"
                         >
                           <Menu.Items className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
+                            {project.manager === user._id &&(
+                                <>
+                                  <Menu.Item>
+                                    {({ active }) => (
+                                        <Link
+                                            to={`/projects/${project._id}/edit`}
+                                            className={`${active ? "bg-gray-100" : ""} flex items-center px-4 py-2 text-sm text-gray-700`}
+                                        >
+                                          <PencilIcon className="w-5 h-5 mr-2 text-gray-500" />
+                                          Editar proyecto
+                                        </Link>
+                                    )}
+                                  </Menu.Item>
+                                  <Menu.Item>
+                                    {({ active }) => (
+                                        <button
+                                            onClick={() => mutate(project._id)}
+                                            className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-2 text-sm text-blue-600`}
+                                        >
+                                          <TrashIcon className="w-5 h-5 mr-2 text-blue-600" />
+                                          Eliminar proyecto
+                                        </button>
+                                    )}
+                                  </Menu.Item>
+                                </>
+                            )}
                             <div className="py-1">
                               <Menu.Item>
                                 {({ active }) => (
@@ -96,34 +131,11 @@ export default function DashboardView() {
                                   </Link>
                                 )}
                               </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <Link
-                                    to={`/projects/${project._id}/edit`}
-                                    className={`${active ? "bg-gray-100" : ""} flex items-center px-4 py-2 text-sm text-gray-700`}
-                                  >
-                                    <PencilIcon className="w-5 h-5 mr-2 text-gray-500" />
-                                    Editar proyecto
-                                  </Link>
-                                )}
-                              </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <button
-                                    onClick={() => mutate(project._id)}
-                                    className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-2 text-sm text-blue-600`}
-                                  >
-                                    <TrashIcon className="w-5 h-5 mr-2 text-blue-600" />
-                                    Eliminar proyecto
-                                  </button>
-                                )}
-                              </Menu.Item>
                             </div>
                           </Menu.Items>
                         </Transition>
                       </Menu>
                     </div>
-
                     <div className="mt-3 space-y-1">
                       <p className="text-sm text-gray-600">
                         <span className="font-medium text-gray-800">

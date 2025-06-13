@@ -4,9 +4,10 @@ import { ProjectController } from "../controllers/projectController";
 import { handleInputErrors } from "../middleware/validation";
 import { validateProjectExists } from "../middleware/projects";
 import { TaskController } from "../controllers/taskController";
-import { validateTaskId } from "../middleware/task";
+import {itHasAuthorization, validateTaskId} from "../middleware/task";
 import { taskBelongsToProject } from "../middleware/task";
 import { authenticate } from "../middleware/auth";
+import {TeamMemberController} from "../controllers/teamController";
 
 const router = Router();
 router.use(authenticate);
@@ -77,6 +78,7 @@ router.get(
 
 router.put(
   "/:projectId/tasks/:taskId",
+  itHasAuthorization,
   param("taskId").isMongoId().withMessage("El Id de la tarea es obligatorio"),
   body("name").notEmpty().withMessage("El nombre de la tarea es obligatorio"),
   body("description").notEmpty().withMessage("La descripción es obligatoria"),
@@ -88,6 +90,7 @@ router.put(
 
 router.delete(
   "/:projectId/tasks/:taskId",
+    itHasAuthorization,
   param("taskId").isMongoId().withMessage("El Id de la tarea es obligatorio"),
   TaskController.deleteById,
 );
@@ -99,4 +102,29 @@ router.post(
   handleInputErrors,
   TaskController.updateStatus,
 );
+
+router.post('/:projectId/team/find',
+    body("email")
+        .isEmail().toLowerCase().withMessage("El email no es valido"),
+    handleInputErrors,
+    TeamMemberController.findMemberByEmail
+)
+
+router.get('/:projectId/team',
+    TeamMemberController.getProjectTeams
+)
+
+router.post('/:projectId/team',
+    body("id")
+        .isMongoId().withMessage("Id is required"),
+    handleInputErrors,
+    TeamMemberController.addUserById
+)
+
+router.delete('/:projectId/team/:userId',
+    param("userId")
+        .isMongoId().withMessage("Id is required"),
+    handleInputErrors,
+    TeamMemberController.deleteUserById
+)
 export default router;

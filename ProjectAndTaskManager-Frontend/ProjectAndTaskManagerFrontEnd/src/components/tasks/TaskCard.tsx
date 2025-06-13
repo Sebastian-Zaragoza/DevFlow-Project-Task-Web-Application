@@ -14,9 +14,10 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 
 type TaskCardProps = {
   task: Task;
+  canEdit: boolean;
 };
 
-function TaskCard({ task }: TaskCardProps) {
+function TaskCard({ task, canEdit }: TaskCardProps) {
   const navigate = useNavigate();
   const params = useParams();
   const projectId = params.projectId!;
@@ -75,32 +76,38 @@ function TaskCard({ task }: TaskCardProps) {
                   </button>
                 )}
               </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    onClick={() =>
-                      navigate(`${location.pathname}?editTask=${task._id}`)
-                    }
-                    className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-3 text-sm text-gray-700 transition-colors`}
-                  >
-                    <PencilIcon className="w-5 h-5 mr-2 text-gray-500" />
-                    Editar tarea
-                  </button>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    onClick={() =>
-                      mutate({ projectId: projectId!, taskId: task._id })
-                    }
-                    className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-3 text-sm text-red-600 transition-colors`}
-                  >
-                    <TrashIcon className="w-5 h-5 mr-2 text-red-600" />
-                    Eliminar tarea
-                  </button>
-                )}
-              </Menu.Item>
+              {
+                canEdit && (
+                    <>
+                      <Menu.Item>
+                        {({ active }) => (
+                            <button
+                                onClick={() =>
+                                    navigate(`${location.pathname}?editTask=${task._id}`)
+                                }
+                                className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-3 text-sm text-gray-700 transition-colors`}
+                            >
+                              <PencilIcon className="w-5 h-5 mr-2 text-gray-500" />
+                              Editar tarea
+                            </button>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                            <button
+                                onClick={() =>
+                                    mutate({ projectId: projectId!, taskId: task._id })
+                                }
+                                className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-3 text-sm text-red-600 transition-colors`}
+                            >
+                              <TrashIcon className="w-5 h-5 mr-2 text-red-600" />
+                              Eliminar tarea
+                            </button>
+                        )}
+                      </Menu.Item>
+                    </>
+                  )
+              }
             </Menu.Items>
           </Transition>
         </Menu>

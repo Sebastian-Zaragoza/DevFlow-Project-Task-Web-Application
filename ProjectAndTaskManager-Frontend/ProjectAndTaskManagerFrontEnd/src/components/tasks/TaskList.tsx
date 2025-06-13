@@ -3,6 +3,7 @@ import TaskCard from "./TaskCard.tsx";
 
 type TaskListProps = {
   tasks: Task[];
+  canEdit: boolean;
 };
 
 type GroupedTasks = {
@@ -33,7 +34,7 @@ const initialStatusGroups: GroupedTasks = {
   completado: [],
 };
 
-export default function TaskList({ tasks }: TaskListProps) {
+export default function TaskList({ tasks, canEdit }: TaskListProps) {
   const groupedTasks = tasks.reduce((acc, task) => {
     const group = acc[task.status] || [];
     return { ...acc, [task.status]: [...group, task] };
@@ -57,7 +58,7 @@ export default function TaskList({ tasks }: TaskListProps) {
                   No hay tareas
                 </li>
               ) : (
-                tasks.map((task) => <TaskCard key={task._id} task={task} />)
+                tasks.map((task) => <TaskCard key={task._id} task={task} canEdit={canEdit} />)
               )}
             </ul>
           </div>

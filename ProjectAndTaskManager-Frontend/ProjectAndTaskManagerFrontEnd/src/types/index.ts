@@ -1,4 +1,5 @@
 import { z } from "zod";
+import {userSchema} from "./auth.ts";
 
 export const taskStatusSchema = z.enum([
   "pendiente",
@@ -33,6 +34,7 @@ export const projectSchema = z.object({
   projectName: z.string(),
   clientName: z.string(),
   description: z.string(),
+  manager: z.string(userSchema.pick({_id: true}))
 });
 
 export const dashBoardSchema = z.array(
@@ -41,6 +43,7 @@ export const dashBoardSchema = z.array(
     projectName: true,
     clientName: true,
     description: true,
+    manager: true
   }),
 );
 export type Project = z.infer<typeof projectSchema>;
