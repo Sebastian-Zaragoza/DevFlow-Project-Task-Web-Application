@@ -1,62 +1,61 @@
-import mongoose, {Schema, Document, PopulatedDoc, Types} from "mongoose";
-import {IUser} from "./user";
+import mongoose, { Schema, Document, PopulatedDoc, Types } from "mongoose";
+import { IUser } from "./user";
 
 const tasksStatus = {
-    PENDING: "pendiente",
-    COMPLETED: "completado",
-    ON_HOLD: "en_espera",
-    IN_PROGRESS: "en_progreso",
-    UNDER_REVIEWS: "en_revision",
-} as const
-
-export type TaskStatus = typeof tasksStatus[keyof typeof tasksStatus];
-
+  PENDING: "pendiente",
+  COMPLETED: "completado",
+  ON_HOLD: "en_espera",
+  IN_PROGRESS: "en_progreso",
+  UNDER_REVIEWS: "en_revision",
+} as const;
+export type TaskStatus = (typeof tasksStatus)[keyof typeof tasksStatus];
 export interface ITasks extends Document {
-    name: string,
-    description: string,
-    project: Types.ObjectId
-    rol: string,
-    user: PopulatedDoc<IUser, Types.ObjectId>,
-    relation?: PopulatedDoc<ITasks, Types.ObjectId> | null,
-    status: TaskStatus
+  name: string;
+  description: string;
+  project: Types.ObjectId;
+  rol: string;
+  user: PopulatedDoc<IUser, Types.ObjectId>;
+  relation?: PopulatedDoc<ITasks, Types.ObjectId> | null;
+  status: TaskStatus;
 }
-
-const TaskSchema = new Schema({
+const TaskSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true,
-        trim: true,
+      type: String,
+      required: true,
+      trim: true,
     },
     description: {
-        type: String,
-        required: true,
-        trim: true,
+      type: String,
+      required: true,
+      trim: true,
     },
     project: {
-        type: Schema.Types.ObjectId,
-        ref: "Project",
+      type: Schema.Types.ObjectId,
+      ref: "Project",
     },
     rol: {
-        type: String,
-        required: true,
-        trim: true
+      type: String,
+      required: true,
+      trim: true,
     },
     user: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     relation: {
-        type: Schema.Types.ObjectId,
-        ref: "Task",
-        default: null
+      type: Schema.Types.ObjectId,
+      ref: "Task",
+      default: null,
     },
     status: {
-        type: String,
-        enum: Object.values(tasksStatus),
-        default: tasksStatus.PENDING
-    }
-}, {timestamps: true})
-
-const Task = mongoose.model<ITasks>("Task", TaskSchema)
-export default Task
+      type: String,
+      enum: Object.values(tasksStatus),
+      default: tasksStatus.PENDING,
+    },
+  },
+  { timestamps: true },
+);
+const Task = mongoose.model<ITasks>("Task", TaskSchema);
+export default Task;

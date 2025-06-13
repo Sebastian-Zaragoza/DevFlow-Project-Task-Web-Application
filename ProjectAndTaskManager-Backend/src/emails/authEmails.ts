@@ -1,20 +1,19 @@
 import { transporter } from "../config/nodemailer";
 
 interface IEmail {
-    email: string;
-    name: string;
-    token: string;
+  email: string;
+  name: string;
+  token: string;
 }
-
 export class AuthEmails {
-    static sendConfirmationEmail = async (user: IEmail) => {
-        const confirmationUrl = `${process.env.FRONTEND_URL}/auth/confirm-account`;
-        const info = await transporter.sendMail({
-            from: `DevFlow <no-reply@devflow.com>`,
-            to: user.email,
-            subject: "DevFlow - Confirma tu cuenta",
-            text: `Hola ${user.name}, por favor confirma tu cuenta usando el siguiente enlace: ${confirmationUrl}`,
-            html: `
+  static sendConfirmationEmail = async (user: IEmail) => {
+    const confirmationUrl = `${process.env.FRONTEND_URL}/auth/confirm-account`;
+    const info = await transporter.sendMail({
+      from: `DevFlow <no-reply@devflow.com>`,
+      to: user.email,
+      subject: "DevFlow - Confirma tu cuenta",
+      text: `Hola ${user.name}, por favor confirma tu cuenta usando el siguiente enlace: ${confirmationUrl}`,
+      html: `
         <html>
           <body style="margin:0; padding:0; background-color:#F3F4F6;">
             <div style="
@@ -72,18 +71,17 @@ export class AuthEmails {
           </body>
         </html>
       `,
-        });
-        console.log("Correo de confirmación enviado:", info.messageId);
-    };
-
-    static sendPasswordResetToken = async (user: IEmail) => {
-        const resetUrl = `${process.env.FRONTEND_URL}/auth/new-password`;
-        const info = await transporter.sendMail({
-            from: `DevFlow <no-reply@devflow.com>`,
-            to: user.email,
-            subject: "DevFlow - Restablece tu contraseña",
-            text: `Hola ${user.name}, solicita restablecer tu contraseña usando: ${resetUrl}`,
-            html: `
+    });
+    console.log("Correo de confirmación enviado:", info.messageId);
+  };
+  static sendPasswordResetToken = async (user: IEmail) => {
+    const resetUrl = `${process.env.FRONTEND_URL}/auth/new-password`;
+    const info = await transporter.sendMail({
+      from: `DevFlow <no-reply@devflow.com>`,
+      to: user.email,
+      subject: "DevFlow - Restablece tu contraseña",
+      text: `Hola ${user.name}, solicita restablecer tu contraseña usando: ${resetUrl}`,
+      html: `
         <html>
           <body style="margin:0; padding:0; background-color:#F3F4F6;">
             <div style="
@@ -142,7 +140,7 @@ export class AuthEmails {
           </body>
         </html>
       `,
-        });
-        console.log("Correo de restablecimiento enviado:", info.messageId);
-    };
+    });
+    console.log("Correo de restablecimiento enviado:", info.messageId);
+  };
 }

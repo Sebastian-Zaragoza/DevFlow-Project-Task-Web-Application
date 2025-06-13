@@ -1,5 +1,3 @@
 export default function Logo() {
-    return (
-        <img src="/Logo.png" alt="logo" width="100"/>
-    );
+  return <img src="/LogoDevFlow.png" alt="logo" width="100" />;
 }
