@@ -131,7 +131,7 @@ export default function TaskForm({
           </option>
           {colaborators?.map((c) => (
               <option key={c._id} value={c.email}>
-                {c.name} : {c.email}
+                {`${c.name} <${c.email}>`}
               </option>
           ))}
         </select>

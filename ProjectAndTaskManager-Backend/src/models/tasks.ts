@@ -17,6 +17,10 @@ export interface ITasks extends Document {
   user: PopulatedDoc<IUser, Types.ObjectId>;
   relation?: PopulatedDoc<ITasks, Types.ObjectId> | null;
   status: TaskStatus;
+  completedBy: {
+      user: Types.ObjectId,
+      status: TaskStatus
+  }[]
 }
 const TaskSchema = new Schema(
   {
@@ -54,6 +58,18 @@ const TaskSchema = new Schema(
       enum: Object.values(tasksStatus),
       default: tasksStatus.PENDING,
     },
+    completedBy: [{
+        user:{
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            default: null,
+        },
+        status: {
+            type: String,
+            enum: Object.values(tasksStatus),
+            default: tasksStatus.PENDING,
+        }
+    }]
   },
   { timestamps: true },
 );

@@ -1,6 +1,6 @@
 import api from "../lib/axios.ts";
 import { isAxiosError } from "axios";
-import { type Project, type Task, type TaskFormData } from "../types";
+import {type Project, type Task, type TaskFormData, taskSchema} from "../types";
 
 type TaskApiData = {
   formData: TaskFormData;
@@ -22,20 +22,23 @@ export async function createTask({
     }
   }
 }
-export async function getTaskById({
-  projectId,
-  taskId,
-}: Pick<TaskApiData, "projectId" | "taskId">) {
+export async function getTaskById({projectId, taskId,}: Pick<TaskApiData, "projectId" | "taskId">): Promise<Task> {
+  const url = `projects/${projectId}/tasks/${taskId}`;
   try {
-    const url = `projects/${projectId}/tasks/${taskId}`;
     const { data } = await api.get(url);
-    return data;
-  } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      throw new Error(error.response.data.error);
+    const parsed = taskSchema.safeParse(data);
+    if (!parsed.success) {
+      throw new Error("Respuesta de tarea inválida");
     }
+    return parsed.data;
+  } catch (err) {
+    if (isAxiosError(err) && err.response) {
+      throw new Error(err.response.data.error);
+    }
+    throw err;
   }
 }
+
 export async function updateTask({
   projectId,
   taskId,

@@ -17,8 +17,13 @@ export const taskSchema = z.object({
   project: z.string(),
   rol: z.string(),
   user: z.string(),
-  relation: z.string() || z.null(),
+  relation:  z.string().nullable(),
   status: taskStatusSchema,
+  completedBy: z.array(z.object({
+    _id: z.string(),
+    user: userSchema,
+    status: taskStatusSchema,
+  })),
   createdAt: z.string(),
   updatedAt: z.string(),
 });

@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getTaskById, updateStatus } from "../../api/TaskApi.ts";
 import { toast } from "react-toastify";
-import { Navigate } from "react-router-dom";
 import { formatDate } from "../../utils/utils.ts";
 import type { Task, TaskStatus } from "../../types";
 import api from "../../lib/axios.ts";
@@ -32,30 +31,27 @@ export default function ModalDetails() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const loadRelation = async () => {
-      setRelation(undefined);
-      setLoading(true);
+    if (!taskId) return;
+    setLoading(true);
+    setRelation(undefined);
 
-      try {
-        const task = await api.get<Task>(
-          `/projects/${projectId}/tasks/${taskId}`,
-        );
-        if (task.data.relation) {
-          const { data: relatedTask } = await api.get<Task>(
-            `/projects/${projectId}/tasks/${task.data.relation}`,
-          );
-          setRelation(relatedTask);
-        }
-      } catch (error) {
-        console.error("Error al cargar la tarea:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadRelation();
+    api.get<Task>(`/projects/${projectId}/tasks/${taskId}`)
+        .then(({ data }) => {
+          if (data.relation) {
+            return api.get<Task>(
+                `/projects/${projectId}/tasks/${data.relation}`
+            );
+          }
+          return null;
+        })
+        .then((res) => {
+          if (res) setRelation(res.data);
+        })
+        .catch((e) => console.error("Error al cargar la tarea:", e))
+        .finally(() => setLoading(false));
   }, [projectId, taskId]);
 
-  const { data, isError } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["task", taskId],
     queryFn: () => getTaskById({ projectId, taskId }),
     enabled: !!taskId,
@@ -90,11 +86,7 @@ export default function ModalDetails() {
   })
 
   const navigate = useNavigate();
-  if (isError) {
-    toast.error("Tarea no encontrada", { toastId: "error" });
-    return <Navigate to={`/projects/${projectId}`} />;
-  }
-
+  if (isLoading) return 'Cargando...';
   if (data)
     return (
       <>
@@ -104,7 +96,6 @@ export default function ModalDetails() {
             className="relative z-10"
             onClose={() => navigate(location.pathname, { replace: true })}
           >
-            {/* Overlay */}
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -117,7 +108,6 @@ export default function ModalDetails() {
               <div className="fixed inset-0 bg-black/60" />
             </Transition.Child>
 
-            {/* Modal panel */}
             <div className="fixed inset-0 overflow-y-auto">
               <div className="flex min-h-full items-center justify-center p-4 text-center">
                 <Transition.Child
@@ -136,7 +126,6 @@ export default function ModalDetails() {
                     <p className="text-sm text-gray-500 mb-4">
                       Última actualización: {formatDate(data.updatedAt)}
                     </p>
-
                     <Dialog.Title className="text-3xl font-extrabold text-gray-900 mb-5">
                       {data.name}
                     </Dialog.Title>
@@ -153,15 +142,8 @@ export default function ModalDetails() {
                       <span className="font-semibold">
                         Usuario responsable:
                       </span>{" "}
-                      {user_data?.name}
+                      {`${user_data?.name} <${user_data?.email}>`}
                     </p>
-                    <p className="text-lg text-gray-700 mb-3">
-                      <span className="font-semibold">
-                        Email del usuario responsable:
-                      </span>{" "}
-                      {user_data?.email}
-                    </p>
-
                     <p
                       className={`text-lg mb-4 ${
                         relation
@@ -179,6 +161,15 @@ export default function ModalDetails() {
                             : `Tarea dependiente no completada: ${relation.name}`
                           : "Tarea sin dependencias"}
                     </p>
+                    <p className="text-lg text-slate-500 mb-2">Historial de cambios</p>
+                    {data.completedBy.map((activityLog) => (
+                        <p key={activityLog._id}>
+                            <span className="font-bold text-slate-600">
+                              {optionsStatus[activityLog.status]}
+                            </span>{" "}
+                          por: {activityLog.user.name}
+                        </p>
+                    ))}
 
                     <div className="my-6 space-y-3">
                       <label className="block text-gray-800 font-semibold">
