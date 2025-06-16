@@ -10,6 +10,7 @@ import type { Task, TaskStatus } from "../../types";
 import api from "../../lib/axios.ts";
 import * as React from "react";
 import {getUserById} from "../../api/AuthApi.ts";
+import NotesPanel from "../notes/NotesPanel.tsx";
 
 export const optionsStatus: { [key: string]: string } = {
   pendiente: "Pendiente",
@@ -130,19 +131,22 @@ export default function ModalDetails() {
                       {data.name}
                     </Dialog.Title>
 
-                    <p className="text-lg text-gray-700 mb-3">
+                    <p className="text-lg text-gray-700 mb-1">
                       <span className="font-semibold">Descripción:</span>{" "}
                       {data.description}
                     </p>
-                    <p className="text-lg text-gray-700 mb-3">
+
+                    <p className="text-lg text-gray-700 mb-1">
                       <span className="font-semibold">Role asignado:</span>{" "}
                       {data.rol}
                     </p>
-                    <p className="text-lg text-gray-700 mb-3">
-                      <span className="font-semibold">
-                        Usuario responsable:
-                      </span>{" "}
-                      {`${user_data?.name} <${user_data?.email}>`}
+                    <p className="text-lg text-gray-700 mb-1">
+                      <span className="font-semibold">Nombre del colaborador:</span>{" "}
+                      {user_data?.name}
+                    </p>
+                    <p className="text-lg text-gray-700 mb-1">
+                      <span className="font-semibold">Email del colaborador:</span>{" "}
+                      {user_data?.email}
                     </p>
                     <p
                       className={`text-lg mb-4 ${
@@ -150,7 +154,7 @@ export default function ModalDetails() {
                           ? relation.status === "completado"
                             ? "text-green-500"
                             : "text-red-500"
-                          : "text-gray-700"
+                          : "text-gray-800 font-semibold"
                       }`}
                     >
                       {loading
@@ -161,15 +165,20 @@ export default function ModalDetails() {
                             : `Tarea dependiente no completada: ${relation.name}`
                           : "Tarea sin dependencias"}
                     </p>
-                    <p className="text-lg text-slate-500 mb-2">Historial de cambios</p>
-                    {data.completedBy.map((activityLog) => (
-                        <p key={activityLog._id}>
-                            <span className="font-bold text-slate-600">
+                    {data.completedBy.length ? (
+                        <>
+                          <p className="text-3xl font-black text-gray-800 mb-2">Historial de cambios</p>
+                          {data.completedBy.map((activityLog) => (
+                              <p key={activityLog._id}>
+                            <div className="mb-1">
+                              <span className="font-semibold text-gray-800 text-lg">
                               {optionsStatus[activityLog.status]}
-                            </span>{" "}
-                          por: {activityLog.user.name}
-                        </p>
-                    ))}
+                            </span>: {activityLog.user.name}
+                            </div>
+                              </p>
+                          ))}
+                        </>
+                    ): null}
 
                     <div className="my-6 space-y-3">
                       <label className="block text-gray-800 font-semibold">
@@ -191,6 +200,9 @@ export default function ModalDetails() {
                         ))}
                       </select>
                     </div>
+                    <NotesPanel
+                      notes={data.notes}
+                    />
                   </Dialog.Panel>
                 </Transition.Child>
               </div>

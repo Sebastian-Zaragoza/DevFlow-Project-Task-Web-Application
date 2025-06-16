@@ -2,7 +2,6 @@ import type { Request, Response } from "express";
 import Task from "../models/tasks";
 import User from "../models/user";
 import Project from "../models/project";
-import user from "../models/user";
 
 export class TaskController {
   static createTask = async (req: Request, res: Response) => {
@@ -46,7 +45,8 @@ export class TaskController {
   };
   static getTaskById = async (req: Request, res: Response) => {
     try {
-      const task = await Task.findById(req.task.id).populate({path: 'completedBy.user', select: '_id name email'});
+      const task = await Task.findById(req.task.id).populate({path: 'completedBy.user', select: '_id name email'})
+          .populate({path: 'notes', populate: {path: 'createdBy', select: '_id name email'}});
       res.send(task);
     } catch (error) {
       res.status(500).json({ error: "Error ocurrido" });

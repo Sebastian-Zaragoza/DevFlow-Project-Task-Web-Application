@@ -116,22 +116,22 @@ export default function TaskForm({
 
       <div className="flex flex-col space-y-1">
         <label htmlFor="user" className="block text-sm font-medium text-gray-700">
-          Usuario asignado
+          Colaborador asignado por email
         </label>
         <select
             id="user"
             className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
             {...register("user", {
-              required: "Debes seleccionar un usuario",
+              required: "Debes seleccionar un colaborador",
             })}
             defaultValue=""
         >
           <option value="" disabled>
-            Selecciona un usuario
+            Selecciona un colaborador por email
           </option>
           {colaborators?.map((c) => (
               <option key={c._id} value={c.email}>
-                {`${c.name} <${c.email}>`}
+                {`${c.email}`}
               </option>
           ))}
         </select>
