@@ -15,6 +15,7 @@ import ProjectTeamView from "./views/projects/ProjectTeamView.tsx";
 import ProfileView from "./views/profile/ProfileView.tsx";
 import ChangePasswordView from "./views/profile/ChangePasswordView.tsx";
 import ProfileLayout from "./layouts/ProfileLayout.tsx";
+import NotFound from "./views/404/NotFound.tsx";
 
 export default function Router() {
   return (
@@ -62,6 +63,9 @@ export default function Router() {
             element={<ForgotPasswordView />}
           />
           <Route path={"/auth/new-password"} element={<NewPasswordView />} />
+        </Route>
+        <Route element={<AuthLayout/>}>
+          <Route path='*' element={<NotFound/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
