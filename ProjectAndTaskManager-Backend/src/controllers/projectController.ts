@@ -87,6 +87,10 @@ export class ProjectController {
         res.status(404).json({ error: 'El proyecto tiene tareas incompletas' });
         return;
       }
+      if (project.team  && project.team.length > 0){
+        res.status(404).json({ error: 'El proyecto aún tiene colaboradores' });
+        return;
+      }
       await project.deleteOne();
       res.send("Proyecto eliminado exitosamente ");
     } catch (error) {

@@ -76,7 +76,6 @@ export default function ModalDetails() {
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const status = e.target.value as TaskStatus;
-    console.log(status);
     mutate({ projectId, taskId, status });
   };
 

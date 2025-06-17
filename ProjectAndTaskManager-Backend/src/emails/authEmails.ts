@@ -11,6 +11,13 @@ interface IEmailAddDeleteMember{
   name: string;
   projectName: string;
 }
+
+interface IEmailNotifyMembers{
+  email: string;
+  name: string;
+  projectName: string;
+  taskName: string;
+}
 export class AuthEmails {
   static sendConfirmationEmail = async (user: IEmail) => {
     const confirmationUrl = `${process.env.FRONTEND_URL}/auth/confirm-account`;
@@ -178,8 +185,8 @@ export class AuthEmails {
                 font-size:16px;
                 margin-bottom:24px;
               ">
-                ¡Hola, ${user.name}! Haz sido agregado al proyecto con el nombre de: ${user.projectName}. 
-                Verifica tu asignación aqui, accediendo con tus credenciales:
+                ¡Hola, ${user.name}! Haz sido agregado al proyecto con el nombre de <b>"${user.projectName}"</b>. 
+                Verifica tu asignación aquí, accediendo con tus credenciales:
               </p>
               <a href="${addMemberToProjectURL}" style="
                 display:inline-block;
@@ -230,7 +237,7 @@ export class AuthEmails {
                 font-size:16px;
                 margin-bottom:24px;
               ">
-                Hola, ${user.name}. Haz sido eliminado del proyecto con el nombre de: ${user.projectName}. 
+                Hola, ${user.name}. Haz sido eliminado del proyecto con el nombre de <b>"${user.projectName}"</b>. 
                 ¡No te desanimes, puedes seguir creando proyectos! Accede con tus credenciales:
               </p>
               <a href="${addMemberToProjectURL}" style="
@@ -244,6 +251,161 @@ export class AuthEmails {
                 border-radius:6px;
               ">
                 Eliminación a un proyecto nuevo
+              </a>
+            </div>
+          </body>
+        </html>
+      `,
+    });
+  };
+  static createTaskNotify = async (user: IEmailNotifyMembers) => {
+    const addMemberToProjectURL = `${process.env.FRONTEND_URL}`;
+    const info = await transporter.sendMail({
+      from: `DevFlow <no-reply@devflow.com>`,
+      to: user.email,
+      subject: "DevFlow - Se te ha asignado una tarea nueva!",
+      text: `Hola ${user.name}, verifica tu asignación: ${addMemberToProjectURL}`,
+      html: `
+        <html>
+          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+            <div style="
+              max-width:600px;
+              margin: 40px auto;
+              background-color:#FFFFFF;
+              border-radius:8px;
+              font-family:Arial, sans-serif;
+              padding:24px;
+            ">
+              <h2 style="
+                color:#1F2937;
+                font-size:24px;
+                font-weight:700;
+                margin-bottom:16px;
+              ">
+                Verificación de la tarea nueva
+              </h2>
+              <p style="
+                color:#4B5563;
+                font-size:16px;
+                margin-bottom:24px;
+              ">
+                ¡Hola, ${user.name}! Se te ha asignado la tarea nueva con el nombre de <b>"${user.taskName}"</b> del proyecto con el nombre de <b>"${user.projectName}"</b>. 
+                Verifica tu asignación aquí y sigue el progreso de la tarea, accediendo con tus credenciales:
+              </p>
+              <a href="${addMemberToProjectURL}" style="
+                display:inline-block;
+                background-color:#2563EB;
+                color:#FFFFFF;
+                text-decoration:none;
+                font-weight:600;
+                font-size:16px;
+                padding:12px 24px;
+                border-radius:6px;
+              ">
+                Verificación de la tarea nueva
+              </a>
+            </div>
+          </body>
+        </html>
+      `,
+    });
+  };
+  static editTaskNotify = async (user: IEmailNotifyMembers) => {
+    const addMemberToProjectURL = `${process.env.FRONTEND_URL}`;
+    const info = await transporter.sendMail({
+      from: `DevFlow <no-reply@devflow.com>`,
+      to: user.email,
+      subject: "DevFlow - Se te ha asignado una tarea existente!",
+      text: `Hola ${user.name}, verifica tu asignación: ${addMemberToProjectURL}`,
+      html: `
+        <html>
+          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+            <div style="
+              max-width:600px;
+              margin: 40px auto;
+              background-color:#FFFFFF;
+              border-radius:8px;
+              font-family:Arial, sans-serif;
+              padding:24px;
+            ">
+              <h2 style="
+                color:#1F2937;
+                font-size:24px;
+                font-weight:700;
+                margin-bottom:16px;
+              ">
+                Verificación de la tarea existente
+              </h2>
+              <p style="
+                color:#4B5563;
+                font-size:16px;
+                margin-bottom:24px;
+              ">
+                ¡Hola, ${user.name}! Se te ha asignado la tarea existente con el nombre de <b>"${user.taskName}"</b> del proyecto con el nombre de <b>"${user.projectName}"</b>. 
+                Verifica tu asignación aquí y sigue el progreso de la tarea, accediendo con tus credenciales:
+              </p>
+              <a href="${addMemberToProjectURL}" style="
+                display:inline-block;
+                background-color:#2563EB;
+                color:#FFFFFF;
+                text-decoration:none;
+                font-weight:600;
+                font-size:16px;
+                padding:12px 24px;
+                border-radius:6px;
+              ">
+                Verificación de la tarea existente
+              </a>
+            </div>
+          </body>
+        </html>
+      `,
+    });
+  }; static deleteTaskNotify = async (user: IEmailNotifyMembers) => {
+    const addMemberToProjectURL = `${process.env.FRONTEND_URL}`;
+    const info = await transporter.sendMail({
+      from: `DevFlow <no-reply@devflow.com>`,
+      to: user.email,
+      subject: "DevFlow - Se te ha eliminado una tarea en la que tu participabas",
+      text: `Hola ${user.name}, verifica el estado del proyecto: ${addMemberToProjectURL}`,
+      html: `
+        <html>
+          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+            <div style="
+              max-width:600px;
+              margin: 40px auto;
+              background-color:#FFFFFF;
+              border-radius:8px;
+              font-family:Arial, sans-serif;
+              padding:24px;
+            ">
+              <h2 style="
+                color:#1F2937;
+                font-size:24px;
+                font-weight:700;
+                margin-bottom:16px;
+              ">
+                Verificación de la eliminación de una tarea antes asignada
+              </h2>
+              <p style="
+                color:#4B5563;
+                font-size:16px;
+                margin-bottom:24px;
+              ">
+                ¡Hola, ${user.name}! Se te ha eliminado la tarea antes asignada con el nombre de <b>"${user.taskName}"</b> del proyecto con el nombre de <b>"${user.projectName}"</b>. 
+                Sigue el progreso del proyecto, accediendo con tus credenciales:
+              </p>
+              <a href="${addMemberToProjectURL}" style="
+                display:inline-block;
+                background-color:#2563EB;
+                color:#FFFFFF;
+                text-decoration:none;
+                font-weight:600;
+                font-size:16px;
+                padding:12px 24px;
+                border-radius:6px;
+              ">
+                Verificación de la eliminación de una tarea antes asignada
               </a>
             </div>
           </body>
