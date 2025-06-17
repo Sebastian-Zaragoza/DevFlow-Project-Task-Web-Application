@@ -62,14 +62,14 @@ function TaskCard({ task, canEdit }: TaskCardProps) {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-2 focus:outline-none space-y-1">
+            <Menu.Items className="absolute right-0 z-10 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg py-2 focus:outline-none space-y-1">
               <Menu.Item>
                 {({ active }) => (
                   <button
                     onClick={() =>
                       navigate(`${location.pathname}?viewTask=${task._id}`)
                     }
-                    className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-3 text-sm text-gray-700 transition-colors`}
+                    className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-8 py-3 text-sm text-gray-700 transition-colors`}
                   >
                     <EyeIcon className="w-5 h-5 mr-2 text-gray-500" />
                     Ver tarea
@@ -85,7 +85,7 @@ function TaskCard({ task, canEdit }: TaskCardProps) {
                                 onClick={() =>
                                     navigate(`${location.pathname}?editTask=${task._id}`)
                                 }
-                                className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-3 text-sm text-gray-700 transition-colors`}
+                                className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-6 py-3 text-sm text-gray-700 transition-colors`}
                             >
                               <PencilIcon className="w-5 h-5 mr-2 text-gray-500" />
                               Editar tarea

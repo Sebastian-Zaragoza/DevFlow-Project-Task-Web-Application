@@ -7,6 +7,8 @@ import {Menu} from "@headlessui/react";
 import {Fragment} from "react";
 import {EllipsisVerticalIcon} from "@heroicons/react/24/solid";
 import {toast} from "react-toastify";
+import {UserIcon} from "@heroicons/react/24/solid";
+import {TrashIcon} from "@heroicons/react/24/solid";
 
 export default function ProjectTeamView() {
     const navigate = useNavigate();
@@ -55,24 +57,30 @@ export default function ProjectTeamView() {
                         </Link>
                         <h2 className="text-4xl font-black mt-10 mb-2">Miembros actuales</h2>
                         {data.length ? (
-                            <ul role="list" className="divide-y divide-gray-100 border border-gray-100 mt-10 bg-white shadow-lg">
-                                {data?.map((member) => (
-                                    <li key={member._id} className="flex justify-between gap-x-6 px-5 py-10">
-                                        <div className="flex min-w-0 gap-x-4">
-                                            <div className="min-w-0 flex-auto space-y-2">
-                                                <p className="text-2xl font-black text-gray-600">
-                                                    Nombre del usuario: {member.name}
-                                                </p>
-                                                <p className="text-sm text-gray-400">
-                                                    Email del usuario: {member.email}
-                                                </p>
+                            <div className="mt-10 bg-white rounded-lg shadow-md overflow-visible">
+                                <ul role="list" className="divide-y divide-gray-200">
+                                    {data.map((member) => (
+                                        <li
+                                            key={member._id}
+                                            className="flex items-center justify-between px-6 py-4"
+                                        >
+                                            <div className="flex items-center space-x-4">
+                                                <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center">
+                                                    <UserIcon className="h-6 w-6 text-blue-600" />
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <p className="text-lg font-semibold text-gray-900 truncate">
+                                                        {member.name}
+                                                    </p>
+                                                    <p className="text-sm text-gray-500 truncate">
+                                                        {member.email}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="flex shrink-0 items-center gap-x-6">
-                                            <Menu as="div" className="relative flex-none">
-                                                <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
-                                                    <span className="sr-only">opciones</span>
-                                                    <EllipsisVerticalIcon className="h-9 w-9" aria-hidden="true" />
+                                            <Menu as="div" className="relative">
+                                                <Menu.Button className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-colors">
+                                                    <span className="sr-only">Abrir opciones</span>
+                                                    <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
                                                 </Menu.Button>
                                                 <Transition
                                                     as={Fragment}
@@ -83,25 +91,31 @@ export default function ProjectTeamView() {
                                                     leaveFrom="transform opacity-100 scale-100"
                                                     leaveTo="transform opacity-0 scale-95"
                                                 >
-                                                    <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                                                    <Menu.Items className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-md shadow-lg focus:outline-none z-50">
                                                         <Menu.Item>
-                                                            <button
-                                                                type='button'
-                                                                className='block px-3 py-1 text-sm leading-6 text-blue-600'
-                                                                onClick={()=>mutate({projectId, userId: member._id})}
-                                                            >
-                                                                Eliminar del proyecto
-                                                            </button>
+                                                            {({ active }) => (
+                                                                <button
+                                                                    onClick={() => mutate({ projectId, userId: member._id })}
+                                                                    className={`inline-flex px-4 w-full items-center py-3 text-sm font-medium rounded-md transition-colors ${
+                                                                        active
+                                                                            ? "bg-gray-100 text-red-600"
+                                                                            : "text-red-600"
+                                                                    }`}
+                                                                >
+                                                                    <TrashIcon className="w-5 h-5" />
+                                                                    <span className="ml-2">Eliminar miembro</span>
+                                                                </button>
+                                                            )}
                                                         </Menu.Item>
                                                     </Menu.Items>
                                                 </Transition>
                                             </Menu>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         ) : (
-                            <p className='text-center py-20'>No hay miembros en este equipo</p>
+                            <p className="mt-10 text-center text-gray-500">No hay miembros en este equipo</p>
                         )}
                         <AddMember/>
                     </header>
