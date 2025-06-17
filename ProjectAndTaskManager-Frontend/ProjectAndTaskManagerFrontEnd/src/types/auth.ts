@@ -40,3 +40,4 @@ export type User = z.infer<typeof userSchema>;
 export type ConfirmToken = Pick<Auth, "token">;
 export type UserProfileForm = Pick<User, 'name' | 'email'>
 export type UpdateUserPassword = Pick<Auth, 'current_password' | 'password' | 'password_confirmation'>
+export type CheckPasswordForm = Pick<Auth, 'password'>

@@ -6,7 +6,7 @@ import {
   type RequestConfirmationCodeForm,
   type UserLoginForm,
   type ForgotPasswordForm,
-  type NewPasswordFormToken, userInfoSchema,
+  type NewPasswordFormToken, userInfoSchema, type CheckPasswordForm,
 } from "../types/auth.ts";
 import { userSchema } from "../types/auth.ts";
 
@@ -115,6 +115,17 @@ export async function getUserById(userId: string) {
     if (response.success) {
       return response.data;
     }
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
+export async function checkPassword(formData: CheckPasswordForm) {
+  try {
+    const url = "/auth/check-password";
+    const { data } = await api.post<string>(url, formData);
+    return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);

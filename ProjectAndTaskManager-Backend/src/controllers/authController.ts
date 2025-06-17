@@ -215,13 +215,28 @@ export class AuthController {
     const isPasswordCorrect = await checkPassword(current_password, user.password);
     if(!isPasswordCorrect){
       const error = new Error('La contraseña es incorrecta')
-      res.status(409).json({ error: error.message });
+      res.status(401).json({ error: error.message });
       return;
     }
     try{
       user.password = await hashPassword(password);
       await user.save();
       res.status(200).json('Contraseña actualizada correctamente');
+    }catch (error){
+      res.status(500).json({ error: "Ocurrió un error" });
+    }
+  };
+  static checkPassword = async (req: Request, res: Response) => {
+    try{
+      const { password} = req.body;
+      const user = await User.findById(req.user.id);
+      const isPasswordCorrect = await checkPassword(password, user.password);
+      if(!isPasswordCorrect){
+        const error = new Error('La contraseña es incorrecta')
+        res.status(401).json({ error: error.message });
+        return;
+      }
+      res.status(200).json('La contraseña es correcta');
     }catch (error){
       res.status(500).json({ error: "Ocurrió un error" });
     }
