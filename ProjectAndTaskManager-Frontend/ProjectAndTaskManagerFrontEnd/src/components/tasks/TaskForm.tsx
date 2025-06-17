@@ -7,6 +7,7 @@ import api from "../../lib/axios.ts";
 import { useLocation } from "react-router";
 import {useQuery} from "@tanstack/react-query";
 import {getProjectTeam} from "../../api/TeamApi.ts";
+import {useAuth} from "../../hooks/useAuth.ts";
 
 type TaskFormProps = {
   projectId: string;
@@ -29,6 +30,7 @@ export default function TaskForm({
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const currentTaskId = query.get("editTask");
+  const {data} = useAuth();
 
   const {data: colaborators} = useQuery({
     queryKey:['projectTeam', projectId],
@@ -118,22 +120,25 @@ export default function TaskForm({
         <label htmlFor="user" className="block text-sm font-medium text-gray-700">
           Colaborador asignado por email
         </label>
-        <select
-            id="user"
-            className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-            {...register("user", {
-              required: "Debes seleccionar un colaborador",
-            })}
-            defaultValue=""
-        >
+          <select
+              id="user"
+              className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+              {...register("user", {
+                required: "Debes seleccionar un colaborador",
+              })}
+              defaultValue=""
+          >
           <option value="" disabled>
             Selecciona un colaborador por email
           </option>
           {colaborators?.map((c) => (
-              <option key={c._id} value={c.email}>
-                {`${c.email}`}
+              <option key={c._id} value={c._id}>
+                {c.email}
               </option>
           ))}
+            <option key={data?._id} value={data?._id}>
+              {data?.email}
+            </option>
         </select>
         {errors.user && <ErrorMessage>{errors.user.message}</ErrorMessage>}
       </div>

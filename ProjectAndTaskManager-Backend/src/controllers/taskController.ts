@@ -7,32 +7,41 @@ export class TaskController {
   static createTask = async (req: Request, res: Response) => {
     try {
       const task = new Task(req.body);
-      if (req.body.relation == "Ninguna") {
+      if (req.body.relation === "Ninguna") {
         task.relation = null;
       } else {
         const relation = await Task.findById(req.body.relation);
         if (!relation) {
-          res.status(404).send("No se encontró la relación");
+           res.status(404).send("No se encontró la relación");
         }
         task.relation = relation;
       }
-      const user_assigned =  await User.findOne({email: req.body.user})
-      if (!user_assigned) {
-        res.status(404).send("Usuario no existe")
-      }
-      const user_project = await Project.findOne({team: user_assigned.id});
-      if (!user_project) {
-        res.status(404).send("El usuario no pertenece al proyecto")
+
+      let user_assigned = await User.findOne({ email: req.body.user });
+      if (user_assigned) {
+        const inTeam = await Project.exists({
+          _id: req.project.id,
+          team: user_assigned._id,
+        });
+        if (!inTeam) {
+           res.status(404).send("El usuario no pertenece al proyecto");
+        }
+      } else {
+        user_assigned = await User.findById(req.project.manager);
+        if (!user_assigned) {
+           res.status(404).send("Manager no encontrado");
+        }
       }
       task.project = req.project.id;
       task.user = user_assigned;
       req.project.tasks.push(task.id);
-      await Promise.allSettled([task.save(), req.project.save()]);
+      await Promise.all([task.save(), req.project.save()]);
       res.send("Tarea guardada");
     } catch (error) {
-      res.status(500).json({ error: "Error ocurrido" });
+       res.status(500).json({ error: "Error ocurrido" });
     }
   };
+
   static getTasks = async (req: Request, res: Response) => {
     try {
       const tasks = await Task.find({ project: req.project.id }).populate(
@@ -43,6 +52,7 @@ export class TaskController {
       res.status(500).json({ error: "Error ocurrido" });
     }
   };
+
   static getTaskById = async (req: Request, res: Response) => {
     try {
       const task = await Task.findById(req.task.id).populate({path: 'completedBy.user', select: '_id name email'})
@@ -52,12 +62,13 @@ export class TaskController {
       res.status(500).json({ error: "Error ocurrido" });
     }
   };
+
   static putTaskById = async (req: Request, res: Response) => {
     try {
       if (req.body.relation === "Ninguna") {
         req.body.relation = null;
       } else {
-        const relation = await Task.findOne(req.body.relation);
+        const relation = await Task.findById(req.body.relation);
         if (!relation) {
           res.status(404).send("No se encontró la relación");
         }
@@ -74,6 +85,7 @@ export class TaskController {
       res.status(500).json({ error: "Error ocurrido" });
     }
   };
+
   static deleteById = async (req: Request, res: Response) => {
     try {
       req.project.tasks = req.project.tasks.filter(
@@ -85,6 +97,7 @@ export class TaskController {
       res.status(500).json({ error: "Error ocurrido" });
     }
   };
+
   static updateStatus = async (req: Request, res: Response) => {
     try {
       const { status } = req.body;

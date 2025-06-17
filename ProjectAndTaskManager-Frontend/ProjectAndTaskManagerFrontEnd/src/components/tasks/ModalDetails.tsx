@@ -11,6 +11,8 @@ import api from "../../lib/axios.ts";
 import * as React from "react";
 import {getUserById} from "../../api/AuthApi.ts";
 import NotesPanel from "../notes/NotesPanel.tsx";
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+
 
 export const optionsStatus: { [key: string]: string } = {
   pendiente: "Pendiente",
@@ -27,7 +29,7 @@ export default function ModalDetails() {
   const querystring = new URLSearchParams(location.search);
   const taskId = querystring.get("viewTask")!;
   const show = taskId ? true : false;
-
+  const navigate = useNavigate();
   const [relation, setRelation] = useState<Task>();
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -60,7 +62,6 @@ export default function ModalDetails() {
   });
 
   const queryClient = useQueryClient();
-
   const { mutate } = useMutation({
     mutationFn: updateStatus,
     onError: (error) => {
@@ -86,32 +87,45 @@ export default function ModalDetails() {
     staleTime: 1000 * 60,
   })
 
-  const navigate = useNavigate();
-  if (isLoading) return 'Cargando...';
-  if (data)
-    return (
-      <>
+  if (isLoading || !data) return;
+
+  const percentMap: Record<TaskStatus, number> = {
+    pendiente:    0,
+    en_espera:   25,
+    en_progreso: 50,
+    en_revision: 75,
+    completado: 100,
+  };
+
+  const currentPercent = percentMap[data.status];
+  const chartData = currentPercent === 100
+      ? [{ name: 'Completado', value: 100 }]
+      : [
+        { name: 'Completado', value: currentPercent },
+        { name: 'Restante',   value: 100 - currentPercent },
+      ];
+
+  return (
         <Transition appear show={show} as={Fragment}>
           <Dialog
-            as="div"
-            className="relative z-10"
-            onClose={() => navigate(location.pathname, { replace: true })}
+              as="div"
+              className="fixed inset-0 z-50 overflow-y-auto"
+              onClose={() => navigate(location.pathname, { replace: true })}
           >
             <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
             >
               <div className="fixed inset-0 bg-black/60" />
             </Transition.Child>
 
-            <div className="fixed inset-0 overflow-y-auto">
-              <div className="flex min-h-full items-center justify-center p-4 text-center">
-                <Transition.Child
+            <div className="flex min-h-full items-center justify-center p-4">
+              <Transition.Child
                   as={Fragment}
                   enter="ease-out duration-300"
                   enterFrom="opacity-0 scale-95"
@@ -119,96 +133,123 @@ export default function ModalDetails() {
                   leave="ease-in duration-200"
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white border-l-4  transition-all p-8 sm:p-10 text-left">
-                    <p className="text-sm text-gray-500 mb-1">
-                      Agregada el: {formatDate(data.createdAt)}
-                    </p>
-                    <p className="text-sm text-gray-500 mb-4">
-                      Última actualización: {formatDate(data.updatedAt)}
-                    </p>
-                    <Dialog.Title className="text-3xl font-extrabold text-gray-900 mb-5">
-                      {data.name}
-                    </Dialog.Title>
+              >
+                <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden bg-white rounded-2xl shadow-xl ring-1 ring-black ring-opacity-5 p-8 sm:p-10">
+                  <header className="flex items-start justify-between pb-4 mb-6 border-b border-gray-200">
+                    <div>
+                      <Dialog.Title className="text-2xl font-extrabold text-gray-900">
+                        {data.name}
+                      </Dialog.Title>
+                      <p className="text-sm text-gray-500">
+                        Agregado: {formatDate(data.createdAt)} · Actualizado: {formatDate(data.updatedAt)}
+                      </p>
+                    </div>
+                  </header>
 
-                    <p className="text-lg text-gray-700 mb-1">
-                      <span className="font-semibold">Descripción:</span>{" "}
-                      {data.description}
-                    </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                      <h3 className="text-lg font-medium text-gray-700 mb-2">Descripción</h3>
+                      <p className="text-gray-800">{data.description}</p>
+                    </div>
 
-                    <p className="text-lg text-gray-700 mb-1">
-                      <span className="font-semibold">Role asignado:</span>{" "}
-                      {data.rol}
-                    </p>
-                    <p className="text-lg text-gray-700 mb-1">
-                      <span className="font-semibold">Nombre del colaborador:</span>{" "}
-                      {user_data?.name}
-                    </p>
-                    <p className="text-lg text-gray-700 mb-1">
-                      <span className="font-semibold">Email del colaborador:</span>{" "}
-                      {user_data?.email}
-                    </p>
-                    <p
-                      className={`text-lg mb-4 ${
-                        relation
-                          ? relation.status === "completado"
-                            ? "text-green-500"
-                            : "text-red-500"
-                          : "text-gray-800 font-semibold"
-                      }`}
-                    >
-                      {loading
-                        ? "..."
+                    <div>
+                      <h3 className="text-lg font-medium text-gray-700 mb-2">Información del colaborador</h3>
+                      <p className="text-gray-800"><span className="font-semibold">Rol:</span> {data.rol}</p>
+                      <p className="text-gray-800"><span className="font-semibold">Nombre:</span> {user_data?.name}</p>
+                      <p className="text-gray-800"><span className="font-semibold">Email:</span> {user_data?.email}</p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-medium text-gray-700 mb-2">Dependencia</h3>
+                      <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${loading ? 'bg-gray-100 text-gray-500' : relation ? relation.status === 'completado' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`}>
+                    {loading
+                        ? ''
                         : relation
-                          ? relation.status === "completado"
-                            ? `Tarea dependiente completada: ${relation.name}`
-                            : `Tarea dependiente no completada: ${relation.name}`
-                          : "Tarea sin dependencias"}
-                    </p>
-                    {data.completedBy.length ? (
-                        <>
-                          <p className="text-3xl font-black text-gray-800 mb-2">Historial de cambios</p>
-                          {data.completedBy.map((activityLog) => (
-                              <p key={activityLog._id}>
-                            <div className="mb-1">
-                              <span className="font-semibold text-gray-800 text-lg">
-                              {optionsStatus[activityLog.status]}
-                            </span>: {activityLog.user.name}
-                            </div>
-                              </p>
-                          ))}
-                        </>
-                    ): null}
+                            ? relation.status === 'completado'
+                                ? `Completada: ${relation.name}`
+                                : `No completada: ${relation.name}`
+                            : 'Sin dependencias'}
+                  </span>
+                    </div>
+                  </div>
 
-                    <div className="my-6 space-y-3">
-                      <label className="block text-gray-800 font-semibold">
-                        Estado Actual:
-                      </label>
-                      <select
+                  {data.completedBy.length > 0 && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 ">
+
+                        <div className="bg-white rounded-lg shadow-md p-6">
+                          <h3 className="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">
+                            Historial de Cambios
+                          </h3>
+                          <ul className="space-y-4">
+                            {data.completedBy.map((log) => (
+                                <li key={log._id} className="flex items-center space-x-3">
+                                  <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0" />
+                                  <div>
+                                    <p className="text-gray-800">
+            <span className="font-semibold">
+              {optionsStatus[log.status]}
+            </span>{' '}
+                                      por <span className="font-medium">{log.user.name}</span>
+                                    </p>
+                                  </div>
+                                </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center">
+                          <h4 className="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2 w-full text-center">
+                            Progreso de la tarea
+                          </h4>
+                          <div className="w-48 h-48 relative mt-4">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <PieChart>
+                                <Pie
+                                    data={chartData}
+                                    dataKey="value"
+                                    startAngle={90}
+                                    endAngle={-270}
+                                    innerRadius="60%"
+                                    outerRadius="100%"
+                                    isAnimationActive={true}
+                                    animationDuration={800}
+                                    animationEasing="ease-out"
+                                >
+                                  <Cell fill="#2563EB" />
+                                  {currentPercent < 100 && <Cell fill="#E5E7EB" />}
+                                </Pie>
+                              </PieChart>
+                            </ResponsiveContainer>
+                            <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-2xl font-bold text-gray-700">
+            {currentPercent}%
+          </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  )}
+
+                  <section className="mb-8">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Estado Actual</label>
+                    <select
                         onChange={handleChange}
                         defaultValue={data.status}
-                        disabled={
-                          relation &&
-                          relation.status.toString() !== "completado"
-                        }
-                        className="mt-1 block w-full border border-gray-300 rounded-md bg-white py-2 px-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-                      >
-                        {Object.entries(optionsStatus).map(([key, value]) => (
-                          <option key={key} value={key}>
-                            {value}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <NotesPanel
-                      notes={data.notes}
-                    />
-                  </Dialog.Panel>
-                </Transition.Child>
-              </div>
+                        disabled={relation && relation.status !== 'completado'}
+                        className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                    >
+                      {Object.entries(optionsStatus).map(([key, value]) => (
+                          <option key={key} value={key}>{value}</option>
+                      ))}
+                    </select>
+                  </section>
+
+                  <section>
+                    <NotesPanel notes={data.notes} relation={relation ?? null}/>
+                  </section>
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
           </Dialog>
         </Transition>
-      </>
     );
 }

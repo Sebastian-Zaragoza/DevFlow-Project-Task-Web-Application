@@ -3,19 +3,17 @@ import api from "../lib/axios.ts";
 import {type TeamMember, type TeamMemberForm, teamMembersSchema} from "../types/team.ts";
 import type {Project} from "../types";
 
-
 export async function findUserByEmail(args: {
     projectId: string
     formData: TeamMemberForm
-}): Promise<TeamMember> {
+}){
     const { projectId, formData } = args
     const { data } = await api.post<{ user: TeamMember }>(
-        `/projects/${projectId}/search-user`,
+        `projects/${projectId}/team/find`,
         { email: formData.email }
     )
-    return data.user
+    return data
 }
-
 
 export async function addUserById({projectId, id}: {projectId: Project['_id'], id: TeamMember['_id']}) {
     try{
@@ -34,7 +32,6 @@ export async function getProjectTeam(projectId: Project['_id']) {
         const url = `projects/${projectId}/team`;
         const data = await api.get(url);
         const response = teamMembersSchema.safeParse(data.data);
-        console.log(response);
         if(response.success){
             return response.data;
         }

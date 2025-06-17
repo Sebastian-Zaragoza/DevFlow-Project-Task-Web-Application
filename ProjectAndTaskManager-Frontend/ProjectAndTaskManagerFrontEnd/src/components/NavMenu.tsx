@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import type { User } from "../types/auth.ts";
 import { useQueryClient } from "@tanstack/react-query";
+import {Link} from "react-router-dom";
 
 type NavMenuProps = {
   name: User["name"];
@@ -44,26 +45,31 @@ export default function NavMenu({ name }: NavMenuProps) {
       >
         <Menu.Item>
           {({ active }) => (
-            <button
-              className={`group flex items-center w-full px-4 py-2 text-sm text-gray-700 ${
-                active ? "bg-gray-100" : ""
-              }`}
-            >
-              <UserIcon className="w-5 h-5 mr-2 text-gray-500 group-hover:text-gray-700" />
-              Mi Perfil
-            </button>
+              <button
+                  className={`group flex items-center w-full px-4 py-2 text-sm text-gray-700 ${
+                      active ? "bg-gray-100" : ""
+                  }`}
+              >
+                  <UserIcon className="w-5 h-5 mr-2 text-gray-500 group-hover:text-gray-700" />
+                  <Link to='/profile'>
+                      Mi perfil
+                  </Link>
+              </button>
           )}
         </Menu.Item>
         <Menu.Item>
           {({ active }) => (
-            <button
-              className={`group flex items-center w-full px-4 py-2 text-sm text-gray-700 ${
-                active ? "bg-gray-100" : ""
-              }`}
-            >
-              <FolderIcon className="w-5 h-5 mr-2 text-gray-500 group-hover:text-gray-700" />
-              Mis Proyectos
-            </button>
+              <button
+                  className={`group flex items-center w-full px-4 py-2 text-sm text-gray-700 ${
+                      active ? "bg-gray-100" : ""
+                  }`}
+              >
+                  <FolderIcon className="w-5 h-5 mr-2 text-gray-500 group-hover:text-gray-700" />
+                  <Link to='/'>
+                    Mis proyectos
+                  </Link>
+              </button>
+
           )}
         </Menu.Item>
         <Menu.Item>

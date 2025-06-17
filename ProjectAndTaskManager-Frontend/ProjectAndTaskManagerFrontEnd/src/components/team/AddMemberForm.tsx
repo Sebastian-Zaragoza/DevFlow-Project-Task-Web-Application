@@ -13,7 +13,6 @@ export default function AddMemberForm() {
     }
     const params = useParams()
     const projectId = params.projectId!
-
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ defaultValues: initialValues })
 
     const mutation = useMutation<
@@ -21,8 +20,9 @@ export default function AddMemberForm() {
         Error,
         { projectId: string; formData: TeamMemberForm }
     >({
+        // @ts-ignore
         mutationFn: findUserByEmail
-    })
+    });
 
     const handleSearchUser = async (formData: TeamMemberForm) => {
         const data = {projectId, formData}
@@ -33,7 +33,6 @@ export default function AddMemberForm() {
         reset();
         mutation.reset();
     }
-
     return (
         <>
             <form
@@ -70,7 +69,7 @@ export default function AddMemberForm() {
                 </button>
             </form>
             <div className="mt-10">
-                {mutation.isPending && <p className="text-center">Cargando...</p>}
+                {mutation.isPending && <p className="text-center">...</p>}
                 {mutation.isError && <p className="text-center">{mutation.error.message}</p>}
                 {mutation.data && <SearchResult user={mutation.data} reset={resetData}/>}
             </div>

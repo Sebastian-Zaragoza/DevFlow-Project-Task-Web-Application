@@ -40,7 +40,7 @@ export default function AddTaskModal() {
     mutationFn: createTask,
     onError: (error) => {
       toast.error(error.message);
-      console.log(error.message);
+      console.log(error);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["editProject", projectId] });

@@ -1,4 +1,4 @@
-import Note from "../models/Note";
+import Note from "../models/note";
 import {Request, Response} from "express";
 
 export class NoteController {

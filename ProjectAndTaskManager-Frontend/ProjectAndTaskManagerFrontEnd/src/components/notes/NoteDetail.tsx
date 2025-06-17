@@ -10,7 +10,7 @@ import {useLocation} from "react-router";
 import {useQueryClient} from "@tanstack/react-query";
 
 type NoteDetailProps = {
-    note: Note
+    note: Note;
 }
 
 export default function NoteDetail({note}: NoteDetailProps) {
@@ -34,20 +34,31 @@ export default function NoteDetail({note}: NoteDetailProps) {
         }
     })
     return (
-        <div className="pt-3 flex justify-between items-center">
-           <div>
-               <p>
-                   {note.content}: <span className="font-semibold">{note.createdBy.name}</span>
-               </p>
-               <p className=" text-xs text-gray-500">
-                   {formatDate(note.createdAt)}
-               </p>
-           </div>
-            {canDelete && (
-                <button type="button" className="bg-red-400 hover:bg-red-500 p-2 text-xs text-white cursor-pointer transition-colors"
-                    onClick={()=>{mutate({projectId, taskId, noteId: note._id})}}
-                >Eliminar</button>
-            )}
-        </div>
+        <>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 flex justify-between items-start space-x-4 mb-4 items-center">
+                <div className="flex-1">
+                    <p className="text-gray-900">
+                        <span className="font-semibold">{note.content}</span>{' '}
+                        <span className="text-gray-700">por</span>{' '}
+                        <span className="font-semibold">{note.createdBy.name}</span>
+                    </p>
+                    <p className="mt-1 text-xs text-gray-500">
+                        {formatDate(note.createdAt)}
+                    </p>
+                </div>
+
+                {canDelete && (
+                    <button
+                        type="button"
+                        onClick={() =>
+                            mutate({ projectId, taskId, noteId: note._id })
+                        }
+                        className="inline-flex items-center px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-xs font-medium rounded-md shadow focus:outline-none focus:ring-2 focus:ring-red-400 transition-colors"
+                    >
+                        Eliminar
+                    </button>
+                )}
+            </div>
+        </>
     );
 }

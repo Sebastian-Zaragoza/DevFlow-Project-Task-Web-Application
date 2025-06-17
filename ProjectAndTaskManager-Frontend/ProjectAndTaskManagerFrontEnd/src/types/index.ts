@@ -19,6 +19,7 @@ export const dashBoardSchema = z.array(
   }),
 );
 export type Project = z.infer<typeof projectSchema>;
+
 export type ProjectFormData = Pick<
   Project,
   "projectName" | "clientName" | "description"
@@ -70,3 +71,15 @@ export type TaskFormData = Pick<
     Task,
     "name" | "description" | "rol" | "user" | "relation"
 >;
+
+export const projectAndTaskSchema = projectSchema.pick({
+  _id: true,
+  projectName: true,
+  clientName: true,
+  description: true,
+  manager: true,
+}).extend({
+  tasks: taskSchema.array()
+})
+
+export type ProjectWithTasks = z.infer<typeof projectAndTaskSchema>;
