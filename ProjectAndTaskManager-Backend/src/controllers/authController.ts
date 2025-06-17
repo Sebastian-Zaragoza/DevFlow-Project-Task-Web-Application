@@ -13,6 +13,7 @@ export class AuthController {
     if (userExists) {
       const error = new Error("El usuario ya existe");
       res.status(409).json({ error: error.message });
+      return;
     }
     const user = new User(req.body);
     user.password = await hashPassword(req.body.password);
@@ -37,6 +38,7 @@ export class AuthController {
       if (!tokenExists) {
         const error = new Error("Token inválido");
         res.status(404).json({ error: error.message });
+        return;
       }
 
       const user = await User.findById(tokenExists.user);
@@ -55,6 +57,7 @@ export class AuthController {
       if (!user) {
         const error = new Error("El usuario no existe");
         res.status(404).json({ error: error.message });
+        return;
       }
       if (!user.confirmed) {
         const token = new Token();
@@ -76,6 +79,7 @@ export class AuthController {
       if (!isPasswordValid) {
         const error = new Error("La contraseña no coincide");
         res.status(401).json({ error: error.message });
+        return;
       }
       const tokenJWT = generateJWT({ id: user.id });
       res.send(tokenJWT);
@@ -90,11 +94,13 @@ export class AuthController {
       if (!user) {
         const error = new Error("El usuario no existe");
         res.status(404).json({ error: error.message });
+        return;
       }
 
       if (user.confirmed) {
         const error = new Error("El usuario ya ha sido confirmado");
         res.status(403).json({ error: error.message });
+        return;
       }
 
       const token = new Token();
@@ -120,6 +126,7 @@ export class AuthController {
       if (!user) {
         const error = new Error("El usuario no existe");
         res.status(404).json({ error: error.message });
+        return;
       }
 
       const token = new Token();
@@ -144,6 +151,7 @@ export class AuthController {
       if (!tokenExists) {
         const error = new Error("Token inválido");
         res.status(404).json({ error: error.message });
+        return;
       }
       res.send("Token validado, restablece tu contraseña");
     } catch (error) {
@@ -157,6 +165,7 @@ export class AuthController {
       if (!tokenExists) {
         const error = new Error("Token inválido");
         res.status(404).json({ error: error.message });
+        return;
       }
       const user = await User.findById(tokenExists.user);
       user.password = await hashPassword(req.body.password);
@@ -175,6 +184,7 @@ export class AuthController {
       const user = await User.findById(userId);
       if (!user) {
         res.status(404).json({ error: "Usuario no existe" });
+        return;
       }
       const {name, email} = user
       res.send({name, email});

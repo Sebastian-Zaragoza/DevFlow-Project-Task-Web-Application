@@ -95,11 +95,24 @@ export default function DashboardView() {
                           <Menu.Items className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
                             {project.manager === user._id &&(
                                 <>
+                                  <div className="py-1">
+                                    <Menu.Item>
+                                      {({ active }) => (
+                                          <Link
+                                              to={`/projects/${project._id}`}
+                                              className={`${active ? "bg-gray-100" : ""} flex items-center px-4 py-3 text-sm text-gray-700`}
+                                          >
+                                            <EyeIcon className="w-5 h-5 mr-2 text-gray-500" />
+                                            Ver proyecto
+                                          </Link>
+                                      )}
+                                    </Menu.Item>
+                                  </div>
                                   <Menu.Item>
                                     {({ active }) => (
                                         <Link
                                             to={`/projects/${project._id}/edit`}
-                                            className={`${active ? "bg-gray-100" : ""} flex items-center px-4 py-2 text-sm text-gray-700`}
+                                            className={`${active ? "bg-gray-100" : ""} flex items-center px-4 py-3 text-sm text-gray-700`}
                                         >
                                           <PencilIcon className="w-5 h-5 mr-2 text-gray-500" />
                                           Editar proyecto
@@ -110,7 +123,7 @@ export default function DashboardView() {
                                     {({ active }) => (
                                         <button
                                             onClick={() => mutate(project._id)}
-                                            className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-2 text-sm text-blue-600`}
+                                            className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-3 text-sm text-blue-600`}
                                         >
                                           <TrashIcon className="w-5 h-5 mr-2 text-blue-600" />
                                           Eliminar proyecto
@@ -119,19 +132,6 @@ export default function DashboardView() {
                                   </Menu.Item>
                                 </>
                             )}
-                            <div className="py-1">
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <Link
-                                    to={`/projects/${project._id}`}
-                                    className={`${active ? "bg-gray-100" : ""} flex items-center px-4 py-2 text-sm text-gray-700`}
-                                  >
-                                    <EyeIcon className="w-5 h-5 mr-2 text-gray-500" />
-                                    Ver proyecto
-                                  </Link>
-                                )}
-                              </Menu.Item>
-                            </div>
                           </Menu.Items>
                         </Transition>
                       </Menu>

@@ -5,6 +5,12 @@ interface IEmail {
   name: string;
   token: string;
 }
+
+interface IEmailAddDeleteMember{
+  email: string;
+  name: string;
+  projectName: string;
+}
 export class AuthEmails {
   static sendConfirmationEmail = async (user: IEmail) => {
     const confirmationUrl = `${process.env.FRONTEND_URL}/auth/confirm-account`;
@@ -72,7 +78,6 @@ export class AuthEmails {
         </html>
       `,
     });
-    console.log("Correo de confirmación enviado:", info.messageId);
   };
   static sendPasswordResetToken = async (user: IEmail) => {
     const resetUrl = `${process.env.FRONTEND_URL}/auth/new-password`;
@@ -141,6 +146,109 @@ export class AuthEmails {
         </html>
       `,
     });
-    console.log("Correo de restablecimiento enviado:", info.messageId);
+  };
+  static addMemberToProject = async (user: IEmailAddDeleteMember) => {
+    const addMemberToProjectURL = `${process.env.FRONTEND_URL}`;
+    const info = await transporter.sendMail({
+      from: `DevFlow <no-reply@devflow.com>`,
+      to: user.email,
+      subject: "DevFlow - Haz sido agregado a un proyecto nuevo!",
+      text: `Hola ${user.name}, verifica tu asignación: ${addMemberToProjectURL}`,
+      html: `
+        <html>
+          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+            <div style="
+              max-width:600px;
+              margin: 40px auto;
+              background-color:#FFFFFF;
+              border-radius:8px;
+              font-family:Arial, sans-serif;
+              padding:24px;
+            ">
+              <h2 style="
+                color:#1F2937;
+                font-size:24px;
+                font-weight:700;
+                margin-bottom:16px;
+              ">
+                Asignación a un proyecto nuevo
+              </h2>
+              <p style="
+                color:#4B5563;
+                font-size:16px;
+                margin-bottom:24px;
+              ">
+                ¡Hola, ${user.name}! Haz sido agregado al proyecto con el nombre de: ${user.projectName}. 
+                Verifica tu asignación aqui, accediendo con tus credenciales:
+              </p>
+              <a href="${addMemberToProjectURL}" style="
+                display:inline-block;
+                background-color:#2563EB;
+                color:#FFFFFF;
+                text-decoration:none;
+                font-weight:600;
+                font-size:16px;
+                padding:12px 24px;
+                border-radius:6px;
+              ">
+                Asignación a un proyecto nuevo
+              </a>
+            </div>
+          </body>
+        </html>
+      `,
+    });
+  };
+  static deleteMemberToProject = async (user: IEmailAddDeleteMember) => {
+    const addMemberToProjectURL = `${process.env.FRONTEND_URL}`;
+    const info = await transporter.sendMail({
+      from: `DevFlow <no-reply@devflow.com>`,
+      to: user.email,
+      subject: "DevFlow - Haz sido eliminado de un proyecto",
+      text: `Hola ${user.name}, crea más proyectos accediendo con tus credenciales: ${addMemberToProjectURL}`,
+      html: `
+        <html>
+          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+            <div style="
+              max-width:600px;
+              margin: 40px auto;
+              background-color:#FFFFFF;
+              border-radius:8px;
+              font-family:Arial, sans-serif;
+              padding:24px;
+            ">
+              <h2 style="
+                color:#1F2937;
+                font-size:24px;
+                font-weight:700;
+                margin-bottom:16px;
+              ">
+                Eliminación a un proyecto nuevo
+              </h2>
+              <p style="
+                color:#4B5563;
+                font-size:16px;
+                margin-bottom:24px;
+              ">
+                Hola, ${user.name}. Haz sido eliminado del proyecto con el nombre de: ${user.projectName}. 
+                ¡No te desanimes, puedes seguir creando proyectos! Accede con tus credenciales:
+              </p>
+              <a href="${addMemberToProjectURL}" style="
+                display:inline-block;
+                background-color:#2563EB;
+                color:#FFFFFF;
+                text-decoration:none;
+                font-weight:600;
+                font-size:16px;
+                padding:12px 24px;
+                border-radius:6px;
+              ">
+                Eliminación a un proyecto nuevo
+              </a>
+            </div>
+          </body>
+        </html>
+      `,
+    });
   };
 }

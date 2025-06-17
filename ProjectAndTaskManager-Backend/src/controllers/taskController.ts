@@ -13,6 +13,7 @@ export class TaskController {
         const relation = await Task.findById(req.body.relation);
         if (!relation) {
            res.status(404).send("No se encontró la relación");
+          return;
         }
         task.relation = relation;
       }
@@ -24,12 +25,14 @@ export class TaskController {
           team: user_assigned._id,
         });
         if (!inTeam) {
-           res.status(404).send("El usuario no pertenece al proyecto");
+          res.status(404).send("El usuario no pertenece al proyecto");
+          return;
         }
       } else {
         user_assigned = await User.findById(req.project.manager);
         if (!user_assigned) {
-           res.status(404).send("Manager no encontrado");
+          res.status(404).send("Manager no encontrado");
+          return;
         }
       }
       task.project = req.project.id;
@@ -71,6 +74,7 @@ export class TaskController {
         const relation = await Task.findById(req.body.relation);
         if (!relation) {
           res.status(404).send("No se encontró la relación");
+          return;
         }
         req.body.relation = relation.id;
       }

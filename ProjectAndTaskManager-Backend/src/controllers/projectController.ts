@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Project from "../models/project";
+import {ITasks} from "../models/tasks";
 
 export class ProjectController {
   static createProject = async (req: Request, res: Response) => {
@@ -32,10 +33,12 @@ export class ProjectController {
       if (!project) {
         const error = new Error("Proyecto no encontrado con el id: " + id);
         res.status(404).json({ error: error });
+        return;
       }
       if (project.manager.toString() !== req.user.id.toString() && !project.team.includes(req.user.id)) {
         const error = new Error("Acción no válida");
         res.status(404).json({ error: error });
+        return;
       }
       res.send(project);
     } catch (error) {
@@ -49,10 +52,12 @@ export class ProjectController {
       if (!project) {
         const error = new Error("Proyecto no encontrado con el id: " + id);
         res.status(404).json({ error: error });
+        return;
       }
       if (project.manager.toString() !== req.user.id.toString()) {
         const error = new Error("No tienes los permisos necesarios");
         res.status(404).json({ error: error });
+        return;
       }
       project.projectName = req.body.projectName;
       project.clientName = req.body.clientName;
@@ -66,14 +71,21 @@ export class ProjectController {
   static deleteProjectById = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-      const project = await Project.findById(id);
+      const project = await Project.findById(id).populate<{ tasks: ITasks[] }>("tasks") ;
       if (!project) {
         const error = new Error("Proyecto no encontrado con el id: " + id);
         res.status(404).json({ error: error });
+        return;
       }
       if (project.manager.toString() !== req.user.id.toString()) {
         const error = new Error("No tienes los permisos necesarios");
         res.status(404).json({ error: error });
+        return;
+      }
+      const hasPending = project.tasks.some(task => task.status !== 'completado');
+      if (hasPending) {
+        res.status(404).json({ error: 'El proyecto tiene tareas incompletas' });
+        return;
       }
       await project.deleteOne();
       res.send("Proyecto eliminado exitosamente ");
