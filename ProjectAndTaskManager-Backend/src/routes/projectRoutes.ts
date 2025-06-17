@@ -145,5 +145,4 @@ router.delete('/:projectId/tasks/:taskId/notes/:noteId',
     handleInputErrors,
     NoteController.deleteNote
 )
-
 export default router;
