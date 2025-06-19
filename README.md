@@ -73,7 +73,7 @@ DevFlow/
    ```bash
    cd ProjectAndTaskManager-Backend
    npm install
-   cp .env.example .env
+   cp .env
    npm run dev
    ```
 3. **Front End**  
