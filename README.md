@@ -24,24 +24,24 @@ Built with a React + Tailwind front end and a Node.js + Express + MongoDB back e
 ```
 DevFlow/
 ├── ProjectAndTaskManager-Backend/
-│   ├── src/config/        # cors.ts, db.ts, nodemailer.ts
-│   ├── src/controllers/   # authController.ts, projectController.ts, taskController.ts
-│   ├── src/middleware/    # auth.ts, validation.ts, projects.ts, task.ts
-│   ├── src/models/        # user.ts, project.ts, task.ts, token.ts
-│   ├── src/routes/        # authRoutes.ts, projectRoutes.ts, taskRoutes.ts
-│   ├── src/utils/         # jwt.ts, email.ts, token.ts
+│   ├── src/config/       
+│   ├── src/controllers/   
+│   ├── src/middleware/    
+│   ├── src/models/       
+│   ├── src/routes/        
+│   ├── src/utils/       
 │   ├── src/index.ts
 │   └── src/server.ts
 ├── ProjectAndTaskManager-Frontend/
-│   ├── public/            # Logo.png
-│   ├── src/api/           # AuthApi.ts, ProjectApi.ts, TaskApi.ts
-│   ├── src/components/    # auth/, projects/, tasks/
-│   ├── src/hooks/         # useAuth.ts
-│   ├── src/layouts/       # AppLayout.tsx, AuthLayout.tsx
-│   ├── src/lib/           # axios.ts
-│   ├── src/types/         # index.ts, auth.ts
-│   ├── src/utils/         # utils.ts
-│   ├── src/views/         # auth/, projects/
+│   ├── public/           
+│   ├── src/api/          
+│   ├── src/components/    
+│   ├── src/hooks/        
+│   ├── src/layouts/      
+│   ├── src/lib/          
+│   ├── src/types/       
+│   ├── src/utils/        
+│   ├── src/views/        
 │   ├── src/main.tsx
 │   ├── src/router.tsx
 │   └── src/index.css
@@ -59,7 +59,7 @@ DevFlow/
 | **Database**     | MongoDB (Mongoose)                      |
 | **Authentication** | JWT (jsonwebtoken), bcrypt            |
 | **Validation**   | Zod                                    |
-| **Email**        | Nodemailer                             |
+| **Email**        | Resend                                 |
 | **HTTP Client**  | Axios                                  |
 
 ---
@@ -100,7 +100,7 @@ curl -X POST http://localhost:4000/api/projects   -H "Authorization: Bearer <YOU
 ---
 
 ## 📄 API Reference
-See **docs/api.md** for full endpoint details, request/response schemas & error codes.  
+Documentation is not implemented yet and will be addd in a future release. 
 
 ---
 
