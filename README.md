@@ -1,76 +1,36 @@
-# DevFlow - Project & Task Management System
+DEVFLOW - Project & Task Management System
 
-**DevFlow** is a full-stack web application designed to manage software development projects and tasks collaboratively. It features a modular frontend and backend system with secure authentication and rich UI interactions for creating, editing, and assigning tasks and projects.
+DESCRIPCIÓN:
+DevFlow es una aplicación web full-stack para la gestión colaborativa de proyectos y tareas. Cuenta con frontend en React (v18) y TypeScript, y backend en Node.js con Express y MongoDB, usando Mongoose para modelado de datos.
 
----
-
-## 📁 Project Structure
-
-```
+ESTRUCTURA DEL PROYECTO:
 DevFlow/
 ├── ProjectAndTaskManager-Backend/
 │   ├── src/
-│   │   ├── config/
-│   │   │   ├── cors.ts
-│   │   │   ├── db.ts
-│   │   │   └── nodemailer.ts
-│   │   ├── controllers/
-│   │   │   ├── authController.ts
-│   │   │   ├── projectController.ts
-│   │   │   └── taskController.ts
-│   │   ├── emails/
-│   │   │   └── authEmails.ts
-│   │   ├── middleware/
-│   │   │   ├── auth.ts
-│   │   │   ├── projects.ts
-│   │   │   ├── task.ts
-│   │   │   └── validation.ts
-│   │   ├── models/
-│   │   │   ├── project.ts
-│   │   │   ├── tasks.ts
-│   │   │   ├── token.ts
-│   │   │   └── user.ts
-│   │   ├── routes/
-│   │   │   ├── authRoutes.ts
-│   │   │   └── projectRoutes.ts
-│   │   ├── utils/
-│   │   │   ├── auth.ts
-│   │   │   ├── jwt.ts
-│   │   │   └── token.ts
+│   │   ├── config/ (cors.ts, db.ts, nodemailer.ts)
+│   │   ├── controllers/ (authController.ts, projectController.ts, taskController.ts)
+│   │   ├── emails/ (authEmails.ts)
+│   │   ├── middleware/ (auth.ts, projects.ts, task.ts, validation.ts)
+│   │   ├── models/ (project.ts, tasks.ts, token.ts, user.ts)
+│   │   ├── routes/ (authRoutes.ts, projectRoutes.ts)
+│   │   ├── utils/ (auth.ts, jwt.ts, token.ts)
 │   │   ├── index.ts
 │   │   └── server.ts
 │   ├── .env
 │   ├── package.json
 │   └── tsconfig.json
-
 ├── ProjectAndTaskManager-Frontend/
 │   └── ProjectAndTaskManagerFrontEnd/
-│       ├── public/
-│       │   └── Logo.png
+│       ├── public/ (Logo.png)
 │       ├── src/
-│       │   ├── api/
-│       │   │   ├── AuthApi.ts
-│       │   │   ├── ProjectApi.ts
-│       │   │   └── TaskApi.ts
-│       │   ├── components/
-│       │   │   ├── auth/
-│       │   │   ├── projects/
-│       │   │   └── tasks/
-│       │   ├── hooks/
-│       │   │   └── useAuth.ts
-│       │   ├── layouts/
-│       │   │   ├── AppLayout.tsx
-│       │   │   └── AuthLayout.tsx
-│       │   ├── lib/
-│       │   │   └── axios.ts
-│       │   ├── types/
-│       │   │   ├── auth.ts
-│       │   │   └── index.ts
-│       │   ├── utils/
-│       │   │   └── utils.ts
-│       │   ├── views/
-│       │   │   ├── auth/
-│       │   │   └── projects/
+│       │   ├── api/ (AuthApi.ts, ProjectApi.ts, TaskApi.ts)
+│       │   ├── components/ (auth/, projects/, tasks/)
+│       │   ├── hooks/ (useAuth.ts)
+│       │   ├── layouts/ (AppLayout.tsx, AuthLayout.tsx)
+│       │   ├── lib/ (axios.ts)
+│       │   ├── types/ (auth.ts, index.ts)
+│       │   ├── utils/ (utils.ts)
+│       │   ├── views/ (auth/, projects/)
 │       │   ├── main.tsx
 │       │   ├── router.tsx
 │       │   └── index.css
@@ -78,60 +38,60 @@ DevFlow/
 │       └── vite.config.ts
 ├── .gitignore
 └── README.md
-```
 
----
+TECH STACK:
+Frontend: React 18, TypeScript citeturn3search1
+Backend: Node.js, Express citeturn5search0
+Base de datos: MongoDB citeturn6search1
+ODM: Mongoose citeturn7search0
+Autenticación: JWT (RFC 7519) citeturn8search1
+Hashing de contraseñas: bcrypt citeturn9search10
+HTTP: Axios citeturn10search0
+Validación: Zod citeturn11search0
 
-## 🛠️ Tech Stack
+CARACTERÍSTICAS:
+- Registro e inicio de sesión de usuarios con verificación por email.
+- CRUD de proyectos y tareas, con asignación a usuarios.
+- Validación de datos en backend con Zod citeturn11search0.
+- Envío de emails mediante nodemailer.
+- Rutas protegidas con JWT citeturn8search1.
 
-- **Frontend**: React, TypeScript, TailwindCSS, Vite
-- **Backend**: Node.js, Express, MongoDB, Mongoose, TypeScript
-- **Security**: JWT, bcrypt, email token verification
-- **Communication**: Axios, RESTful API
-- **Validation**: Zod
+VARIABLES DE ENTORNO:
+Backend (.env):
+- PORT
+- MONGO_URI
+- JWT_SECRET
+- EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASS
+Frontend (.env.local):
+- VITE_API_BASE_URL
 
----
+INSTALACIÓN:
+1. Clonar repositorio:
+   git clone https://github.com/Sebastian-Zaragoza/DevFlow-Project-Task-Management.git
+2. Backend:
+   cd ProjectAndTaskManager-Backend
+   npm install
+   cp .env.example .env
+   npm run dev
+3. Frontend:
+   cd ../ProjectAndTaskManager-Frontend/ProjectAndTaskManagerFrontEnd
+   npm install
+   npm run dev
 
-## ✅ Features
+USO:
+- Accede a http://localhost:5173
+- Regístrate y confirma tu email.
+- Crea proyectos y tareas, asígnalos y filtra según usuario y estado.
 
-- 🧑‍💼 User registration, login and protected routes
-- 📬 Email confirmation and password recovery
-- 🗂️ Project and task creation, editing and assignment
-- 📋 Task status and user-based filtering
-- ⚙️ Middleware validations for routes
-- 🔐 Token-based authentication (JWT)
-- 📡 Clean separation between frontend and backend logic
+TESTING:
+No se han implementado pruebas automatizadas en esta versión.
 
----
+CONTRIBUCIONES:
+- Haz fork y pull request.
+- Sigue la convención de commits de tu preferencia.
 
-## 🚀 Running Locally
+LICENCIA:
+MIT
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/Sebastian-Zaragoza/DevFlow-Project-Task-Management.git
-```
-
-2. **Setup backend**
-```bash
-cd ProjectAndTaskManager-Backend
-npm install
-cp .env.example .env
-npm run dev
-```
-
-3. **Setup frontend**
-```bash
-cd ../ProjectAndTaskManager-Frontend/ProjectAndTaskManagerFrontEnd
-npm install
-npm run dev
-```
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-Built with 💻 by [Sebastian Zaragoza](https://github.com/Sebastian-Zaragoza)
+CONTACTO:
+Sebastian Zaragoza - https://github.com/Sebastian-Zaragoza
