@@ -39,6 +39,7 @@ function SearchResult({user, reset}: SearchResultProps) {
             <h2 className="mt-10 text-center text-2xl font-extrabold text-gray-900">
                 Resultado de la búsqueda
             </h2>
+
             <div className="mt-6 max-w-xl mx-auto bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center">
@@ -46,11 +47,19 @@ function SearchResult({user, reset}: SearchResultProps) {
                     </div>
                     <div className="flex-1">
                         <p className="text-lg font-medium text-gray-800">{user.name}</p>
-                        <p className="text-sm text-gray-500">{user.email}</p>
+                        <p className="text-sm text-gray-500 break-words whitespace-normal">
+                            {user.email}
+                        </p>
                     </div>
+                </div>
+
+                <div className="mt-4">
                     <button
                         onClick={handleAddUser}
-                        className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow transition-colors"
+                        className="w-full flex justify-center items-center
+                     bg-blue-600 hover:bg-blue-700 text-white
+                     font-semibold py-2 rounded-md shadow
+                     transition-colors"
                     >
                         Añadir
                     </button>

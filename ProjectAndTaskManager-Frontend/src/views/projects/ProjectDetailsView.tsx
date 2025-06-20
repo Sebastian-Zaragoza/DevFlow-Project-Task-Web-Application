@@ -72,23 +72,27 @@ export default function ProjectDetailsView() {
               </p>
 
               {isManager(project.manager, user._id) && (
-                  <div className="mt-4 space-x-3">
+                  <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-start gap-3">
                     <button
                         type="button"
-                        onClick={() =>
-                            navigate(`${location.pathname}?newTask=true`)
-                        }
-                        className="inline-flex items-center bg-blue-500 hover:bg-blue-600 text-white font-medium px-5 py-2 rounded-md shadow transition-colors"
+                        onClick={() => navigate(`${location.pathname}?newTask=true`)}
+                        className="w-full sm:w-auto inline-flex justify-center items-center
+               bg-blue-500 hover:bg-blue-600 text-white font-medium
+               px-5 py-2 rounded-md shadow transition-colors"
                     >
                       Agregar tarea
                     </button>
+
                     <Link
                         to="team"
-                        className="inline-flex items-center bg-blue-500 hover:bg-blue-600 text-white font-medium px-5 py-2 rounded-md shadow transition-colors"
+                        className="w-full sm:w-auto inline-flex justify-center items-center
+               bg-blue-500 hover:bg-blue-600 text-white font-medium
+               px-5 py-2 rounded-md shadow transition-colors text-center"
                     >
                       Colaboradores
                     </Link>
                   </div>
+
               )}
             </div>
 
