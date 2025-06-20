@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import type { UserLoginForm } from "../../types/auth.ts";
 import ErrorMessage from "../../components/ErrorMessage.tsx";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { authenticateUser } from "../../api/AuthApi.ts";
 

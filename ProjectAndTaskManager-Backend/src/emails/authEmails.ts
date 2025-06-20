@@ -1,84 +1,42 @@
-import { transporter } from "../config/nodemailer";
+import {sendEmail} from "../config/nodemailer";
+import dotenv from "dotenv";
+dotenv.config();
 
-interface IEmail {
-  email: string;
-  name: string;
-  token: string;
-}
+interface IEmail      { email: string; name: string; token: string; }
+interface IEmailAddDeleteMember { email: string; name: string; projectName: string; }
+interface IEmailNotifyMembers   { email: string; name: string; projectName: string; taskName: string; }
 
-interface IEmailAddDeleteMember{
-  email: string;
-  name: string;
-  projectName: string;
-}
-
-interface IEmailNotifyMembers{
-  email: string;
-  name: string;
-  projectName: string;
-  taskName: string;
-}
 export class AuthEmails {
   static sendConfirmationEmail = async (user: IEmail) => {
-    const confirmationUrl = `${process.env.FRONTEND_URL}/auth/confirm-account`;
-    const info = await transporter.sendMail({
-      from: `DevFlow <no-reply@devflow.com>`,
+    const url = `${process.env.FRONTEND_URL}/auth/confirm-account`;
+    await sendEmail({
       to: user.email,
-      subject: "DevFlow - Confirma tu cuenta",
-      text: `Hola ${user.name}, por favor confirma tu cuenta usando el siguiente enlace: ${confirmationUrl}`,
+      subject: "DevFlow – Confirma tu cuenta",
+      text:  `Hola ${user.name}, confirma tu cuenta aquí: ${url}\nCódigo: ${user.token}`,
       html: `
         <html>
-          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+          <body style="margin:0;padding:0;background:#F3F4F6;">
             <div style="
-              max-width:600px;
-              margin: 40px auto;
-              background-color:#FFFFFF;
-              border-radius:8px;
-              font-family:Arial, sans-serif;
-              padding:24px;
+              max-width:600px;margin:40px auto;padding:24px;
+              background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="
-                color:#1F2937;
-                font-size:24px;
-                font-weight:700;
-                margin-bottom:16px;
-              ">
-                Confirma tu cuenta
-              </h2>
-              <p style="
-                color:#4B5563;
-                font-size:16px;
-                margin-bottom:24px;
-              ">
-                ¡Hola, ${user.name}! Gracias por crear tu cuenta en DevFlow. 
-                Para activarla, haz clic en el botón que aparece a continuación e ingresa el código debajo:
+              <h2 style="color:#1F2937;font-size:24px;">Confirma tu cuenta</h2>
+              <p style="color:#4B5563;font-size:16px;">
+                Hola ${user.name}, gracias por registrarte.  
+                Para activarla, haz clic en este botón:
               </p>
-              <a href="${confirmationUrl}" style="
-                display:inline-block;
-                background-color:#2563EB;
-                color:#FFFFFF;
-                text-decoration:none;
-                font-weight:600;
-                font-size:16px;
-                padding:12px 24px;
-                border-radius:6px;
+              <a href="${url}" style="
+                display:inline-block;background:#2563EB;color:#fff;
+                text-decoration:none;font-weight:600;
+                padding:12px 24px;border-radius:6px;
               ">
                 Confirmar cuenta
               </a>
-              <p style="
-                color:#4B5563;
-                font-size:16px;
-                margin-top:32px;
-              ">
-                Este es tu código de confirmación:
-                <strong style="color:#1F2937;">${user.token}</strong>
+              <p style="color:#4B5563;font-size:16px;margin-top:24px;">
+                Tu código de verificación: <strong style="color:#1F2937;">${user.token}</strong>
               </p>
-              <p style="
-                color:#9CA3AF;
-                font-size:14px;
-                margin-top:8px;
-              ">
-                Nota: Este código expira en 10 minutos.
+              <p style="color:#9CA3AF;font-size:12px;">
+                Este código expira en 10 minutos.
               </p>
             </div>
           </body>
@@ -86,67 +44,36 @@ export class AuthEmails {
       `,
     });
   };
+
   static sendPasswordResetToken = async (user: IEmail) => {
-    const resetUrl = `${process.env.FRONTEND_URL}/auth/new-password`;
-    const info = await transporter.sendMail({
-      from: `DevFlow <no-reply@devflow.com>`,
+    const url = `${process.env.FRONTEND_URL}/auth/new-password`;
+    await sendEmail({
       to: user.email,
-      subject: "DevFlow - Restablece tu contraseña",
-      text: `Hola ${user.name}, solicita restablecer tu contraseña usando: ${resetUrl}`,
+      subject: "DevFlow – Restablece tu contraseña",
+      text:  `Hola ${user.name}, restablece tu contraseña aquí: ${url}\nCódigo: ${user.token}`,
       html: `
         <html>
-          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+          <body style="margin:0;padding:0;background:#F3F4F6;">
             <div style="
-              max-width:600px;
-              margin: 40px auto;
-              background-color:#FFFFFF;
-              border-radius:8px;
-              font-family:Arial, sans-serif;
-              padding:24px;
+              max-width:600px;margin:40px auto;padding:24px;
+              background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="
-                color:#1F2937;
-                font-size:24px;
-                font-weight:700;
-                margin-bottom:16px;
-              ">
-                Restablecer contraseña
-              </h2>
-              <p style="
-                color:#4B5563;
-                font-size:16px;
-                margin-bottom:24px;
-              ">
-                ¡Hola, ${user.name}! Hemos recibido una solicitud para restablecer 
-                tu contraseña en DevFlow. Haz clic en el botón a continuación 
-                para continuar e ingresa el código debajo:
+              <h2 style="color:#1F2937;font-size:24px;">Restablecer contraseña</h2>
+              <p style="color:#4B5563;font-size:16px;">
+                Hola ${user.name}, haz clic en el botón para continuar:
               </p>
-              <a href="${resetUrl}" style="
-                display:inline-block;
-                background-color:#2563EB;
-                color:#FFFFFF;
-                text-decoration:none;
-                font-weight:600;
-                font-size:16px;
-                padding:12px 24px;
-                border-radius:6px;
+              <a href="${url}" style="
+                display:inline-block;background:#2563EB;color:#fff;
+                text-decoration:none;font-weight:600;
+                padding:12px 24px;border-radius:6px;
               ">
                 Restablecer contraseña
               </a>
-              <p style="
-                color:#4B5563;
-                font-size:16px;
-                margin-top:32px;
-              ">
-                Este es tu código de confirmación:
-                <strong style="color:#1F2937;">${user.token}</strong>
+              <p style="color:#4B5563;font-size:16px;margin-top:24px;">
+                Tu código: <strong style="color:#1F2937;">${user.token}</strong>
               </p>
-              <p style="
-                color:#9CA3AF;
-                font-size:14px;
-                margin-top:8px;
-              ">
-                Nota: Este código expira en 10 minutos.
+              <p style="color:#9CA3AF;font-size:12px;">
+                Expira en 10 minutos.
               </p>
             </div>
           </body>
@@ -154,51 +81,31 @@ export class AuthEmails {
       `,
     });
   };
+
   static addMemberToProject = async (user: IEmailAddDeleteMember) => {
-    const addMemberToProjectURL = `${process.env.FRONTEND_URL}`;
-    const info = await transporter.sendMail({
-      from: `DevFlow <no-reply@devflow.com>`,
+    const url = process.env.FRONTEND_URL!;
+    await sendEmail({
       to: user.email,
-      subject: "DevFlow - Haz sido agregado a un proyecto nuevo!",
-      text: `Hola ${user.name}, verifica tu asignación: ${addMemberToProjectURL}`,
+      subject: "DevFlow – Nuevo miembro en proyecto",
+      text:  `Hola ${user.name}, te agregaron al proyecto "${user.projectName}". Visita: ${url}`,
       html: `
         <html>
-          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+          <body style="margin:0;padding:0;background:#F3F4F6;">
             <div style="
-              max-width:600px;
-              margin: 40px auto;
-              background-color:#FFFFFF;
-              border-radius:8px;
-              font-family:Arial, sans-serif;
-              padding:24px;
+              max-width:600px;margin:40px auto;padding:24px;
+              background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="
-                color:#1F2937;
-                font-size:24px;
-                font-weight:700;
-                margin-bottom:16px;
-              ">
-                Asignación a un proyecto nuevo
-              </h2>
-              <p style="
-                color:#4B5563;
-                font-size:16px;
-                margin-bottom:24px;
-              ">
-                ¡Hola, ${user.name}! Haz sido agregado al proyecto con el nombre de <b>"${user.projectName}"</b>. 
-                Verifica tu asignación aquí, accediendo con tus credenciales:
+              <h2 style="color:#1F2937;font-size:24px;">Asignación a proyecto</h2>
+              <p style="color:#4B5563;font-size:16px;">
+                Hola ${user.name}, fuiste agregado al proyecto:
+                <strong>${user.projectName}</strong>
               </p>
-              <a href="${addMemberToProjectURL}" style="
-                display:inline-block;
-                background-color:#2563EB;
-                color:#FFFFFF;
-                text-decoration:none;
-                font-weight:600;
-                font-size:16px;
-                padding:12px 24px;
-                border-radius:6px;
+              <a href="${url}" style="
+                display:inline-block;background:#2563EB;color:#fff;
+                text-decoration:none;font-weight:600;
+                padding:12px 24px;border-radius:6px;
               ">
-                Asignación a un proyecto nuevo
+                Ver proyecto
               </a>
             </div>
           </body>
@@ -206,103 +113,55 @@ export class AuthEmails {
       `,
     });
   };
+
   static deleteMemberToProject = async (user: IEmailAddDeleteMember) => {
-    const addMemberToProjectURL = `${process.env.FRONTEND_URL}`;
-    const info = await transporter.sendMail({
-      from: `DevFlow <no-reply@devflow.com>`,
+    await sendEmail({
       to: user.email,
-      subject: "DevFlow - Haz sido eliminado de un proyecto",
-      text: `Hola ${user.name}, crea más proyectos accediendo con tus credenciales: ${addMemberToProjectURL}`,
+      subject: "DevFlow – Eliminado de proyecto",
+      text:  `Hola ${user.name}, fuiste eliminado del proyecto "${user.projectName}".`,
       html: `
         <html>
-          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+          <body style="margin:0;padding:0;background:#F3F4F6;">
             <div style="
-              max-width:600px;
-              margin: 40px auto;
-              background-color:#FFFFFF;
-              border-radius:8px;
-              font-family:Arial, sans-serif;
-              padding:24px;
+              max-width:600px;margin:40px auto;padding:24px;
+              background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="
-                color:#1F2937;
-                font-size:24px;
-                font-weight:700;
-                margin-bottom:16px;
-              ">
-                Eliminación a un proyecto nuevo
-              </h2>
-              <p style="
-                color:#4B5563;
-                font-size:16px;
-                margin-bottom:24px;
-              ">
-                Hola, ${user.name}. Haz sido eliminado del proyecto con el nombre de <b>"${user.projectName}"</b>. 
-                ¡No te desanimes, puedes seguir creando proyectos! Accede con tus credenciales:
+              <h2 style="color:#1F2937;font-size:24px;">Eliminación de proyecto</h2>
+              <p style="color:#4B5563;font-size:16px;">
+                Hola ${user.name}, fuiste eliminado de "${user.projectName}". ¡Anímate a crear otro!
               </p>
-              <a href="${addMemberToProjectURL}" style="
-                display:inline-block;
-                background-color:#2563EB;
-                color:#FFFFFF;
-                text-decoration:none;
-                font-weight:600;
-                font-size:16px;
-                padding:12px 24px;
-                border-radius:6px;
-              ">
-                Eliminación a un proyecto nuevo
-              </a>
             </div>
           </body>
         </html>
       `,
     });
   };
+
   static createTaskNotify = async (user: IEmailNotifyMembers) => {
-    const addMemberToProjectURL = `${process.env.FRONTEND_URL}`;
-    const info = await transporter.sendMail({
-      from: `DevFlow <no-reply@devflow.com>`,
+    const url = process.env.FRONTEND_URL!;
+    await sendEmail({
       to: user.email,
-      subject: "DevFlow - Se te ha asignado una tarea nueva!",
-      text: `Hola ${user.name}, verifica tu asignación: ${addMemberToProjectURL}`,
+      subject: "DevFlow – Nueva tarea asignada",
+      text:  `Hola ${user.name}, nueva tarea "${user.taskName}" en "${user.projectName}".`,
       html: `
         <html>
-          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+          <body style="margin:0;padding:0;background:#F3F4F6;">
             <div style="
-              max-width:600px;
-              margin: 40px auto;
-              background-color:#FFFFFF;
-              border-radius:8px;
-              font-family:Arial, sans-serif;
-              padding:24px;
+              max-width:600px;margin:40px auto;padding:24px;
+              background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="
-                color:#1F2937;
-                font-size:24px;
-                font-weight:700;
-                margin-bottom:16px;
-              ">
-                Verificación de la tarea nueva
-              </h2>
-              <p style="
-                color:#4B5563;
-                font-size:16px;
-                margin-bottom:24px;
-              ">
-                ¡Hola, ${user.name}! Se te ha asignado la tarea nueva con el nombre de <b>"${user.taskName}"</b> del proyecto con el nombre de <b>"${user.projectName}"</b>. 
-                Verifica tu asignación aquí y sigue el progreso de la tarea, accediendo con tus credenciales:
+              <h2 style="color:#1F2937;font-size:24px;">Tarea nueva</h2>
+              <p style="color:#4B5563;font-size:16px;">
+                ¡Hola ${user.name}! Te asignaron la tarea:
+                <strong>${user.taskName}</strong> en
+                <strong>${user.projectName}</strong>.
               </p>
-              <a href="${addMemberToProjectURL}" style="
-                display:inline-block;
-                background-color:#2563EB;
-                color:#FFFFFF;
-                text-decoration:none;
-                font-weight:600;
-                font-size:16px;
-                padding:12px 24px;
-                border-radius:6px;
+              <a href="${url}" style="
+                display:inline-block;background:#2563EB;color:#fff;
+                text-decoration:none;font-weight:600;
+                padding:12px 24px;border-radius:6px;
               ">
-                Verificación de la tarea nueva
+                Ver tarea
               </a>
             </div>
           </body>
@@ -310,103 +169,58 @@ export class AuthEmails {
       `,
     });
   };
+
   static editTaskNotify = async (user: IEmailNotifyMembers) => {
-    const addMemberToProjectURL = `${process.env.FRONTEND_URL}`;
-    const info = await transporter.sendMail({
-      from: `DevFlow <no-reply@devflow.com>`,
+    const url = process.env.FRONTEND_URL!;
+    await sendEmail({
       to: user.email,
-      subject: "DevFlow - Se te ha asignado una tarea existente!",
-      text: `Hola ${user.name}, verifica tu asignación: ${addMemberToProjectURL}`,
+      subject: "DevFlow – Asignación a una tarea existente",
+      text:  `Hola ${user.name}, la tarea "${user.taskName}" en "${user.projectName}" se te ha sido asignada.`,
       html: `
         <html>
-          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+          <body style="margin:0;padding:0;background:#F3F4F6;">
             <div style="
-              max-width:600px;
-              margin: 40px auto;
-              background-color:#FFFFFF;
-              border-radius:8px;
-              font-family:Arial, sans-serif;
-              padding:24px;
+              max-width:600px;margin:40px auto;padding:24px;
+              background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="
-                color:#1F2937;
-                font-size:24px;
-                font-weight:700;
-                margin-bottom:16px;
-              ">
-                Verificación de la tarea existente
-              </h2>
-              <p style="
-                color:#4B5563;
-                font-size:16px;
-                margin-bottom:24px;
-              ">
-                ¡Hola, ${user.name}! Se te ha asignado la tarea existente con el nombre de <b>"${user.taskName}"</b> del proyecto con el nombre de <b>"${user.projectName}"</b>. 
-                Verifica tu asignación aquí y sigue el progreso de la tarea, accediendo con tus credenciales:
+              <h2 style="color:#1F2937;font-size:24px;">Tarea nueva asignada</h2>
+              <p style="color:#4B5563;font-size:16px;">
+                La tarea:
+                <strong>${user.taskName}</strong> en
+                <strong>${user.projectName}</strong> se te ha sido asignada.
               </p>
-              <a href="${addMemberToProjectURL}" style="
-                display:inline-block;
-                background-color:#2563EB;
-                color:#FFFFFF;
-                text-decoration:none;
-                font-weight:600;
-                font-size:16px;
-                padding:12px 24px;
-                border-radius:6px;
+              <a href="${url}" style="
+                display:inline-block;background:#2563EB;color:#fff;
+                text-decoration:none;font-weight:600;
+                padding:12px 24px;border-radius:6px;
               ">
-                Verificación de la tarea existente
+                Ver cambios
               </a>
             </div>
           </body>
         </html>
       `,
     });
-  }; static deleteTaskNotify = async (user: IEmailNotifyMembers) => {
-    const addMemberToProjectURL = `${process.env.FRONTEND_URL}`;
-    const info = await transporter.sendMail({
-      from: `DevFlow <no-reply@devflow.com>`,
+  };
+
+  static deleteTaskNotify = async (user: IEmailNotifyMembers) => {
+    await sendEmail({
       to: user.email,
-      subject: "DevFlow - Se te ha eliminado una tarea en la que tu participabas",
-      text: `Hola ${user.name}, verifica el estado del proyecto: ${addMemberToProjectURL}`,
+      subject: "DevFlow – Tarea eliminada",
+      text:  `Hola ${user.name}, la tarea "${user.taskName}" en "${user.projectName}" fue eliminada.`,
       html: `
         <html>
-          <body style="margin:0; padding:0; background-color:#F3F4F6;">
+          <body style="margin:0;padding:0;background:#F3F4F6;">
             <div style="
-              max-width:600px;
-              margin: 40px auto;
-              background-color:#FFFFFF;
-              border-radius:8px;
-              font-family:Arial, sans-serif;
-              padding:24px;
+              max-width:600px;margin:40px auto;padding:24px;
+              background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="
-                color:#1F2937;
-                font-size:24px;
-                font-weight:700;
-                margin-bottom:16px;
-              ">
-                Verificación de la eliminación de una tarea antes asignada
-              </h2>
-              <p style="
-                color:#4B5563;
-                font-size:16px;
-                margin-bottom:24px;
-              ">
-                ¡Hola, ${user.name}! Se te ha eliminado la tarea antes asignada con el nombre de <b>"${user.taskName}"</b> del proyecto con el nombre de <b>"${user.projectName}"</b>. 
-                Sigue el progreso del proyecto, accediendo con tus credenciales:
+              <h2 style="color:#1F2937;font-size:24px;">Tarea eliminada</h2>
+              <p style="color:#4B5563;font-size:16px;">
+                La tarea:
+                <strong>${user.taskName}</strong> en
+                <strong>${user.projectName}</strong> ha sido eliminada.
               </p>
-              <a href="${addMemberToProjectURL}" style="
-                display:inline-block;
-                background-color:#2563EB;
-                color:#FFFFFF;
-                text-decoration:none;
-                font-weight:600;
-                font-size:16px;
-                padding:12px 24px;
-                border-radius:6px;
-              ">
-                Verificación de la eliminación de una tarea antes asignada
-              </a>
             </div>
           </body>
         </html>

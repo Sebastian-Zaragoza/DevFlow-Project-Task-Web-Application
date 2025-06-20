@@ -73,6 +73,7 @@ export class AuthController {
           "La cuenta no ha sido confirmada. Hemos enviado otro correo para confirmar tu cuenta",
         );
         res.status(401).json({ error: error.message });
+        return;
       }
 
       const isPasswordValid = await checkPassword(password, user.password);

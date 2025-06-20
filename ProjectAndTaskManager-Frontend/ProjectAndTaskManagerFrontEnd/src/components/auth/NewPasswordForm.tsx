@@ -62,7 +62,7 @@ export default function NewPasswordForm({ token }: NewPasswordFormProps) {
             placeholder="Nueva contraseña (min 8 caracteres)"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("password", {
-              required: "Password is required",
+              required: "La contraseña es requerida",
               minLength: {
                 value: 8,
                 message: "La contraseña debe tener al menos 8 caracteres",
@@ -87,9 +87,9 @@ export default function NewPasswordForm({ token }: NewPasswordFormProps) {
             placeholder="Repite la contraseña"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("password_confirmation", {
-              required: "Repeat password is required",
+              required: "Repite la misma contraseña",
               validate: (value) =>
-                value === password || "Passwords do not match",
+                value === password || "Las contraseñas no son iguales",
             })}
           />
           {errors.password_confirmation && (
