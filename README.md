@@ -28,10 +28,6 @@ DevFlow is a scalable project and task management system for software teams, fea
 - React · Vite · TypeScript · TailwindCSS  
 - React Router · Axios  
 
-**DevOps**  
-- Docker & Docker Compose  
-- GitHub Actions (CI/CD)
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📂 **Project Structure**
