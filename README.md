@@ -115,4 +115,4 @@ MIT © Sebastian Zaragoza
 
 👤 **Sebastian Zaragoza**  
 🔗 GitHub: https://github.com/Sebastian-Zaragoza  
-✉️ Email: your.email@example.com
+✉️ Email: galindozaragozasebastian@gmail.com
