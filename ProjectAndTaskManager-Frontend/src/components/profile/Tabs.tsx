@@ -19,7 +19,7 @@ export default function Tabs() {
         <div className='mb-10'>
             <div className="sm:hidden">
                 <label htmlFor="tabs" className="sr-only">
-                    Select a tab
+                    Selecciona una opción
                 </label>
                 <select
                     id="tabs"

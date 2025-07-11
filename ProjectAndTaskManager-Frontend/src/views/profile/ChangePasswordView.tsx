@@ -112,7 +112,7 @@ export default function ChangePasswordView() {
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md shadow focus:outline-none transition-colors"
                 >
-                    Cambiar Password
+                    Cambiar contraseña
                 </button>
             </form>
         </div>
