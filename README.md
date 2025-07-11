@@ -1,9 +1,3 @@
-# 🏷️ DevFlow
-
-🌐 **Project & Task Management System**
-
----
-
 ## 📖 Overview
 DevFlow is a full‑stack web application for collaborative management of software projects and tasks.  
 Built with a React + Tailwind front end and a Node.js + Express + MongoDB back end.  
@@ -118,7 +112,8 @@ Automated tests are not implemented yet and will be added in a future release.
 ---
 
 ## 📄 License
-MIT
+
+MIT © Sebastian Zaragoza
 
 ---
 
