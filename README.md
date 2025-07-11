@@ -1,122 +1,119 @@
-## 📖 Overview
-DevFlow is a full‑stack web application for collaborative management of software projects and tasks.  
-Built with a React + Tailwind front end and a Node.js + Express + MongoDB back end.  
+🔍 **Overview**  
+DevFlow is a full-stack web application designed to manage software development projects and tasks collaboratively. It features a modular frontend and backend architecture, secure authentication, and an intuitive UI for creating, editing, and assigning projects and tasks.
 
----
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-## 🚀 Features
-- 🔐 **Authentication**: JWT‑based login, email confirmation & password recovery  
-- 🗂️ **Projects**: Create, Read, Update, Delete (CRUD)  
-- ✅ **Tasks**: CRUD with assignment, status tracking & filtering  
-- ⚙️ **Validation**: Zod middleware for request payloads  
-- 📧 **Email Workflows**: Transactional emails via Nodemailer  
-- 🔀 **Architecture**: Clear separation of front end and back end  
+✨ **Key Features**  
+- 👥 **User Management**: Registration, login, email confirmation, and password recovery  
+- 📂 **Project Handling**: Create, edit, delete, and assign projects to team members  
+- ✅ **Task Tracking**: Create tasks, update status, filter by user or status, and assign tasks  
+- 🔒 **Authentication**: JWT-based authentication and protected routes  
+- 🛡️ **Validation**: Server-side data validation with Zod and custom middleware  
+- 🔄 **REST API**: Clean RESTful endpoints consumed via Axios  
+- 🎨 **Responsive UI**: Built with React, Vite, TypeScript, and TailwindCSS
 
----
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-## 🗂️ Architecture
-```
-DevFlow/
+🛠️ **Tech Stack**
+
+**Backend**  
+- Node.js · Express · TypeScript  
+- MongoDB · Mongoose  
+- JWT · bcrypt · Nodemailer  
+- Zod for schema validation  
+
+**Frontend**  
+- React · Vite · TypeScript · TailwindCSS  
+- React Router · Axios  
+
+**DevOps**  
+- Docker & Docker Compose (optional)  
+- GitHub Actions (CI/CD)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📂 **Project Structure**
+
+\`\`\`bash
+DevFlow-Project-Task-Management/
 ├── ProjectAndTaskManager-Backend/
-│   ├── src/config/       
-│   ├── src/controllers/   
-│   ├── src/middleware/    
-│   ├── src/models/       
-│   ├── src/routes/        
-│   ├── src/utils/       
-│   ├── src/index.ts
-│   └── src/server.ts
-├── ProjectAndTaskManager-Frontend/
-│   ├── public/           
-│   ├── src/api/          
-│   ├── src/components/    
-│   ├── src/hooks/        
-│   ├── src/layouts/      
-│   ├── src/lib/          
-│   ├── src/types/       
-│   ├── src/utils/        
-│   ├── src/views/        
-│   ├── src/main.tsx
-│   ├── src/router.tsx
-│   └── src/index.css
-├── .gitignore
-└── README.md
-```
+│   ├── src/
+│   │   ├── config/         # CORS, DB connection, email setup
+│   │   ├── controllers/    # Route handlers (auth, projects, tasks)
+│   │   ├── emails/         # Email templates & senders
+│   │   ├── middleware/     # Auth, validation, error handling
+│   │   ├── models/         # Mongoose schemas (User, Project, Task, Token)
+│   │   ├── routes/         # Express route definitions
+│   │   ├── utils/          # JWT helpers, token utils
+│   │   └── server.ts       # Entry point
+│   ├── .env                # Environment variables
+│   ├── package.json  
+│   └── tsconfig.json
+└── ProjectAndTaskManager-Frontend/
+    ├── ProjectAndTaskManagerFrontEnd/
+    │   ├── public/         # Static assets
+    │   ├── src/
+    │   │   ├── api/        # Axios API wrappers
+    │   │   ├── components/ # UI components
+    │   │   ├── hooks/      # Custom hooks (useAuth)
+    │   │   ├── layouts/    # App & Auth layouts
+    │   │   ├── router.tsx  # Route definitions
+    │   │   ├── main.tsx    # App entry
+    │   │   └── index.css   # Global styles
+    │   ├── .env.local      # Frontend env vars
+    │   └── vite.config.ts
+\`\`\`
 
----
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-## ⚙️ Tech Stack
-| Layer            | Technologies                           |
-|-----------------:|----------------------------------------|
-| **Front End**    | React 18, TypeScript, TailwindCSS, Vite |
-| **Back End**     | Node.js, Express, TypeScript            |
-| **Database**     | MongoDB (Mongoose)                      |
-| **Authentication** | JWT (jsonwebtoken), bcrypt            |
-| **Validation**   | Zod                                    |
-| **Email**        | Resend                                 |
-| **HTTP Client**  | Axios                                  |
+🔑 **JWT Authentication Flow**
 
----
+1. 🎉 **Registration**: User signs up → confirmation email via Nodemailer  
+2. 🔑 **Login**: Issues short‑lived access token & long‑lived refresh token  
+3. 🚪 **Protected Routes**: Access with \`Authorization: Bearer <access_token>\`  
+4. 🔄 **Token Refresh**: Call \`/auth/refresh\` with refresh token → new access token  
+5. 🔒 **Logout**: Invalidate refresh token in database  
 
-## 🛠️ Installation
-1. **Clone**  
-   ```bash
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚙️ **Quick Start**
+
+1. **Clone Repo**  
+   \`\`\`bash
    git clone https://github.com/Sebastian-Zaragoza/DevFlow-Project-Task-Management.git
-   ```
-2. **Back End**  
-   ```bash
+   cd DevFlow-Project-Task-Management
+   \`\`\`
+
+2. **Backend Setup**  
+   \`\`\`bash
    cd ProjectAndTaskManager-Backend
    npm install
-   cp .env
+   cp .env.example .env
    npm run dev
-   ```
-3. **Front End**  
-   ```bash
+   \`\`\`
+
+3. **Frontend Setup**  
+   \`\`\`bash
    cd ../ProjectAndTaskManager-Frontend/ProjectAndTaskManagerFrontEnd
    npm install
+   cp .env.local.example .env.local
    npm run dev
-   ```
-4. **Open** `http://localhost:5173`
+   \`\`\`
 
----
+4. **Access the App**  
+   - 🔗 Frontend: http://localhost:3000  
+   - 🖥️ Backend API: http://localhost:5000  
 
-## ⚙️ Usage
-1. Register & confirm your email.  
-2. Create a new project.  
-3. Add tasks, assign to users & set statuses.  
-4. Filter tasks by user or status.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**Example cURL**  
-```bash
-curl -X POST http://localhost:4000/api/projects   -H "Authorization: Bearer <YOUR_TOKEN>"   -H "Content-Type: application/json"   -d '{"name":"Project","description":"Descrption"}'
-```
-
----
-
-## 📄 API Reference
-Documentation is not implemented yet and will be addd in a future release. 
-
----
-
-## 🧪 Testing
-Automated tests are not implemented yet and will be added in a future release.  
-
----
-
-## 🤝 Contributing
-1. Fork the repository  
-2. Create a feature branch  
-3. Commit your changes  
-4. Open a Pull Request  
-
----
-
-## 📄 License
+📄 **License**
 
 MIT © Sebastian Zaragoza
 
----
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-## 📬 Contact
-**Sebastian Zaragoza**  
-GitHub: https://github.com/Sebastian-Zaragoza  
+📫 **Contact**
+
+👤 **Sebastian Zaragoza**  
+🔗 GitHub: https://github.com/Sebastian-Zaragoza  
+✉️ Email: your.email@example.com
