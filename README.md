@@ -1,9 +1,7 @@
-🔍 **Overview**  
+## 🔍 Overview 
 DevFlow is a scalable project and task management system for software teams, featuring modular architecture, secure JWT authentication, and an intuitive React frontend.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🚀 **Features**  
+## 🚀 Features
 - 👤 **User Accounts**: Registration, login, email verification, and password reset  
 - 📁 **Project Management**: Create, edit, delete, and assign projects  
 - ✔️ **Task Tracking**: Create tasks, update status, filter by user or status, and assign tasks  
@@ -14,9 +12,7 @@ DevFlow is a scalable project and task management system for software teams, fea
 - 🐳 **Containerization**: Docker Compose for development and deployment  
 - ⚙️ **CI/CD**: GitHub Actions workflows for automated testing and deployment
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🛠️ **Tech Stack**  
+## 🛠️ Tech Stack
 
 **Backend**  
 - Node.js · Express · TypeScript  
@@ -28,9 +24,7 @@ DevFlow is a scalable project and task management system for software teams, fea
 - React · Vite · TypeScript · TailwindCSS  
 - React Router · Axios  
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📂 **Project Structure**
+## 📂 Project Structure
 
 ```bash
 DevFlow-Project-Task-Management/
@@ -59,9 +53,7 @@ DevFlow-Project-Task-Management/
     └── vite.config.ts
 ```
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🔑 **JWT Authentication Flow**
+## 🔑 JWT Authentication Flow
 
 1. 📧 **Registration**: User signs up → verification email via Nodemailer  
 2. 🔑 **Login**: Issues short-lived access token & long-lived refresh token  
@@ -69,9 +61,7 @@ DevFlow-Project-Task-Management/
 4. 🔄 **Token Refresh**: POST to `/auth/refresh` with refresh token → new access token  
 5. 🔒 **Logout**: Invalidate refresh token in the database  
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚙️ **Quick Start**
+## ⚙️ Quick Start
 
 1. **Clone the repository**  
    ```bash
@@ -99,15 +89,11 @@ DevFlow-Project-Task-Management/
    - 🔗 Frontend: http://localhost:3000  
    - 🖥️ Backend API: http://localhost:5000  
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📄 **License**
+## 📄 License
 
 MIT © Sebastian Zaragoza
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📫 **Contact**
+## 📫 Contact
 
 👤 **Sebastian Zaragoza**  
 🔗 GitHub: https://github.com/Sebastian-Zaragoza  
