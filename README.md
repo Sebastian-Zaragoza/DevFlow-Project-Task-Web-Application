@@ -1,5 +1,3 @@
-### DevFlow: Project and Task Management Web Application
-
 ## Overview
 DevFlow is a comprehensive full-stack web application built to facilitate collaborative management of software development projects and tasks. It enables teams to create, edit, assign, and track projects and tasks efficiently, with a focus on security, scalability, and user-friendly interactions. The application features modular architecture, secure authentication mechanisms, and a responsive user interface, making it ideal for software development teams of any size.
 
