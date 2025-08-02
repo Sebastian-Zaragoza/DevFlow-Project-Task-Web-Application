@@ -1,11 +1,9 @@
-# DevFlow: Project and Task Management Web Application
+DevFlow: Project and Task Management Web Application
 
 ## Overview
-
 DevFlow is a comprehensive full-stack web application built to facilitate collaborative management of software development projects and tasks. It enables teams to create, edit, assign, and track projects and tasks efficiently, with a focus on security, scalability, and user-friendly interactions. The application features modular architecture, secure authentication mechanisms, and a responsive user interface, making it ideal for software development teams of any size.
 
 ## Features
-
 - **User Authentication and Management**:
   - Secure user registration, login, and logout.
   - Email verification for new accounts.
@@ -30,11 +28,8 @@ DevFlow is a comprehensive full-stack web application built to facilitate collab
   - Responsive and intuitive UI for seamless user experience.
   - Email notifications for key events (e.g., verification, resets).
   - RESTful API endpoints for frontend-backend communication.
-  - Containerization support with Docker Compose.
-  - CI/CD pipeline via GitHub Actions.
 
 ## Tech Stack
-
 ### Backend
 - Node.js
 - Express.js
@@ -54,12 +49,9 @@ DevFlow is a comprehensive full-stack web application built to facilitate collab
 - Axios (for API requests)
 
 ### Additional Tools
-- Docker Compose (for containerization)
-- GitHub Actions (for CI/CD)
 - Environment management via .env files
 
 ## Project Structure
-
 The project is divided into two main directories: the backend and the frontend. Below is the high-level directory structure:
 
 ```
@@ -92,14 +84,12 @@ DevFlow-Project-Task-Management/
 This structure promotes separation of concerns, with the backend handling data persistence and business logic, and the frontend focusing on user interface and interactions.
 
 ## JWT Authentication Flow
-
 1. **Registration/Login**: User submits credentials; backend validates and issues JWT access and refresh tokens.
 2. **Token Usage**: Frontend stores tokens and includes access token in API requests.
 3. **Refresh Mechanism**: If access token expires, refresh token is used to obtain a new one without re-login.
 4. **Security Measures**: Tokens are stored securely (e.g., HttpOnly cookies for refresh tokens); endpoints are protected via middleware.
 
 ## Quick Start (Installation)
-
 ### Prerequisites
 - Node.js (v18+ recommended)
 - MongoDB (local or cloud instance)
@@ -130,14 +120,7 @@ This structure promotes separation of concerns, with the backend handling data p
 
 4. Open your browser and navigate to `http://localhost:5173` to access the application.
 
-### Docker Setup (Optional)
-Use Docker Compose for containerized deployment:
-```
-docker-compose up -d
-```
-
 ## Usage
-
 - **Register/Login**: Create an account or log in to access the dashboard.
 - **Manage Projects**: From the dashboard, create new projects, add members, and view details.
 - **Handle Tasks**: Within a project, add tasks, assign them, and update statuses.
@@ -145,23 +128,9 @@ docker-compose up -d
 
 For development, use `npm run dev` in both directories for hot-reloading.
 
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/YourFeature`).
-3. Commit your changes (`git commit -m 'Add YourFeature'`).
-4. Push to the branch (`git push origin feature/YourFeature`).
-5. Open a Pull Request.
-
-Ensure code follows TypeScript best practices and includes tests where applicable.
-
 ## License
-
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
-
-For questions or feedback, reach out to Sebastian Zaragoza via GitHub or email (sebastian.zaragoza@example.com). 
-
+For questions or feedback, reach out to Sebastian Zaragoza via GitHub or email (galindozaragozasebastian@gmail.com). 
 Thank you for using DevFlow! 🚀
