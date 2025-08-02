@@ -1,127 +1,100 @@
-# 🏷️ DevFlow
-
-🌐 **Project & Task Management System**
-
----
-
-## 📖 Overview
-DevFlow is a full‑stack web application for collaborative management of software projects and tasks.  
-Built with a React + Tailwind front end and a Node.js + Express + MongoDB back end.  
-
----
+## 🔍 Overview 
+DevFlow is a scalable project and task management system for software teams, featuring modular architecture, secure JWT authentication, and an intuitive React frontend.
 
 ## 🚀 Features
-- 🔐 **Authentication**: JWT‑based login, email confirmation & password recovery  
-- 🗂️ **Projects**: Create, Read, Update, Delete (CRUD)  
-- ✅ **Tasks**: CRUD with assignment, status tracking & filtering  
-- ⚙️ **Validation**: Zod middleware for request payloads  
-- 📧 **Email Workflows**: Transactional emails via Nodemailer  
-- 🔀 **Architecture**: Clear separation of front end and back end  
+- 👤 **User Accounts**: Registration, login, email verification, and password reset  
+- 📁 **Project Management**: Create, edit, delete, and assign projects  
+- ✔️ **Task Tracking**: Create tasks, update status, filter by user or status, and assign tasks  
+- 🔒 **Security**: JWT-based authentication with access and refresh tokens  
+- 🧩 **Validation**: Zod schemas and custom middleware for robust input validation  
+- 🌐 **API**: RESTful endpoints consumed by Axios  
+- 🎨 **Responsive UI**: Built with React, Vite, TypeScript, and TailwindCSS  
+- 🐳 **Containerization**: Docker Compose for development and deployment  
+- ⚙️ **CI/CD**: GitHub Actions workflows for automated testing and deployment
 
----
+## 🛠️ Tech Stack
 
-## 🗂️ Architecture
-```
-DevFlow/
+**Backend**  
+- Node.js · Express · TypeScript  
+- MongoDB · Mongoose  
+- JWT · bcrypt · Nodemailer  
+- Zod for schema validation  
+
+**Frontend**  
+- React · Vite · TypeScript · TailwindCSS  
+- React Router · Axios  
+
+## 📂 Project Structure
+
+```bash
+DevFlow-Project-Task-Management/
 ├── ProjectAndTaskManager-Backend/
-│   ├── src/config/       
-│   ├── src/controllers/   
-│   ├── src/middleware/    
-│   ├── src/models/       
-│   ├── src/routes/        
-│   ├── src/utils/       
-│   ├── src/index.ts
-│   └── src/server.ts
-├── ProjectAndTaskManager-Frontend/
-│   ├── public/           
-│   ├── src/api/          
-│   ├── src/components/    
-│   ├── src/hooks/        
-│   ├── src/layouts/      
-│   ├── src/lib/          
-│   ├── src/types/       
-│   ├── src/utils/        
-│   ├── src/views/        
-│   ├── src/main.tsx
-│   ├── src/router.tsx
-│   └── src/index.css
-├── .gitignore
-└── README.md
+│   ├── src/
+│   │   ├── config/         # DB, CORS, email setup
+│   │   ├── controllers/    # Auth, projects, tasks handlers
+│   │   ├── emails/         # Email templates
+│   │   ├── middleware/     # Auth, validation, error handling
+│   │   ├── models/         # User, Project, Task, Token schemas
+│   │   ├── routes/         # Route definitions
+│   │   └── server.ts       # Application entry point
+│   ├── .env                # Environment variables
+│   ├── package.json
+│   └── tsconfig.json
+└── ProjectAndTaskManager-Frontend/
+    ├── src/
+    │   ├── api/            # Axios API wrappers
+    │   ├── components/     # UI components
+    │   ├── hooks/          # Custom React hooks
+    │   ├── layouts/        # Layout components
+    │   ├── router.tsx      # Route definitions
+    │   └── main.tsx        # App entry point
+    ├── .env.local          # Environment variables
+    ├── index.css           # Global styles
+    └── vite.config.ts
 ```
 
----
+## 🔑 JWT Authentication Flow
 
-## ⚙️ Tech Stack
-| Layer            | Technologies                           |
-|-----------------:|----------------------------------------|
-| **Front End**    | React 18, TypeScript, TailwindCSS, Vite |
-| **Back End**     | Node.js, Express, TypeScript            |
-| **Database**     | MongoDB (Mongoose)                      |
-| **Authentication** | JWT (jsonwebtoken), bcrypt            |
-| **Validation**   | Zod                                    |
-| **Email**        | Resend                                 |
-| **HTTP Client**  | Axios                                  |
+1. 📧 **Registration**: User signs up → verification email via Nodemailer  
+2. 🔑 **Login**: Issues short-lived access token & long-lived refresh token  
+3. 🚪 **Protected Routes**: Access with `Authorization: Bearer <access_token>` header  
+4. 🔄 **Token Refresh**: POST to `/auth/refresh` with refresh token → new access token  
+5. 🔒 **Logout**: Invalidate refresh token in the database  
 
----
+## ⚙️ Quick Start
 
-## 🛠️ Installation
-1. **Clone**  
+1. **Clone the repository**  
    ```bash
    git clone https://github.com/Sebastian-Zaragoza/DevFlow-Project-Task-Management.git
+   cd DevFlow-Project-Task-Management
    ```
-2. **Back End**  
+
+2. **Setup Backend**  
    ```bash
    cd ProjectAndTaskManager-Backend
    npm install
-   cp .env
+   cp .env.example .env
    npm run dev
    ```
-3. **Front End**  
+
+3. **Setup Frontend**  
    ```bash
-   cd ../ProjectAndTaskManager-Frontend/ProjectAndTaskManagerFrontEnd
+   cd ../ProjectAndTaskManager-Frontend
    npm install
+   cp .env.local.example .env.local
    npm run dev
    ```
-4. **Open** `http://localhost:5173`
 
----
-
-## ⚙️ Usage
-1. Register & confirm your email.  
-2. Create a new project.  
-3. Add tasks, assign to users & set statuses.  
-4. Filter tasks by user or status.
-
-**Example cURL**  
-```bash
-curl -X POST http://localhost:4000/api/projects   -H "Authorization: Bearer <YOUR_TOKEN>"   -H "Content-Type: application/json"   -d '{"name":"Project","description":"Descrption"}'
-```
-
----
-
-## 📄 API Reference
-Documentation is not implemented yet and will be addd in a future release. 
-
----
-
-## 🧪 Testing
-Automated tests are not implemented yet and will be added in a future release.  
-
----
-
-## 🤝 Contributing
-1. Fork the repository  
-2. Create a feature branch  
-3. Commit your changes  
-4. Open a Pull Request  
-
----
+4. **Access the app**  
+   - 🔗 Frontend: http://localhost:3000  
+   - 🖥️ Backend API: http://localhost:5000  
 
 ## 📄 License
-MIT
 
----
+MIT © Sebastian Zaragoza
 
-## 📬 Contact
-**Sebastian Zaragoza**  
-GitHub: https://github.com/Sebastian-Zaragoza  
+## 📫 Contact
+
+👤 **Sebastian Zaragoza**  
+🔗 GitHub: https://github.com/Sebastian-Zaragoza  
+✉️ Email: galindozaragozasebastian@gmail.com
