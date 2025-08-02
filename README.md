@@ -86,8 +86,8 @@ DevFlow-Project-Task-Management/
    ```
 
 4. **Access the app**  
-   - 🔗 Frontend: http://localhost:3000  
-   - 🖥️ Backend API: http://localhost:5000  
+   - 🔗 Frontend: http://localhost:5173  
+   - 🖥️ Backend API: http://localhost:4000  
 
 ## 📄 License
 
