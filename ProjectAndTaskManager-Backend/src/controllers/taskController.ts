@@ -9,12 +9,12 @@ export class TaskController {
   static createTask = async (req: Request, res: Response) => {
     try {
       const task = new Task(req.body);
-      if (req.body.relation === "Ninguna") {
+      if (req.body.relation === "None") {
         task.relation = null;
       } else {
         const relation = await Task.findById(req.body.relation);
         if (!relation) {
-           res.status(404).send("No se encontró la relación");
+           res.status(404).send("Relation not found.");
           return;
         }
         task.relation = relation;
@@ -29,7 +29,7 @@ export class TaskController {
         if (!inTeam) {
           user_assigned = await User.findById(req.project.manager);
           if (!user_assigned) {
-            res.status(404).json("Usuario no encontrado");
+            res.status(404).json("User not found");
             return;
           }
         }
@@ -46,9 +46,9 @@ export class TaskController {
           taskName: task.name
         });
       }
-      res.send("Tarea guardada");
+      res.send("Task created");
     } catch (error) {
-       res.status(500).json({ error: "Error ocurrido" });
+       res.status(500).json({ error: "Error creating task" });
     }
   };
 
@@ -59,7 +59,7 @@ export class TaskController {
       );
       res.json(tasks);
     } catch (error) {
-      res.status(500).json({ error: "Error ocurrido" });
+      res.status(500).json({ error: "Error getting tasks" });
     }
   };
 
@@ -69,18 +69,18 @@ export class TaskController {
           .populate({path: 'notes', populate: {path: 'createdBy', select: '_id name email'}});
       res.send(task);
     } catch (error) {
-      res.status(500).json({ error: "Error ocurrido" });
+      res.status(500).json({ error: "Error getting task" });
     }
   };
 
   static putTaskById = async (req: Request, res: Response) => {
     try {
-      if (req.body.relation === "Ninguna") {
+      if (req.body.relation === "None") {
         req.body.relation = null;
       } else {
         const relation = await Task.findById(req.body.relation);
         if (!relation) {
-          res.status(404).send("No se encontró la relación");
+          res.status(404).send("Relation not found.");
           return;
         }
         req.body.relation = relation.id;
@@ -93,7 +93,7 @@ export class TaskController {
       req.task.user = req.body.user;
       req.task.relation = req.body.relation;
       await req.task.save();
-      res.send("Tarea actualizada");
+      res.send("Task updated");
       if (previous_user.toString() !== req.body.user.toString() && req.body.user.toString() !== req.project.manager.toString()) {
         AuthEmails.editTaskNotify({
           email: user.email,
@@ -103,7 +103,7 @@ export class TaskController {
         });
       }
     } catch (error) {
-      res.status(500).json({ error: "Error ocurrido" });
+      res.status(500).json({ error: "Error updating task" });
     }
   };
 
@@ -115,14 +115,14 @@ export class TaskController {
             select: "_id name email",
           })
       if (!task) {
-        res.status(404).json({ error: "Tarea no encontrada." });
+        res.status(404).json({ error: "Task not found" });
         return;
       }
       req.project.tasks = req.project.tasks.filter(
         (task) => task.toString() !== req.task.id.toString(),
       );
       await Promise.allSettled([req.task.deleteOne(), req.project.save()]);
-      res.send("Tarea eliminada");
+      res.send("Task deleted");
       if (req.project.manager.toString() !== task.user.id.toString()) {
         AuthEmails.deleteTaskNotify({
           email: task.user.email,
@@ -132,7 +132,7 @@ export class TaskController {
         });
       }
     } catch (error) {
-      res.status(500).json({ error: "Error ocurrido" });
+      res.status(500).json({ error: "Error deleting task" });
     }
   };
 
@@ -146,9 +146,9 @@ export class TaskController {
       }
       req.task.completedBy.push(data)
       await req.task.save();
-      res.send("Tarea actualizada");
+      res.send("Task updated");
     } catch (error) {
-      res.status(500).json({ error: "Error ocurrido" });
+      res.status(500).json({ error: "Error updating task" });
     }
   };
 }

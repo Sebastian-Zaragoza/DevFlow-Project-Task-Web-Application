@@ -30,10 +30,10 @@ export default function ChangePasswordView() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <header className="mb-8">
                 <h1 className="text-4xl font-extrabold text-gray-900">
-                    Cambiar Contraseña
+                    Change Password
                 </h1>
                 <p className="mt-2 text-lg text-gray-500">
-                    Utiliza este formulario para cambiar tu contraseña
+                    Use this form to change your password
                 </p>
             </header>
 
@@ -47,15 +47,15 @@ export default function ChangePasswordView() {
                         htmlFor="current_password"
                         className="text-sm uppercase font-bold"
                     >
-                        Contraseña Actual
+                        Current Password
                     </label>
                     <input
                         id="current_password"
                         type="password"
-                        placeholder="Contraseña actual"
+                        placeholder="Current password"
                         className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         {...register("current_password", {
-                            required: "La contraseña actual es obligatoria",
+                            required: "Current password is required",
                         })}
                     />
                     {errors.current_password && (
@@ -65,18 +65,18 @@ export default function ChangePasswordView() {
 
                 <div className="space-y-3">
                     <label htmlFor="password" className="text-sm uppercase font-bold">
-                        Nueva Contraseña
+                        New Password
                     </label>
                     <input
                         id="password"
                         type="password"
-                        placeholder="Nuevo contraseña"
+                        placeholder="New password"
                         className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         {...register("password", {
-                            required: "La nueva contraseña es obligatoria",
+                            required: "New password is required",
                             minLength: {
                                 value: 8,
-                                message: "La contraseña debe ser mínimo de 8 caracteres",
+                                message: "Password must be at least 8 characters",
                             },
                         })}
                     />
@@ -90,17 +90,17 @@ export default function ChangePasswordView() {
                         htmlFor="password_confirmation"
                         className="text-sm uppercase font-bold"
                     >
-                        Repetir Contraseña
+                        Confirm Password
                     </label>
                     <input
                         id="password_confirmation"
                         type="password"
-                        placeholder="Repetir contraseña"
+                        placeholder="Confirm password"
                         className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         {...register("password_confirmation", {
-                            required: "Este campo es obligatorio",
+                            required: "This field is required",
                             validate: (value) =>
-                                value === password || "Las contraseñas no son iguales",
+                                value === password || "Passwords do not match",
                         })}
                     />
                     {errors.password_confirmation && (
@@ -112,7 +112,7 @@ export default function ChangePasswordView() {
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md shadow focus:outline-none transition-colors"
                 >
-                    Cambiar contraseña
+                    Change password
                 </button>
             </form>
         </div>

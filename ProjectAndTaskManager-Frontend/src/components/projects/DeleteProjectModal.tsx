@@ -33,10 +33,10 @@ export default function DeleteProjectModal() {
 
     const deleteProjectMutation = useMutation({
         mutationFn: deleteProject,
-        onError: (error: any) => {
+        onError: (error) => {
             toast.error(error.message);
         },
-        onSuccess: (msg: any) => {
+        onSuccess: (msg) => {
             toast.success(msg);
             queryClient.invalidateQueries({ queryKey: ["projects"] });
             navigate(location.pathname, {replace: true});
@@ -82,13 +82,13 @@ export default function DeleteProjectModal() {
                             <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-lg bg-white border-l-4  shadow-xl transition-all p-8 sm:p-10 text-left">
 
                                 <Dialog.Title className="text-3xl font-extrabold text-gray-900 mb-4">
-                                    Eliminar Proyecto
+                                    Delete Project
                                 </Dialog.Title>
 
                                 <p className="text-gray-700 mb-6">
-                                    Confirma la eliminación del proyecto{" "}
+                                    Confirm project deletion by{" "}
                                     <span className="text-blue-600 font-semibold">
-                  colocando tu contraseña
+                  entering your password
                 </span>
                                 </p>
 
@@ -102,15 +102,15 @@ export default function DeleteProjectModal() {
                                             htmlFor="password"
                                             className="text-sm uppercase font-bold"
                                         >
-                                            Contraseña
+                                            Password
                                         </label>
                                         <input
                                             id="password"
                                             type="password"
-                                            placeholder="Contraseña de inicio de sesión"
+                                            placeholder="Login password"
                                             className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                             {...register("password", {
-                                                required: "La contraseña es obligatoria",
+                                                required: "Password is required",
                                             })}
                                         />
                                         {errors.password && (
@@ -122,7 +122,7 @@ export default function DeleteProjectModal() {
                                         type="submit"
                                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow focus:outline-none transition-colors"
                                     >
-                                        Eliminar Proyecto
+                                        Delete Project
                                     </button>
                                 </form>
 

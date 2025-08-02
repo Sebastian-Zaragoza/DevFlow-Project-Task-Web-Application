@@ -30,16 +30,16 @@ export default function ConfirmAccountView() {
   return (
     <>
       <h1 className="text-3xl font-extrabold text-gray-900 text-center">
-        Confirmar cuenta
+        Confirm Account
       </h1>
       <p className="text-lg text-gray-600 mt-4 text-center">
-        Ingresa el código que recibiste{" "}
-        <span className="text-blue-600 font-semibold">vía email</span>
+        Enter the code you received {" "}
+        <span className="text-blue-600 font-semibold">via email</span>
       </p>
 
       <form className="mt-8 space-y-6" noValidate>
         <label className="text-sm font-medium text-gray-700 mb-1 block text-center">
-          Código de 6 dígitos
+          6-digit code
         </label>
 
         <div className="flex justify-center gap-4">
@@ -63,7 +63,7 @@ export default function ConfirmAccountView() {
           to="/auth/request-code"
           className="text-sm text-blue-600 hover:underline"
         >
-          Solicitar un nuevo código
+          Request a new code
         </Link>
       </nav>
     </>

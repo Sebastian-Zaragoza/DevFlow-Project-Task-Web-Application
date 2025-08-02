@@ -9,12 +9,12 @@ export default function NewPasswordView() {
   return (
     <>
       <h1 className="text-3xl font-extrabold text-gray-900 text-center">
-        Restablecer contraseña
+        Reset Password
       </h1>
       <p className="text-lg text-gray-600 mt-4 text-center">
-        Ingresa el código que recibiste para{" "}
+        Enter the code you received to{" "}
         <span className="text-blue-600 font-semibold">
-          restablecer tu contraseña
+          reset your password
         </span>
       </p>
 

@@ -12,9 +12,9 @@ export class NoteController {
 
             req.task.notes.push(note.id)
             await Promise.allSettled([req.task.save(), note.save()])
-            res.status(201).send('Nota creada correctamente')
+            res.status(201).send('Note created');
         }catch(error){
-            res.status(500).json({ error: "Error al crear la nota" });
+            res.status(500).json({ error: "Error creating note" });
         }
     }
     static async getNotes(req: Request, res: Response){
@@ -22,7 +22,7 @@ export class NoteController {
             const note = await Note.find({task: req.task.id})
             res.status(200).json(note);
         }catch(error){
-            res.status(500).json({ error: "Error al obtener la nota" });
+            res.status(500).json({ error: "Error getting note" });
         }
     }
     static async deleteNote(req: Request, res: Response){
@@ -30,19 +30,19 @@ export class NoteController {
             const {noteId} = req.params;
             const note = await Note.findById(noteId);
             if(!note){
-                res.status(404).json({error: "Nota no encontrada"});
+                res.status(404).json({error: "Note not found"});
                 return;
             }
             if(note.createdBy.toString() !== req.user.id.toString()){
-                res.status(401).json({error: "Acción no válida"});
+                res.status(401).json({error: "Invalid request"});
                 return;
             }
             req.task.notes = req.task.notes.filter(note => note.id.toString() !== noteId.toString());
             await Promise.allSettled([req.task.save(), note.deleteOne()])
-            res.status(200).send('Nota eliminada exitosamente')
+            res.status(200).send('Note deleted');
 
         }catch(error){
-            res.status(500).json({ error: "Error al eliminar la nota" });
+            res.status(500).json({ error: "Error deleting note" });
         }
     }
 }

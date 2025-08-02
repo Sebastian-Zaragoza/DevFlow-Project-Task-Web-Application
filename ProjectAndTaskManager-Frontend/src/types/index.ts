@@ -37,11 +37,11 @@ export type Note = z.infer<typeof noteSchema>;
 export type NoteFormData = Pick<Note, 'content'>
 
 export const taskStatusSchema = z.enum([
-  "pendiente",
-  "completado",
-  "en_espera",
-  "en_progreso",
-  "en_revision",
+  "pending",
+  "completed",
+  "on_hold",
+  "in_progress",
+  "under_reviews",
 ]);
 export type TaskStatus = z.infer<typeof taskStatusSchema>;
 

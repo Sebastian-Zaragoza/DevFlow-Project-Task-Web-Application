@@ -56,15 +56,15 @@ export default function TaskForm({
           htmlFor="name"
           className="block text-sm font-medium text-gray-700"
         >
-          Nombre de la tarea
+          Task Name
         </label>
         <input
           id="name"
           type="text"
-          placeholder="Nombre de la tarea"
+          placeholder="Task name"
           className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           {...register("name", {
-            required: "El nombre de la tarea es obligatorio",
+            required: "Task name is required",
           })}
         />
         {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
@@ -75,15 +75,15 @@ export default function TaskForm({
           htmlFor="description"
           className="block text-sm font-medium text-gray-700"
         >
-          Descripción de la tarea
+          Task Description
         </label>
         <textarea
           id="description"
           rows={4}
-          placeholder="Descripción de la tarea"
+          placeholder="Task description"
           className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           {...register("description", {
-            required: "La descripción de la tarea es obligatoria",
+            required: "Task description is required",
           })}
         />
         {errors.description && (
@@ -96,40 +96,40 @@ export default function TaskForm({
           htmlFor="rol"
           className="block text-sm font-medium text-gray-700"
         >
-          Rol del usuario
+          User Role
         </label>
         <select
           id="rol"
           className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           {...register("rol", {
-            required: "El rol es obligatorio",
+            required: "Role is required",
           })}
           defaultValue=""
         >
           <option value="" disabled>
-            Selecciona un rol
+            Select a role
           </option>
-          <option value="Diseñador">Diseñador</option>
-          <option value="Desarrollador">Desarrollador</option>
-          <option value="Testeador">Testeador</option>
+          <option value="Designer">Designer</option>
+          <option value="Developer">Developer</option>
+          <option value="Tester">Tester</option>
         </select>
         {errors.rol && <ErrorMessage>{errors.rol.message}</ErrorMessage>}
       </div>
 
       <div className="flex flex-col space-y-1">
         <label htmlFor="user" className="block text-sm font-medium text-gray-700">
-          Colaborador asignado por email
+          Collaborator assigned by email
         </label>
           <select
               id="user"
               className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
               {...register("user", {
-                required: "Debes seleccionar un colaborador",
+                required: "You must select a collaborator",
               })}
               defaultValue=""
           >
           <option value="" disabled>
-            Selecciona un colaborador por email
+            Select a collaborator by email
           </option>
           {colaborators?.map((c) => (
               <option key={c._id} value={c._id}>
@@ -148,19 +148,19 @@ export default function TaskForm({
           htmlFor="relation"
           className="block text-sm font-medium text-gray-700"
         >
-          Dependencia de tareas
+          Task Dependencies
         </label>
         <select
           id="relation"
           className="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           {...register("relation", {
             required:
-              "Elige la tarea de la cual depende. Si no, selecciona 'Ninguna'",
+              "Choose the task it depends on. If not, select 'None'",
           })}
-          defaultValue="Ninguna"
+          defaultValue="None"
           defaultChecked={loadingTasks}
         >
-          <option value="Ninguna">Ninguna</option>
+          <option value="None">None</option>
           {tasks
             .filter((taskItem) => taskItem._id !== currentTaskId)
             .map((taskItem) => (

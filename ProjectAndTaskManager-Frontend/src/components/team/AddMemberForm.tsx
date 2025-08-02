@@ -42,17 +42,17 @@ export default function AddMemberForm() {
             >
                 <div className="flex flex-col gap-3">
                     <label htmlFor="email" className="text-2xl font-normal text-gray-800">
-                        Email de usuario
+                        User Email
                     </label>
 
                     <input
                         id="email"
                         type="email"
-                        placeholder="usuario@correo.com"
+                        placeholder="user@email.com"
                         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         {...register("email", {
-                            required: "El email es obligatorio",
-                            pattern: { value: /\S+@\S+\.\S+/, message: "E-mail no válido" },
+                            required: "Email is required",
+                            pattern: { value: /\S+@\S+\.\S+/, message: "Invalid email" },
                         })}
                     />
 
@@ -65,12 +65,12 @@ export default function AddMemberForm() {
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow transition-colors disabled:opacity-60"
                 >
-                    Buscar usuario
+                    Search User
                 </button>
             </form>
             <div className="mt-10">
                 {mutation.isPending && <p className="text-center"></p>}
-                {mutation.isError && <p className="text-center"><ErrorMessage>Usuario no encontrado</ErrorMessage></p>}
+                {mutation.isError && <p className="text-center"><ErrorMessage>User not found</ErrorMessage></p>}
                 {mutation.data && <SearchResult user={mutation.data} reset={resetData}/>}
             </div>
         </>

@@ -1,10 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
-import { connect_database } from "./config/db";
-import projectRoutes from "./routes/projectRoutes";
+import { connect_database } from "./config/database";
+import projectRoutes from "./routes/ProjectAndTaskRoutes";
 import { corsConfig } from "./config/cors";
 import cors from "cors";
-import authRoutes from "./routes/authRoutes";
+import authRoutes from "./routes/AuthenticationAndAuthorizationRoutes";
 
 dotenv.config();
 connect_database();

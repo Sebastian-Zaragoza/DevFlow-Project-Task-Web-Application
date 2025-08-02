@@ -2,8 +2,8 @@ import { FingerPrintIcon, UserIcon } from '@heroicons/react/20/solid'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const tabs = [
-    { name: 'Mi Cuenta', href: '/profile', icon: UserIcon },
-    { name: 'Cambiar Contraseña', href: '/profile/update-password', icon: FingerPrintIcon },
+    { name: 'My Account', href: '/profile', icon: UserIcon },
+    { name: 'Change Password', href: '/profile/update-password', icon: FingerPrintIcon },
 ]
 
 function classNames(...classes: string[]) {
@@ -19,7 +19,7 @@ export default function Tabs() {
         <div className='mb-10'>
             <div className="sm:hidden">
                 <label htmlFor="tabs" className="sr-only">
-                    Selecciona una opción
+                    Select an option
                 </label>
                 <select
                     id="tabs"

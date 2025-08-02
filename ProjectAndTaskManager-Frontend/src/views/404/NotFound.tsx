@@ -6,19 +6,19 @@ export default function NotFound() {
                 <header className="text-center mb-8">
                     <h1 className="text-6xl font-extrabold text-gray-900 mb-4">404</h1>
                     <p className="text-lg text-gray-500">
-                        Página no encontrada
+                        Page not found
                     </p>
                 </header>
 
                 <div className="bg-white rounded-lg shadow-md  p-8 text-center">
                     <p className="text-gray-700 mb-6">
-                        Lo sentimos, la página que buscas no existe o ha sido movida.
+                        Sorry, the page you are looking for does not exist or has been moved.
                     </p>
                     <a
                         href="/"
                         className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md shadow transition-colors"
                     >
-                        Volver al inicio
+                        Back to Home
                     </a>
                 </div>
             </div>

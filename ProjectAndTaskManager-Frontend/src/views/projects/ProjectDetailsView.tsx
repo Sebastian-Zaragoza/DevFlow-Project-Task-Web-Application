@@ -37,11 +37,11 @@ export default function ProjectDetailsView() {
   if (isLoading || !project || !user) return ;
 
   const percentMap: Record<TaskStatus, number> = {
-    pendiente:    0,
-    en_espera:   25,
-    en_progreso: 50,
-    en_revision: 75,
-    completado: 100,
+    pending:    0,
+    on_hold:   25,
+    in_progress: 50,
+    under_reviews: 75,
+    completed: 100,
   };
 
   const percentages = project.tasks.map((t: Task) => percentMap[t.status] ?? 0);
@@ -53,10 +53,10 @@ export default function ProjectDetailsView() {
 
   const chartData =
       projectPercent === 100
-          ? [{ name: "Completado", value: 100 }]
+          ? [{ name: "Completed", value: 100 }]
           : [
-            { name: "Completado", value: projectPercent },
-            { name: "Restante",   value: 100 - projectPercent },
+            { name: "Completed", value: projectPercent },
+            { name: "Remaining",   value: 100 - projectPercent },
           ];
 
   return (
@@ -68,7 +68,7 @@ export default function ProjectDetailsView() {
                 {project.projectName}
               </h1>
               <p className="mt-2 text-lg text-gray-600">
-                {project.description || "(Sin descripción)"}
+                {project.description || "(No description)"}
               </p>
 
               {isManager(project.manager, user._id) && (
@@ -80,7 +80,7 @@ export default function ProjectDetailsView() {
                bg-blue-500 hover:bg-blue-600 text-white font-medium
                px-5 py-2 rounded-md shadow transition-colors"
                     >
-                      Agregar tarea
+                      Add Task
                     </button>
 
                     <Link
@@ -89,7 +89,7 @@ export default function ProjectDetailsView() {
                bg-blue-500 hover:bg-blue-600 text-white font-medium
                px-5 py-2 rounded-md shadow transition-colors text-center"
                     >
-                      Colaboradores
+                      Collaborators
                     </Link>
                   </div>
 
@@ -98,7 +98,7 @@ export default function ProjectDetailsView() {
 
             <div className="mt-6 md:mt-0 bg-white rounded-lg shadow-md p-6 flex flex-col items-center w-full md:w-1/3">
               <h3 className="text-xl font-semibold text-gray-900 pb-2 w-full text-center">
-                Progreso del proyecto
+                Project Progress
               </h3>
               <div className="w-40 h-40 relative">
                 <ResponsiveContainer width="100%" height="100%">

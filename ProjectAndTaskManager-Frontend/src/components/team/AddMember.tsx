@@ -42,13 +42,13 @@ export default function AddMember() {
                         >
                             <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white border-l-4 shadow-xl transition-all p-8 sm:p-10 text-left">
                                 <Dialog.Title className="text-3xl font-extrabold text-gray-900 mb-4">
-                                    Añadir integrante
+                                    Add Member
                                 </Dialog.Title>
 
                                 <p className="text-gray-700 mb-6 text-lg">
-                                    Busca al nuevo integrante por correo y{" "}
+                                    Search for the new member by email and{" "}
                                     <span className="text-blue-600 font-semibold">
-                    agrégalo al proyecto
+                    add them to the project
                   </span>
                                     .
                                 </p>

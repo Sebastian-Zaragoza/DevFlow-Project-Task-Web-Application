@@ -36,11 +36,11 @@ export default function LoginView() {
   return (
     <>
       <h1 className="text-3xl font-extrabold text-gray-900 text-center">
-        Inicio de sesión
+        Login
       </h1>
       <p className="text-lg text-gray-600 text-center">
-        Llena el formulario para{" "}
-        <span className="text-blue-600 font-semibold">iniciar sesión</span>
+        Fill out the form to{" "}
+        <span className="text-blue-600 font-semibold">log in</span>
       </p>
 
       <form
@@ -53,18 +53,18 @@ export default function LoginView() {
             htmlFor="email"
             className="text-sm font-medium text-gray-700 mb-1"
           >
-            Correo electrónico
+            Email
           </label>
           <input
             id="email"
             type="email"
-            placeholder="ejemplo@dominio.com"
+            placeholder="example@domain.com"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("email", {
               required: "Email is required",
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: "Correo electrónico inválido",
+                message: "Invalid email",
               },
             })}
           />
@@ -76,15 +76,15 @@ export default function LoginView() {
             htmlFor="password"
             className="text-sm font-medium text-gray-700 mb-1"
           >
-            Contraseña
+            Password
           </label>
           <input
             id="password"
             type="password"
-            placeholder="Nueva contraseña (min 8 caracteres)"
+            placeholder="New password (min 8 characters)"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("password", {
-              required: "Contraseña es requerida",
+              required: "Password is required",
             })}
           />
           {errors.password && (
@@ -96,7 +96,7 @@ export default function LoginView() {
           type="submit"
           className="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-3 rounded-lg shadow transition-colors"
         >
-          Iniciar sesión
+          Log in
         </button>
       </form>
 
@@ -105,19 +105,19 @@ export default function LoginView() {
           to="/auth/register"
           className="text-sm text-blue-600 hover:underline"
         >
-          ¿No tienes cuenta? Regístrate
+          Don't have an account? Sign up
         </Link>
         <Link
           to="/auth/forgot-password"
           className="text-sm text-blue-600 hover:underline"
         >
-          ¿Olvidaste tu contraseña? Restablecer
+          Forgot your password? Reset
         </Link>
         <Link
           to="/auth/request-code"
           className="text-sm text-blue-600 hover:underline"
         >
-          ¿No has confirmado tu cuenta? Confirmar
+          Haven't confirmed your account? Confirm
         </Link>
       </nav>
     </>

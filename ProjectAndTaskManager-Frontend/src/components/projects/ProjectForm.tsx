@@ -15,15 +15,15 @@ export default function ProjectForm({ register, errors }: ProjectFormProps) {
           htmlFor="projectName"
           className="block text-sm font-semibold text-gray-700 mb-1 uppercase"
         >
-          Nombre del proyecto
+          Project Name
         </label>
         <input
           id="projectName"
           type="text"
-          placeholder="Ingresa el nombre del proyecto"
+          placeholder="Enter project name"
           className="block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           {...register("projectName", {
-            required: "El nombre del proyecto es requerido",
+            required: "Project name is required",
           })}
         />
         {errors.projectName && (
@@ -36,15 +36,15 @@ export default function ProjectForm({ register, errors }: ProjectFormProps) {
           htmlFor="clientName"
           className="block text-sm font-semibold text-gray-700 mb-1 uppercase"
         >
-          Nombre del cliente
+          Client Name
         </label>
         <input
           id="clientName"
           type="text"
-          placeholder="Ingresa el nombre del cliente"
+          placeholder="Enter client name"
           className="block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           {...register("clientName", {
-            required: "El nombre del cliente es requerido",
+            required: "Client name is required",
           })}
         />
         {errors.clientName && (
@@ -57,15 +57,15 @@ export default function ProjectForm({ register, errors }: ProjectFormProps) {
           htmlFor="description"
           className="block text-sm font-semibold text-gray-700 mb-1 uppercase"
         >
-          Descripción
+          Description
         </label>
         <textarea
           id="description"
           rows={4}
-          placeholder="Describe brevemente el proyecto"
+          placeholder="Briefly describe the project"
           className="block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           {...register("description", {
-            required: "La descripción del proyecto es requerida",
+            required: "Project description is required",
           })}
         />
         {errors.description && (

@@ -72,7 +72,7 @@ function TaskCard({ task, canEdit }: TaskCardProps) {
                     className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-8 py-3 text-sm text-gray-700 transition-colors`}
                   >
                     <EyeIcon className="w-5 h-5 mr-2 text-gray-500" />
-                    Ver tarea
+                    View Task
                   </button>
                 )}
               </Menu.Item>
@@ -88,7 +88,7 @@ function TaskCard({ task, canEdit }: TaskCardProps) {
                                 className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-6 py-3 text-sm text-gray-700 transition-colors`}
                             >
                               <PencilIcon className="w-5 h-5 mr-2 text-gray-500" />
-                              Editar tarea
+                              Edit Task
                             </button>
                         )}
                       </Menu.Item>
@@ -101,7 +101,7 @@ function TaskCard({ task, canEdit }: TaskCardProps) {
                                 className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-3 text-sm text-red-600 transition-colors`}
                             >
                               <TrashIcon className="w-5 h-5 mr-2 text-red-600" />
-                              Eliminar tarea
+                              Delete Task
                             </button>
                         )}
                       </Menu.Item>

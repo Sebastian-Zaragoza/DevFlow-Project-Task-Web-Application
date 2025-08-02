@@ -88,10 +88,10 @@ export default function EditTaskModal({ data, taskId }: EditTaskModalProps) {
             >
               <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white border-l-4  shadow-xl transition-all p-8 sm:p-10 text-left">
                 <Dialog.Title className="text-3xl font-extrabold text-gray-900 mb-4">
-                  Editar Tarea
+                  Edit Task
                 </Dialog.Title>
                 <p className="text-gray-700 mb-6">
-                  Realiza cambios a la tarea usando el siguiente formulario:
+                  Make changes to the task using the following form:
                 </p>
 
                 <form
@@ -108,7 +108,7 @@ export default function EditTaskModal({ data, taskId }: EditTaskModalProps) {
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow focus:outline-none transition-colors"
                   >
-                    Guardar Cambios
+                    Save Changes
                   </button>
                 </form>
               </Dialog.Panel>

@@ -42,11 +42,11 @@ export default function RegisterView() {
   return (
     <>
       <h1 className="text-3xl font-extrabold text-gray-900 text-center">
-        Crear cuenta
+        Create Account
       </h1>
       <p className="text-lg text-gray-600 mt-4 text-center">
-        Completa el formulario para{" "}
-        <span className="text-blue-600 font-semibold">crear tu cuenta</span>
+        Complete the form to{" "}
+        <span className="text-blue-600 font-semibold">create your account</span>
       </p>
 
       <form
@@ -59,18 +59,18 @@ export default function RegisterView() {
             htmlFor="email"
             className="text-sm font-medium text-gray-700 mb-1"
           >
-            Correo electrónico
+            Email
           </label>
           <input
             id="email"
             type="email"
-            placeholder="ejemplo@dominio.com"
+            placeholder="example@domain.com"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("email", {
-              required: "El correo es obligatorio",
+              required: "Email is required",
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: "Correo inválido",
+                message: "Invalid email",
               },
             })}
           />
@@ -82,15 +82,15 @@ export default function RegisterView() {
             htmlFor="name"
             className="text-sm font-medium text-gray-700 mb-1"
           >
-            Nombre de usuario
+            Username
           </label>
           <input
             id="name"
             type="text"
-            placeholder="Tu nombre"
+            placeholder="Your name"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("name", {
-              required: "El nombre es obligatorio",
+              required: "Name is required",
             })}
           />
           {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
@@ -101,18 +101,18 @@ export default function RegisterView() {
             htmlFor="password"
             className="text-sm font-medium text-gray-700 mb-1"
           >
-            Contraseña
+            Password
           </label>
           <input
             id="password"
             type="password"
-            placeholder="Nueva contraseña (min 8 caracteres)"
+            placeholder="New password (min 8 characters)"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("password", {
-              required: "La contraseña es obligatoria",
+              required: "Password is required",
               minLength: {
                 value: 8,
-                message: "Debe tener al menos 8 caracteres",
+                message: "Must have at least 8 characters",
               },
             })}
           />
@@ -126,17 +126,17 @@ export default function RegisterView() {
             htmlFor="password_confirmation"
             className="text-sm font-medium text-gray-700 mb-1"
           >
-            Repetir contraseña
+            Confirm Password
           </label>
           <input
             id="password_confirmation"
             type="password"
-            placeholder="Repite tu contraseña"
+            placeholder="Repeat your password"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("password_confirmation", {
-              required: "La confirmación es obligatoria",
+              required: "Confirmation is required",
               validate: (value) =>
-                value === password || "Las contraseñas no coinciden",
+                value === password || "Passwords do not match",
             })}
           />
           {errors.password_confirmation && (
@@ -148,7 +148,7 @@ export default function RegisterView() {
           type="submit"
           className="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-3 rounded-lg shadow transition-colors"
         >
-          Registrarse
+          Sign Up
         </button>
       </form>
 
@@ -157,13 +157,13 @@ export default function RegisterView() {
           to="/auth/login"
           className="text-sm text-blue-600 hover:underline"
         >
-          ¿Ya tienes una cuenta? Inicia sesión
+          Already have an account? Log in
         </Link>
         <Link
           to="/auth/forgot-password"
           className="text-sm text-blue-600 hover:underline"
         >
-          ¿Olvidaste tu contraseña? Restablecer
+          Forgot your password? Reset
         </Link>
       </nav>
     </>

@@ -26,7 +26,7 @@ export default function AddTaskModal() {
     description: "",
     rol: "",
     user: "",
-    relation: "Ninguna",
+    relation: "None",
   };
 
   const {
@@ -88,11 +88,11 @@ export default function AddTaskModal() {
             >
               <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white border-l-4  shadow-xl transition-all p-8 sm:p-10 text-left">
                 <Dialog.Title className="text-3xl font-extrabold text-gray-900 mb-4">
-                  Nueva Tarea
+                  New Task
                 </Dialog.Title>
                 <p className="text-gray-700 mb-6">
-                  Llena el formulario y crea{" "}
-                  <span className="text-blue-600 font-semibold">una tarea</span>
+                  Fill out the form and create{" "}
+                  <span className="text-blue-600 font-semibold">a task</span>
                 </p>
                 <form
                   onSubmit={handleSubmit(handleCreateTask)}
@@ -108,7 +108,7 @@ export default function AddTaskModal() {
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow focus:outline-none transition-colors"
                   >
-                    Guardar tarea
+                    Save Task
                   </button>
                 </form>
               </Dialog.Panel>

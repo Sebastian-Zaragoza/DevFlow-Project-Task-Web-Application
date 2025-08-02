@@ -29,7 +29,7 @@ export default function NoteDetail({note}: NoteDetailProps) {
             toast.error(error.message);
         },
         onSuccess: () => {
-            toast.success("Nota eliminada correctamente");
+            toast.success("Note deleted successfully");
             queryClient.invalidateQueries({queryKey: ['task', taskId]})
         }
     })
@@ -39,7 +39,7 @@ export default function NoteDetail({note}: NoteDetailProps) {
                 <div className="flex-1">
                     <p className="text-gray-900">
                         <span className="font-semibold">{note.content}</span>{' '}
-                        <span className="text-gray-700">por</span>{' '}
+                        <span className="text-gray-700">by</span>{' '}
                         <span className="font-semibold">{note.createdBy.name}</span>
                     </p>
                     <p className="mt-1 text-xs text-gray-500">
@@ -55,7 +55,7 @@ export default function NoteDetail({note}: NoteDetailProps) {
                         }
                         className="inline-flex items-center px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-xs font-medium rounded-md shadow focus:outline-none focus:ring-2 focus:ring-red-400 transition-colors"
                     >
-                        Eliminar
+                        Delete
                     </button>
                 )}
             </div>

@@ -8,9 +8,9 @@ export class ProjectController {
     project.manager = req.user.id;
     try {
       await project.save();
-      res.send("Proyecto creado exitosamente");
+      res.send("Project created");
     } catch (error) {
-      res.status(500).json({ error: "Error al crear el proyecto" });
+      res.status(500).json({ error: "Error creating project" });
     }
   };
   static getProjects = async (req: Request, res: Response) => {
@@ -23,7 +23,7 @@ export class ProjectController {
       }).populate("tasks");
       res.send(projects);
     } catch (error) {
-      res.status(404).json({ error: "Error al obtener los proyectos" });
+      res.status(404).json({ error: "Error getting project" });
     }
   };
   static getProjectById = async (req: Request, res: Response) => {
@@ -31,18 +31,18 @@ export class ProjectController {
     try {
       const project = await Project.findById(id).populate("tasks");
       if (!project) {
-        const error = new Error("Proyecto no encontrado con el id: " + id);
+        const error = new Error("Project not found with id: " + id);
         res.status(404).json({ error: error });
         return;
       }
       if (project.manager.toString() !== req.user.id.toString() && !project.team.includes(req.user.id)) {
-        const error = new Error("Acción no válida");
+        const error = new Error("Invalid request");
         res.status(404).json({ error: error });
         return;
       }
       res.send(project);
     } catch (error) {
-      res.status(500).json({ error: "Error al obtener el proyecto" });
+      res.status(500).json({ error: "Error getting project" });
     }
   };
   static updateProjectById = async (req: Request, res: Response) => {
@@ -50,12 +50,12 @@ export class ProjectController {
     try {
       const project = await Project.findById(id);
       if (!project) {
-        const error = new Error("Proyecto no encontrado con el id: " + id);
+        const error = new Error("Project not found with id: " + id);
         res.status(404).json({ error: error });
         return;
       }
       if (project.manager.toString() !== req.user.id.toString()) {
-        const error = new Error("No tienes los permisos necesarios");
+        const error = new Error("Invalid request");
         res.status(404).json({ error: error });
         return;
       }
@@ -63,9 +63,9 @@ export class ProjectController {
       project.clientName = req.body.clientName;
       project.description = req.body.description;
       await project.save();
-      res.send("Proyecto actualizado exitosamente ");
+      res.send("Project updated");
     } catch (error) {
-      res.status(500).json({ error: "Error al obtener el proyecto" });
+      res.status(500).json({ error: "Error updating project" });
     }
   };
   static deleteProjectById = async (req: Request, res: Response) => {
@@ -73,28 +73,28 @@ export class ProjectController {
     try {
       const project = await Project.findById(id).populate<{ tasks: ITasks[] }>("tasks") ;
       if (!project) {
-        const error = new Error("Proyecto no encontrado con el id: " + id);
+        const error = new Error("Project not found with id: " + id);
         res.status(404).json({ error: error });
         return;
       }
       if (project.manager.toString() !== req.user.id.toString()) {
-        const error = new Error("No tienes los permisos necesarios");
+        const error = new Error("Invalid request");
         res.status(404).json({ error: error });
         return;
       }
-      const hasPending = project.tasks.some(task => task.status !== 'completado');
+      const hasPending = project.tasks.some(task => task.status !== 'completed');
       if (hasPending) {
-        res.status(404).json({ error: 'El proyecto tiene tareas incompletas' });
+        res.status(404).json({ error: 'The project has incompleted tasks' });
         return;
       }
       if (project.team  && project.team.length > 0){
-        res.status(404).json({ error: 'El proyecto aún tiene colaboradores' });
+        res.status(404).json({ error: 'The project has collaborators' });
         return;
       }
       await project.deleteOne();
-      res.send("Proyecto eliminado exitosamente ");
+      res.send("Project deleted");
     } catch (error) {
-      res.status(500).json({ error: "Error al obtener el proyecto" });
+      res.status(500).json({ error: "Error deleting project" });
     }
   };
 }

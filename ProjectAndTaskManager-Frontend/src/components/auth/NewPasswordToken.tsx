@@ -36,7 +36,7 @@ export default function NewPasswordToken({
     <>
       <form className="mt-8 space-y-6 bg-white rounded-2xl p-8" noValidate>
         <label className="text-sm font-medium text-gray-700 block text-center mb-4">
-          Código de 6 dígitos
+          6-digit code
         </label>
 
         <div className="flex justify-center gap-4">
@@ -60,7 +60,7 @@ export default function NewPasswordToken({
           to="/auth/forgot-password"
           className="text-sm text-blue-600 hover:underline"
         >
-          Solicitar un nuevo código
+          Request a new code
         </Link>
       </nav>
     </>

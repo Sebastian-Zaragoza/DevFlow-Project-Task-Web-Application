@@ -37,7 +37,7 @@ function SearchResult({user, reset}: SearchResultProps) {
     return (
         <>
             <h2 className="mt-10 text-center text-2xl font-extrabold text-gray-900">
-                Resultado de la búsqueda
+                Search result
             </h2>
 
             <div className="mt-6 max-w-xl mx-auto bg-white rounded-lg shadow-md p-6">
@@ -61,7 +61,7 @@ function SearchResult({user, reset}: SearchResultProps) {
                      font-semibold py-2 rounded-md shadow
                      transition-colors"
                     >
-                        Añadir
+                        Add
                     </button>
                 </div>
             </div>

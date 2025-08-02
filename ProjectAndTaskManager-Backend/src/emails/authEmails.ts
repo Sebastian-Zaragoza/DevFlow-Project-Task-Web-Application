@@ -11,8 +11,8 @@ export class AuthEmails {
     const url = `${process.env.FRONTEND_URL}/auth/confirm-account`;
     await sendEmail({
       to: user.email,
-      subject: "DevFlow – Confirma tu cuenta",
-      text:  `Hola ${user.name}, confirma tu cuenta aquí: ${url}\nCódigo: ${user.token}`,
+      subject: "DevFlow – Confirm your account",
+      text:  `Hello ${user.name}, confirm your account here: ${url}\nCode: ${user.token}`,
       html: `
         <html>
           <body style="margin:0;padding:0;background:#F3F4F6;">
@@ -20,23 +20,23 @@ export class AuthEmails {
               max-width:600px;margin:40px auto;padding:24px;
               background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="color:#1F2937;font-size:24px;">Confirma tu cuenta</h2>
+              <h2 style="color:#1F2937;font-size:24px;">Confirm your account</h2>
               <p style="color:#4B5563;font-size:16px;">
-                Hola ${user.name}, gracias por registrarte.  
-                Para activarla, haz clic en este botón:
+                Hello ${user.name}, thank you for registering.  
+                To activate it, click this button:
               </p>
               <a href="${url}" style="
                 display:inline-block;background:#2563EB;color:#fff;
                 text-decoration:none;font-weight:600;
                 padding:12px 24px;border-radius:6px;
               ">
-                Confirmar cuenta
+                Confirm account
               </a>
               <p style="color:#4B5563;font-size:16px;margin-top:24px;">
-                Tu código de verificación: <strong style="color:#1F2937;">${user.token}</strong>
+                Your verification code: <strong style="color:#1F2937;">${user.token}</strong>
               </p>
               <p style="color:#9CA3AF;font-size:12px;">
-                Este código expira en 10 minutos.
+                This code expires in 10 minutes.
               </p>
             </div>
           </body>
@@ -49,8 +49,8 @@ export class AuthEmails {
     const url = `${process.env.FRONTEND_URL}/auth/new-password`;
     await sendEmail({
       to: user.email,
-      subject: "DevFlow – Restablece tu contraseña",
-      text:  `Hola ${user.name}, restablece tu contraseña aquí: ${url}\nCódigo: ${user.token}`,
+      subject: "DevFlow – Reset your password",
+      text:  `Hello ${user.name}, reset your password here: ${url}\nCode: ${user.token}`,
       html: `
         <html>
           <body style="margin:0;padding:0;background:#F3F4F6;">
@@ -58,22 +58,22 @@ export class AuthEmails {
               max-width:600px;margin:40px auto;padding:24px;
               background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="color:#1F2937;font-size:24px;">Restablecer contraseña</h2>
+              <h2 style="color:#1F2937;font-size:24px;">Reset password</h2>
               <p style="color:#4B5563;font-size:16px;">
-                Hola ${user.name}, haz clic en el botón para continuar:
+                Hello ${user.name}, click the button to continue:
               </p>
               <a href="${url}" style="
                 display:inline-block;background:#2563EB;color:#fff;
                 text-decoration:none;font-weight:600;
                 padding:12px 24px;border-radius:6px;
               ">
-                Restablecer contraseña
+                Reset password
               </a>
               <p style="color:#4B5563;font-size:16px;margin-top:24px;">
-                Tu código: <strong style="color:#1F2937;">${user.token}</strong>
+                Your code: <strong style="color:#1F2937;">${user.token}</strong>
               </p>
               <p style="color:#9CA3AF;font-size:12px;">
-                Expira en 10 minutos.
+                Expires in 10 minutes.
               </p>
             </div>
           </body>
@@ -86,8 +86,8 @@ export class AuthEmails {
     const url = process.env.FRONTEND_URL!;
     await sendEmail({
       to: user.email,
-      subject: "DevFlow – Nuevo miembro en proyecto",
-      text:  `Hola ${user.name}, te agregaron al proyecto "${user.projectName}". Visita: ${url}`,
+      subject: "DevFlow – New member in project",
+      text:  `Hello ${user.name}, you were added to the project "${user.projectName}". Visit: ${url}`,
       html: `
         <html>
           <body style="margin:0;padding:0;background:#F3F4F6;">
@@ -95,9 +95,9 @@ export class AuthEmails {
               max-width:600px;margin:40px auto;padding:24px;
               background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="color:#1F2937;font-size:24px;">Asignación a proyecto</h2>
+              <h2 style="color:#1F2937;font-size:24px;">Project assignment</h2>
               <p style="color:#4B5563;font-size:16px;">
-                Hola ${user.name}, fuiste agregado al proyecto:
+                Hello ${user.name}, you were added to the project:
                 <strong>${user.projectName}</strong>
               </p>
               <a href="${url}" style="
@@ -105,7 +105,7 @@ export class AuthEmails {
                 text-decoration:none;font-weight:600;
                 padding:12px 24px;border-radius:6px;
               ">
-                Ver proyecto
+                View project
               </a>
             </div>
           </body>
@@ -117,8 +117,8 @@ export class AuthEmails {
   static deleteMemberToProject = async (user: IEmailAddDeleteMember) => {
     await sendEmail({
       to: user.email,
-      subject: "DevFlow – Eliminado de proyecto",
-      text:  `Hola ${user.name}, fuiste eliminado del proyecto "${user.projectName}".`,
+      subject: "DevFlow – Removed from project",
+      text:  `Hello ${user.name}, you were removed from the project "${user.projectName}".`,
       html: `
         <html>
           <body style="margin:0;padding:0;background:#F3F4F6;">
@@ -126,9 +126,9 @@ export class AuthEmails {
               max-width:600px;margin:40px auto;padding:24px;
               background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="color:#1F2937;font-size:24px;">Eliminación de proyecto</h2>
+              <h2 style="color:#1F2937;font-size:24px;">Project removal</h2>
               <p style="color:#4B5563;font-size:16px;">
-                Hola ${user.name}, fuiste eliminado de "${user.projectName}". ¡Anímate a crear otro!
+                Hello ${user.name}, you were removed from "${user.projectName}". Keep up the good work and create another one!
               </p>
             </div>
           </body>
@@ -141,8 +141,8 @@ export class AuthEmails {
     const url = process.env.FRONTEND_URL!;
     await sendEmail({
       to: user.email,
-      subject: "DevFlow – Nueva tarea asignada",
-      text:  `Hola ${user.name}, nueva tarea "${user.taskName}" en "${user.projectName}".`,
+      subject: "DevFlow – New task assigned",
+      text:  `Hello ${user.name}, new task "${user.taskName}" in "${user.projectName}".`,
       html: `
         <html>
           <body style="margin:0;padding:0;background:#F3F4F6;">
@@ -150,10 +150,10 @@ export class AuthEmails {
               max-width:600px;margin:40px auto;padding:24px;
               background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="color:#1F2937;font-size:24px;">Tarea nueva</h2>
+              <h2 style="color:#1F2937;font-size:24px;">New task</h2>
               <p style="color:#4B5563;font-size:16px;">
-                ¡Hola ${user.name}! Te asignaron la tarea:
-                <strong>${user.taskName}</strong> en
+                Hello ${user.name}! You were assigned the task:
+                <strong>${user.taskName}</strong> in
                 <strong>${user.projectName}</strong>.
               </p>
               <a href="${url}" style="
@@ -161,7 +161,7 @@ export class AuthEmails {
                 text-decoration:none;font-weight:600;
                 padding:12px 24px;border-radius:6px;
               ">
-                Ver tarea
+                View task
               </a>
             </div>
           </body>
@@ -174,8 +174,8 @@ export class AuthEmails {
     const url = process.env.FRONTEND_URL!;
     await sendEmail({
       to: user.email,
-      subject: "DevFlow – Asignación a una tarea existente",
-      text:  `Hola ${user.name}, la tarea "${user.taskName}" en "${user.projectName}" se te ha sido asignada.`,
+      subject: "DevFlow – Assignment to an existing task",
+      text:  `Hello ${user.name}, the task "${user.taskName}" in "${user.projectName}" has been assigned to you.`,
       html: `
         <html>
           <body style="margin:0;padding:0;background:#F3F4F6;">
@@ -183,18 +183,18 @@ export class AuthEmails {
               max-width:600px;margin:40px auto;padding:24px;
               background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="color:#1F2937;font-size:24px;">Tarea nueva asignada</h2>
+              <h2 style="color:#1F2937;font-size:24px;">New task assigned</h2>
               <p style="color:#4B5563;font-size:16px;">
-                La tarea:
-                <strong>${user.taskName}</strong> en
-                <strong>${user.projectName}</strong> se te ha sido asignada.
+                The task:
+                <strong>${user.taskName}</strong> in
+                <strong>${user.projectName}</strong> has been assigned to you.
               </p>
               <a href="${url}" style="
                 display:inline-block;background:#2563EB;color:#fff;
                 text-decoration:none;font-weight:600;
                 padding:12px 24px;border-radius:6px;
               ">
-                Ver cambios
+                View changes
               </a>
             </div>
           </body>
@@ -206,8 +206,8 @@ export class AuthEmails {
   static deleteTaskNotify = async (user: IEmailNotifyMembers) => {
     await sendEmail({
       to: user.email,
-      subject: "DevFlow – Tarea eliminada",
-      text:  `Hola ${user.name}, la tarea "${user.taskName}" en "${user.projectName}" fue eliminada.`,
+      subject: "DevFlow – Task deleted",
+      text:  `Hello ${user.name}, the task "${user.taskName}" in "${user.projectName}" was deleted.`,
       html: `
         <html>
           <body style="margin:0;padding:0;background:#F3F4F6;">
@@ -215,11 +215,11 @@ export class AuthEmails {
               max-width:600px;margin:40px auto;padding:24px;
               background:#fff;border-radius:8px;font-family:Arial,sans-serif;
             ">
-              <h2 style="color:#1F2937;font-size:24px;">Tarea eliminada</h2>
+              <h2 style="color:#1F2937;font-size:24px;">Task deleted</h2>
               <p style="color:#4B5563;font-size:16px;">
-                La tarea:
-                <strong>${user.taskName}</strong> en
-                <strong>${user.projectName}</strong> ha sido eliminada.
+                The task:
+                <strong>${user.taskName}</strong> in
+                <strong>${user.projectName}</strong> has been deleted.
               </p>
             </div>
           </body>

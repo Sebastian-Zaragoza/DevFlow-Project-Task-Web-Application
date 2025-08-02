@@ -33,7 +33,7 @@ export default function AppLayout() {
 
         <footer className="px-8 py-5">
           <p className="text-center text-gray-500">
-            Todos los derechos reservados {new Date().getFullYear()}
+            All rights reserved {new Date().getFullYear()}
           </p>
         </footer>
 

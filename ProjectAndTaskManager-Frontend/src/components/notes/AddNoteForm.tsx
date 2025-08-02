@@ -56,15 +56,15 @@ export default function AddNoteForm({relation}: AddNoteProps) {
                         htmlFor="content"
                         className="block text-sm font-medium text-gray-700 mb-1"
                     >
-                        Nueva Nota
+                        New Note
                     </label>
                     <input
                         id="content"
                         type="text"
-                        placeholder="Escribe tu nota aquí..."
+                        placeholder="Write your note here..."
                         className="block w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
                         {...register("content", {
-                            required: "El contenido de la nota es requerido",
+                            required: "Note content is required",
                         })}
                     />
                     {errors.content && (
@@ -76,10 +76,10 @@ export default function AddNoteForm({relation}: AddNoteProps) {
 
                 <button
                     type="submit"
-                    disabled={relation! && relation.status !== 'completado'}
+                    disabled={relation! && relation.status !== 'completed'}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md shadow focus:outline-none transition-colors disabled:bg-gray-200"
                 >
-                    Crear nota
+                    Create Note
                 </button>
             </form>
         </>

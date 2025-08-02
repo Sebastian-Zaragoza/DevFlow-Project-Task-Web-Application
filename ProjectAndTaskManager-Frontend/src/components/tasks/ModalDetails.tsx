@@ -15,11 +15,11 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 
 export const optionsStatus: { [key: string]: string } = {
-  pendiente: "Pendiente",
-  en_espera: "En Espera",
-  en_progreso: "En Progreso",
-  en_revision: "En Revisión",
-  completado: "Completado",
+  pending: "Pending",
+  on_hold: "On Hold",
+  in_progress: "In Progress",
+  under_reviews: "Under Reviews",
+  completed: "Completed",
 };
 
 export default function ModalDetails() {
@@ -50,7 +50,7 @@ export default function ModalDetails() {
         .then((res) => {
           if (res) setRelation(res.data);
         })
-        .catch((e) => console.error("Error al cargar la tarea:", e))
+        .catch((e) => console.error("Error getting task:", e))
         .finally(() => setLoading(false));
   }, [projectId, taskId]);
 
@@ -89,19 +89,19 @@ export default function ModalDetails() {
   if (isLoading || !data) return;
 
   const percentMap: Record<TaskStatus, number> = {
-    pendiente:    0,
-    en_espera:   25,
-    en_progreso: 50,
-    en_revision: 75,
-    completado: 100,
+    pending:    0,
+    on_hold:   25,
+    in_progress: 50,
+    under_reviews: 75,
+    completed: 100,
   };
 
   const currentPercent = percentMap[data.status];
   const chartData = currentPercent === 100
-      ? [{ name: 'Completado', value: 100 }]
+      ? [{ name: 'Completed', value: 100 }]
       : [
-        { name: 'Completado', value: currentPercent },
-        { name: 'Restante',   value: 100 - currentPercent },
+        { name: 'Completed', value: currentPercent },
+        { name: 'Remaining',   value: 100 - currentPercent },
       ];
 
   return (
@@ -140,34 +140,34 @@ export default function ModalDetails() {
                         {data.name}
                       </Dialog.Title>
                       <p className="text-sm text-gray-500">
-                        Agregado: {formatDate(data.createdAt)} · Actualizado: {formatDate(data.updatedAt)}
+                        Added: {formatDate(data.createdAt)} · Updated: {formatDate(data.updatedAt)}
                       </p>
                     </div>
                   </header>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div>
-                      <h3 className="text-lg font-medium text-gray-700 mb-2">Descripción</h3>
+                      <h3 className="text-lg font-medium text-gray-700 mb-2">Description</h3>
                       <p className="text-gray-800">{data.description}</p>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-medium text-gray-700 mb-2">Información del colaborador</h3>
-                      <p className="text-gray-800"><span className="font-semibold">Rol:</span> {data.rol}</p>
-                      <p className="text-gray-800"><span className="font-semibold">Nombre:</span> {user_data?.name}</p>
+                      <h3 className="text-lg font-medium text-gray-700 mb-2">Collaborator Information</h3>
+                      <p className="text-gray-800"><span className="font-semibold">Role:</span> {data.rol}</p>
+                      <p className="text-gray-800"><span className="font-semibold">Name:</span> {user_data?.name}</p>
                       <p className="text-gray-800"><span className="font-semibold">Email:</span> {user_data?.email}</p>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-medium text-gray-700 mb-2">Dependencia</h3>
-                      <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${loading ? 'bg-gray-100 text-gray-500' : relation ? relation.status === 'completado' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`}>
+                      <h3 className="text-lg font-medium text-gray-700 mb-2">Dependency</h3>
+                      <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${loading ? 'bg-gray-100 text-gray-500' : relation ? relation.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`}>
                     {loading
                         ? ''
                         : relation
-                            ? relation.status === 'completado'
-                                ? `Completada: ${relation.name}`
-                                : `No completada: ${relation.name}`
-                            : 'Sin dependencias'}
+                            ? relation.status === 'completed'
+                                ? `Completed: ${relation.name}`
+                                : `Not completed: ${relation.name}`
+                            : 'Without dependencies'}
                   </span>
                     </div>
                   </div>
@@ -177,7 +177,7 @@ export default function ModalDetails() {
 
                         <div className="bg-white rounded-lg shadow-md p-6">
                           <h3 className="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2">
-                            Historial de Cambios
+                            Change History
                           </h3>
                           <ul className="space-y-4">
                             {data.completedBy.map((log) => (
@@ -197,7 +197,7 @@ export default function ModalDetails() {
                         </div>
                         <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center">
                           <h4 className="text-xl font-semibold text-gray-900 mb-4 border-b border-gray-200 pb-2 w-full text-center">
-                            Progreso de la tarea
+                            Task Progress
                           </h4>
                           <div className="w-48 h-48 relative mt-4">
                             <ResponsiveContainer width="100%" height="100%">
@@ -229,11 +229,11 @@ export default function ModalDetails() {
                   )}
 
                   <section className="mb-8">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Estado Actual</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Current Status</label>
                     <select
                         onChange={handleChange}
                         defaultValue={data.status}
-                        disabled={relation && relation.status !== 'completado'}
+                        disabled={relation && relation.status !== 'completed'}
                         className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
                     >
                       {Object.entries(optionsStatus).map(([key, value]) => (

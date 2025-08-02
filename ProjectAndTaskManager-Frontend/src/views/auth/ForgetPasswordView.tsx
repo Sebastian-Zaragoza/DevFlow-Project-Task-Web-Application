@@ -35,12 +35,12 @@ export default function ForgotPasswordView() {
   return (
     <>
       <h1 className="text-3xl font-extrabold text-gray-900 text-center">
-        Restablecer contraseña
+        Reset Password
       </h1>
       <p className="text-lg text-gray-600 mt-4 text-center">
-        Completa el formulario para{" "}
+        Complete the form to{" "}
         <span className="text-blue-600 font-semibold">
-          restablecer tu contraseña
+          reset your password
         </span>
       </p>
 
@@ -55,18 +55,18 @@ export default function ForgotPasswordView() {
             htmlFor="email"
             className="text-sm font-medium text-gray-700 mb-1"
           >
-            Correo electrónico
+            Email
           </label>
           <input
             id="email"
             type="email"
-            placeholder="ejemplo@dominio.com"
+            placeholder="example@domain.com"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("email", {
-              required: "El correo es obligatorio",
+              required: "Email is required",
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: "Correo inválido",
+                message: "Invalid email",
               },
             })}
           />
@@ -77,7 +77,7 @@ export default function ForgotPasswordView() {
           type="submit"
           className="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-3 rounded-lg shadow transition-colors"
         >
-          Enviar correo
+          Send Email
         </button>
       </form>
 
@@ -86,13 +86,13 @@ export default function ForgotPasswordView() {
           to="/auth/register"
           className="text-sm text-blue-600 hover:underline"
         >
-          ¿No tienes cuenta? Regístrate
+          Don't have an account? Sign up
         </Link>
         <Link
           to="/auth/login"
           className="text-sm text-blue-600 hover:underline"
         >
-          ¿Ya tienes cuenta? Inicia sesión
+          Already have an account? Log in
         </Link>
       </nav>
     </>

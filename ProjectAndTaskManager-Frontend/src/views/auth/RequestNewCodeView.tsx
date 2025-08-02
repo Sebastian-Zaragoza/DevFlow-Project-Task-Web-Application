@@ -35,11 +35,11 @@ export default function RequestNewCodeView() {
   return (
     <>
       <h1 className="text-3xl font-extrabold text-gray-900 text-center">
-        Solicitar código de confirmación
+        Request Confirmation Code
       </h1>
       <p className="text-lg text-gray-600 mt-4 text-center">
-        Ingresa tu correo para recibir{" "}
-        <span className="text-blue-600 font-semibold">un nuevo código</span>
+        Enter your email to receive{" "}
+        <span className="text-blue-600 font-semibold">a new code</span>
       </p>
 
       <form
@@ -52,18 +52,18 @@ export default function RequestNewCodeView() {
             htmlFor="email"
             className="text-sm font-medium text-gray-700 mb-1"
           >
-            Correo electrónico
+            Email
           </label>
           <input
             id="email"
             type="email"
-            placeholder="ejemplo@dominio.com"
+            placeholder="example@domain.com"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("email", {
-              required: "El correo es obligatorio",
+              required: "Email is required",
               pattern: {
                 value: /\S+@\S+\.\S+/,
-                message: "Correo inválido",
+                message: "Invalid email",
               },
             })}
           />
@@ -75,7 +75,7 @@ export default function RequestNewCodeView() {
           type="submit"
           className="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-3 rounded-lg shadow transition-colors"
         >
-          Enviar código
+          Send Code
         </button>
       </form>
 
@@ -84,13 +84,13 @@ export default function RequestNewCodeView() {
           to="/auth/login"
           className="text-sm text-blue-600 hover:underline"
         >
-          ¿Ya tienes cuenta? Iniciar sesión
+          Already have an account? Log in
         </Link>
         <Link
           to="/auth/forgot-password"
           className="text-sm text-blue-600 hover:underline"
         >
-          ¿Olvidaste tu contraseña? Restablecer
+          Forgot your password? Reset
         </Link>
       </nav>
     </>

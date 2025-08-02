@@ -17,7 +17,7 @@ export const authenticate = async (
 ) => {
   const bearer = req.headers.authorization;
   if (!bearer) {
-    const error = new Error("Acceso no autorizado");
+    const error = new Error("Access deny");
     res.status(401).send(error.message);
   }
   const [, token] = bearer.split(" ");
@@ -28,11 +28,11 @@ export const authenticate = async (
       if (user) {
         req.user = user;
       } else {
-        res.status(500).send({ error: "Token inválido" });
+        res.status(500).send({ error: "Invalid token" });
       }
     }
   } catch (error) {
-    res.status(500).send({ error: "Token inválido" });
+    res.status(500).send({ error: "Invalid token" });
   }
   next();
 };

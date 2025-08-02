@@ -31,10 +31,10 @@ export default function ProfileForm({ data }: ProfileFormProps) {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <header className="mb-8">
                 <h1 className="text-4xl font-extrabold text-gray-900">
-                    Mi Perfil
+                    My Profile
                 </h1>
                 <p className="mt-2 text-lg text-gray-500">
-                    Aquí puedes actualizar tu información
+                    Here you can update your information
                 </p>
             </header>
 
@@ -48,15 +48,15 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                         htmlFor="name"
                         className="text-sm uppercase font-bold"
                     >
-                        Nombre
+                        Name
                     </label>
                     <input
                         id="name"
                         type="text"
-                        placeholder="Tu Nombre"
+                        placeholder="Your Name"
                         className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         {...register("name", {
-                            required: "Nombre de usuario es obligatorio",
+                            required: "Username is required",
                         })}
                     />
                     {errors.name && (
@@ -69,18 +69,18 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                         htmlFor="email"
                         className="text-sm uppercase font-bold"
                     >
-                        E-mail
+                        Email
                     </label>
                     <input
                         id="email"
                         type="email"
-                        placeholder="Tu Email"
+                        placeholder="Your Email"
                         className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         {...register("email", {
-                            required: "El e-mail es obligatorio",
+                            required: "Email is required",
                             pattern: {
                                 value: /\S+@\S+\.\S+/,
-                                message: "E-mail no válido",
+                                message: "Invalid email",
                             },
                         })}
                     />
@@ -93,7 +93,7 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md shadow focus:outline-none transition-colors"
                 >
-                    Guardar cambios
+                    Save Changes
                 </button>
             </form>
         </div>

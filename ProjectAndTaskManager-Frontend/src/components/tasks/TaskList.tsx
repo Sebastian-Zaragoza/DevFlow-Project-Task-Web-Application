@@ -11,27 +11,27 @@ type GroupedTasks = {
 };
 
 const statusTranslations: { [key: string]: string } = {
-  pendiente: "Pendiente",
-  en_espera: "En Espera",
-  en_progreso: "En Progreso",
-  en_revision: "En Revisión",
-  completado: "Completado",
+  pending: "Pending",
+  on_hold: "On Hold",
+  in_progress: "In Progress",
+  under_reviews: "Under Reviews",
+  completed: "Completed",
 };
 
 const statusStyles: { [key: string]: string } = {
-  pendiente: "border-blue-500",
-  en_espera: "border-yellow-500",
-  en_progreso: "border-indigo-500",
-  en_revision: "border-orange-500",
-  completado: "border-green-500",
+  pending: "border-blue-500",
+  on_hold: "border-yellow-500",
+  in_progress: "border-indigo-500",
+  under_reviews: "border-orange-500",
+  completed: "border-green-500",
 };
 
 const initialStatusGroups: GroupedTasks = {
-  pendiente: [],
-  en_espera: [],
-  en_progreso: [],
-  en_revision: [],
-  completado: [],
+  pending: [],
+  on_hold: [],
+  in_progress: [],
+  under_reviews: [],
+  completed: [],
 };
 
 export default function TaskList({ tasks, canEdit }: TaskListProps) {
@@ -42,7 +42,7 @@ export default function TaskList({ tasks, canEdit }: TaskListProps) {
 
   return (
     <>
-      <h2 className="text-4xl font-extrabold text-gray-900 mb-8">Tareas</h2>
+      <h2 className="text-4xl font-extrabold text-gray-900 mb-8">Tasks</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 pb-8">
         {Object.entries(groupedTasks).map(([status, tasks]) => (
@@ -55,7 +55,7 @@ export default function TaskList({ tasks, canEdit }: TaskListProps) {
             <ul className="p-4 space-y-4">
               {tasks.length === 0 ? (
                 <li className="text-center text-gray-500 py-6">
-                  No hay tareas
+                  No tasks
                 </li>
               ) : (
                 tasks.map((task) => <TaskCard key={task._id} task={task} canEdit={canEdit} />)

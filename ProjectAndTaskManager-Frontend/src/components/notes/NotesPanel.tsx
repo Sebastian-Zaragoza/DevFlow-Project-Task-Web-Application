@@ -16,9 +16,9 @@ export default function NotesPanel({notes, relation}:NoteProps) {
                 {notes.length > 0 ? (
                     <>
                         <div className="mb-4 flex items-center justify-between border-b border-gray-200 pb-2">
-                            <h2 className="text-2xl font-extrabold text-gray-900">Notas</h2>
+                            <h2 className="text-2xl font-extrabold text-gray-900">Notes</h2>
                             <span className="text-sm text-gray-500">
-            {notes.length} {notes.length === 1 ? 'Nota' : 'Notas'}
+            {notes.length} {notes.length === 1 ? 'Note' : 'Notes'}
           </span>
                         </div>
 
@@ -29,7 +29,7 @@ export default function NotesPanel({notes, relation}:NoteProps) {
                         </ul>
                     </>
                 ) : (
-                    <p className="text-center text-gray-500 py-6">No hay notas</p>
+                    <p className="text-center text-gray-500 py-6">Notes not found</p>
                 )}
             </section>
         </>

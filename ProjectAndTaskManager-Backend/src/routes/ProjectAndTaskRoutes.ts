@@ -16,11 +16,11 @@ router.post(
   "/",
   body("projectName")
     .notEmpty()
-    .withMessage("El nombre del proyecto es obligatorio"),
+    .withMessage("The project name is required"),
   body("clientName")
     .notEmpty()
-    .withMessage("El nombre del cliente es obligatorio"),
-  body("description").notEmpty().withMessage("La descripción es obligatoria"),
+    .withMessage("The client name is required"),
+  body("description").notEmpty().withMessage("The description is required"),
   handleInputErrors,
   ProjectController.createProject,
 );
@@ -29,28 +29,28 @@ router.get("/", ProjectController.getProjects);
 
 router.get(
   "/:id",
-  param("id").isMongoId().withMessage("El Id del proyecto es obligatorio"),
+  param("id").isMongoId().withMessage("The project id is required"),
   handleInputErrors,
   ProjectController.getProjectById,
 );
 
 router.put(
   "/:id",
-  param("id").isMongoId().withMessage("El Id del proyecto es obligatorio"),
+  param("id").isMongoId().withMessage("The project id is required"),
   body("projectName")
     .notEmpty()
-    .withMessage("El nombre del proyecto es obligatorio"),
+    .withMessage("The project name is required"),
   body("clientName")
     .notEmpty()
-    .withMessage("El nombre del cliente es obligatorio"),
-  body("description").notEmpty().withMessage("La descripción es obligatoria"),
+    .withMessage("The client name is required"),
+  body("description").notEmpty().withMessage("The description is required"),
   handleInputErrors,
   ProjectController.updateProjectById,
 );
 
 router.delete(
   "/:id",
-  param("id").isMongoId().withMessage("El Id del proyecto es obligatorio"),
+  param("id").isMongoId().withMessage("The project id is required"),
   handleInputErrors,
   ProjectController.deleteProjectById,
 );
@@ -59,10 +59,10 @@ router.param("projectId", validateProjectExists);
 
 router.post(
   "/:projectId/tasks",
-  body("name").notEmpty().withMessage("El nombre de la tarea es obligatorio"),
-  body("description").notEmpty().withMessage("La descripción es obligatoria"),
-  body("rol").notEmpty().withMessage("El rol es obligatorio"),
-  body("user").notEmpty().withMessage("El usuario es obligatorio"),
+  body("name").notEmpty().withMessage("The task name is required"),
+  body("description").notEmpty().withMessage("The description is required"),
+  body("rol").notEmpty().withMessage("The role is required"),
+  body("user").notEmpty().withMessage("The user is required"),
   TaskController.createTask,
 );
 
@@ -73,18 +73,18 @@ router.param("taskId", taskBelongsToProject);
 
 router.get(
   "/:projectId/tasks/:taskId",
-  param("taskId").isMongoId().withMessage("El Id del proyecto es obligatorio"),
+  param("taskId").isMongoId().withMessage("The project id is required"),
   TaskController.getTaskById,
 );
 
 router.put(
   "/:projectId/tasks/:taskId",
   itHasAuthorization,
-  param("taskId").isMongoId().withMessage("El Id de la tarea es obligatorio"),
-  body("name").notEmpty().withMessage("El nombre de la tarea es obligatorio"),
-  body("description").notEmpty().withMessage("La descripción es obligatoria"),
-  body("rol").notEmpty().withMessage("El rol es obligatorio"),
-  body("user").notEmpty().withMessage("El usuario es obligatorio"),
+  param("taskId").isMongoId().withMessage("The task id is required"),
+  body("name").notEmpty().withMessage("The task name is required"),
+  body("description").notEmpty().withMessage("The description is required"),
+  body("rol").notEmpty().withMessage("The role is required"),
+  body("user").notEmpty().withMessage("The user is required"),
   handleInputErrors,
   TaskController.putTaskById,
 );
@@ -92,21 +92,21 @@ router.put(
 router.delete(
   "/:projectId/tasks/:taskId",
     itHasAuthorization,
-  param("taskId").isMongoId().withMessage("El Id de la tarea es obligatorio"),
+  param("taskId").isMongoId().withMessage("The task id is required"),
   TaskController.deleteById,
 );
 
 router.post(
   "/:projectId/tasks/:taskId/status",
-  param("taskId").isMongoId().withMessage("El Id de la tarea es obligatorio"),
-  body("status").notEmpty().withMessage("El estado es obligatorio"),
+  param("taskId").isMongoId().withMessage("The task id is required"),
+  body("status").notEmpty().withMessage("The status is required"),
   handleInputErrors,
   TaskController.updateStatus,
 );
 
 router.post('/:projectId/team/find',
     body("email")
-        .isEmail().toLowerCase().withMessage("El email no es valido"),
+        .isEmail().toLowerCase().withMessage("The email is invalid"),
     handleInputErrors,
     TeamMemberController.findMemberByEmail
 )
@@ -117,21 +117,21 @@ router.get('/:projectId/team',
 
 router.post('/:projectId/team',
     body("id")
-        .isMongoId().withMessage("Id is required"),
+        .isMongoId().withMessage("The project id is required"),
     handleInputErrors,
     TeamMemberController.addUserById
 )
 
 router.delete('/:projectId/team/:userId',
     param("userId")
-        .isMongoId().withMessage("Id is required"),
+        .isMongoId().withMessage("The user id is required"),
     handleInputErrors,
     TeamMemberController.deleteUserById
 )
 
 router.post('/:projectId/tasks/:taskId/notes',
     body('content')
-        .notEmpty().withMessage("El contenido es obligatorio"),
+        .notEmpty().withMessage("The note content is required"),
     handleInputErrors,
     NoteController.createNote
 )
@@ -141,7 +141,7 @@ router.get('/:projectId/tasks/:taskId/notes',
 )
 
 router.delete('/:projectId/tasks/:taskId/notes/:noteId',
-    param('noteId').isMongoId().withMessage('El Id de la nota es inválido'),
+    param('noteId').isMongoId().withMessage('The note id is required'),
     handleInputErrors,
     NoteController.deleteNote
 )

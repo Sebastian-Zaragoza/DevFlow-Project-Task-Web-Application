@@ -54,18 +54,18 @@ export default function NewPasswordForm({ token }: NewPasswordFormProps) {
             htmlFor="password"
             className="text-sm font-medium text-gray-700 mb-1"
           >
-            Contraseña
+            Password
           </label>
           <input
             id="password"
             type="password"
-            placeholder="Nueva contraseña (min 8 caracteres)"
+            placeholder="New password (min 8 characters)"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("password", {
-              required: "La contraseña es requerida",
+              required: "Password is required",
               minLength: {
                 value: 8,
-                message: "La contraseña debe tener al menos 8 caracteres",
+                message: "Password must have at least 8 characters",
               },
             })}
           />
@@ -79,17 +79,17 @@ export default function NewPasswordForm({ token }: NewPasswordFormProps) {
             htmlFor="password_confirmation"
             className="text-sm font-medium text-gray-700 mb-1"
           >
-            Repetir contraseña
+            Confirm Password
           </label>
           <input
             id="password_confirmation"
             type="password"
-            placeholder="Repite la contraseña"
+            placeholder="Repeat the password"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             {...register("password_confirmation", {
-              required: "Repite la misma contraseña",
+              required: "Repeat the same password",
               validate: (value) =>
-                value === password || "Las contraseñas no son iguales",
+                value === password || "Passwords do not match",
             })}
           />
           {errors.password_confirmation && (
@@ -100,7 +100,7 @@ export default function NewPasswordForm({ token }: NewPasswordFormProps) {
           type="submit"
           className="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-3 rounded-lg shadow transition-colors"
         >
-          Restablecer contraseña
+          Reset Password
         </button>
       </form>
     </>

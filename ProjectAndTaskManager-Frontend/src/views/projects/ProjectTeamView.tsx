@@ -40,10 +40,10 @@ export default function ProjectTeamView() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <header className="mb-8">
                         <h1 className="text-4xl font-extrabold text-gray-900">
-                            Administrar Equipo
+                            Manage Team
                         </h1>
                         <p className="mt-2 text-lg text-gray-600">
-                            Administra el equipo de trabajo para este proyecto
+                            Manage the work team for this project
                         </p>
 
                         <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3">
@@ -54,7 +54,7 @@ export default function ProjectTeamView() {
                          bg-blue-500 hover:bg-blue-600 text-white font-medium
                          px-5 py-2 rounded-md shadow transition-colors"
                             >
-                                Agregar colaborador
+                                Add Collaborator
                             </button>
 
                             <Link
@@ -63,11 +63,11 @@ export default function ProjectTeamView() {
                          bg-blue-500 hover:bg-blue-600 text-white font-medium
                          px-5 py-2 rounded-md shadow transition-colors text-center"
                             >
-                                Volver al proyecto
+                                Back to Project
                             </Link>
                         </div>
 
-                        <h2 className="text-3xl font-black mt-10 mb-2">Miembros actuales</h2>
+                        <h2 className="text-3xl font-black mt-10 mb-2">Current Members</h2>
 
                         {data.length ? (
                             <div className="mt-6 bg-white rounded-lg shadow-md">
@@ -95,7 +95,7 @@ export default function ProjectTeamView() {
                                             <Menu as="div" className="absolute top-4 right-6">
                                                 <Menu.Button className="p-2 text-gray-500 hover:text-gray-700
                                  rounded-full hover:bg-gray-100 transition-colors">
-                                                    <span className="sr-only">Abrir opciones</span>
+                                                    <span className="sr-only">Open options</span>
                                                     <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
                                                 </Menu.Button>
                                                 <Transition
@@ -120,7 +120,7 @@ export default function ProjectTeamView() {
                                                                     }`}
                                                                 >
                                                                     <TrashIcon className="w-5 h-5 mr-2" />
-                                                                    Eliminar miembro
+                                                                    Remove Member
                                                                 </button>
                                                             )}
                                                         </Menu.Item>
@@ -133,7 +133,7 @@ export default function ProjectTeamView() {
                             </div>
                         ) : (
                             <p className="mt-10 text-center text-gray-500">
-                                No hay miembros en este equipo
+                                No members in this team
                             </p>
                         )}
                         <AddMember />

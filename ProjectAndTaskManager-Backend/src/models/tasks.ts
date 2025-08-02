@@ -3,11 +3,11 @@ import { IUser } from "./user";
 import Note from "./note";
 
 const tasksStatus = {
-  PENDING: "pendiente",
-  COMPLETED: "completado",
-  ON_HOLD: "en_espera",
-  IN_PROGRESS: "en_progreso",
-  UNDER_REVIEWS: "en_revision",
+  PENDING: "pending",
+  COMPLETED: "completed",
+  ON_HOLD: "on_hold",
+  IN_PROGRESS: "in_progress",
+  UNDER_REVIEWS: "under_reviews",
 } as const;
 export type TaskStatus = (typeof tasksStatus)[keyof typeof tasksStatus];
 export interface ITasks extends Document {

@@ -32,7 +32,7 @@ export default function NavMenu({ name }: NavMenuProps) {
 
       "
       >
-        <span>¿Qué desarrollarás hoy {name}?</span>
+        <span>What will you develop today {name}?</span>
         <ChevronDownIcon className="w-4 h-4 text-gray-500" aria-hidden="true" />
       </Menu.Button>
 
@@ -52,7 +52,7 @@ export default function NavMenu({ name }: NavMenuProps) {
               >
                   <UserIcon className="w-5 h-5 mr-2 text-gray-500 group-hover:text-gray-700" />
                   <Link to='/profile'>
-                      Mi perfil
+                      My Profile
                   </Link>
               </button>
           )}
@@ -66,7 +66,7 @@ export default function NavMenu({ name }: NavMenuProps) {
               >
                   <FolderIcon className="w-5 h-5 mr-2 text-gray-500 group-hover:text-gray-700" />
                   <Link to='/'>
-                    Mis proyectos
+                    My Projects
                   </Link>
               </button>
 
@@ -81,7 +81,7 @@ export default function NavMenu({ name }: NavMenuProps) {
               onClick={logout}
             >
               <ArrowRightOnRectangleIcon className="w-5 h-5 mr-2 text-blue-600 group-hover:text-blue-700" />
-              Cerrar Sesión
+              Log Out
             </button>
           )}
         </Menu.Item>

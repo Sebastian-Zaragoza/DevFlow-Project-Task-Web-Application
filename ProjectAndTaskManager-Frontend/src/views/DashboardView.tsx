@@ -30,23 +30,23 @@ export default function DashboardView() {
           <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-4xl font-extrabold text-gray-900">
-                Mis proyectos
+                My Projects
               </h1>
               <p className="mt-1 text-lg text-gray-600">
-                Gestiona y administra tus proyectos
+                Manage and administer your projects
               </p>
             </div>
             <Link
                 to="/projects/create"
                 className="mt-3 sm:mt-0 inline-flex items-center bg-blue-500 hover:bg-blue-600 text-white font-medium px-5 py-2 rounded-md shadow transition-colors"
             >
-              Crear proyecto
+              Create Project
             </Link>
           </header>
 
           {data && data.length > 0 ? (
               <div className="mt-8 space-y-6">
-                {data.map((project: any) => (
+                {data.map((project) => (
                     <div
                         key={project._id}
                         className="relative bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-150"
@@ -57,9 +57,9 @@ export default function DashboardView() {
                           {
                             project.manager === user._id?
                                 <p className="font-bold text-xs uppercase bg-indigo-50 text-indigo-500 border-2 border-indigo-500
-                          rounded-lg inline-block py-2 mb-4 px-5">Administrador</p> :
+                          rounded-lg inline-block py-2 mb-4 px-5">Administrator</p> :
                                 <p className="font-bold text-xs uppercase bg-purple-50 text-purple-500 border-2 border-purple-500
-                          rounded-lg inline-block py-2 mb-4 px-5">Colaborador</p>
+                          rounded-lg inline-block py-2 mb-4 px-5">Collaborator</p>
                           }
                           <div className="flex justify-between items-start">
                             <Link
@@ -92,7 +92,7 @@ export default function DashboardView() {
                                               className={`${active ? "bg-gray-100" : ""} flex items-center px-4 py-3 text-sm text-gray-700`}
                                           >
                                             <EyeIcon className="w-5 h-5 mr-2 text-gray-500" />
-                                            Ver proyecto
+                                            View Project
                                           </Link>
                                       )}
                                     </Menu.Item>
@@ -108,7 +108,7 @@ export default function DashboardView() {
                                                   className={`${active ? "bg-gray-100" : ""} flex items-center px-4 py-3 text-sm text-gray-700`}
                                               >
                                                 <PencilIcon className="w-5 h-5 mr-2 text-gray-500" />
-                                                Editar proyecto
+                                                Edit Project
                                               </Link>
                                           )}
                                         </Menu.Item>
@@ -120,7 +120,7 @@ export default function DashboardView() {
                                                   className={`${active ? "bg-gray-100" : ""} flex items-center w-full px-4 py-3 text-sm text-blue-600`}
                                               >
                                                 <TrashIcon className="w-5 h-5 mr-2 text-blue-600" />
-                                                Eliminar proyecto
+                                                Delete Project
                                               </button>
                                           )}
                                         </Menu.Item>
@@ -133,15 +133,15 @@ export default function DashboardView() {
                           <div className="mt-3 space-y-1">
                             <p className="text-sm text-gray-600">
                         <span className="font-medium text-gray-800">
-                          Cliente:
+                          Client:
                         </span>{" "}
                               {project.clientName}
                             </p>
                             <p className="text-sm text-gray-600">
                         <span className="font-medium text-gray-800">
-                          Descripción:
+                          Description:
                         </span>{" "}
-                              {project.description || "(Sin descripción)"}
+                              {project.description || "(No description)"}
                             </p>
                           </div>
 
@@ -150,7 +150,7 @@ export default function DashboardView() {
                                 to={`/projects/${project._id}`}
                                 className="text-blue-600 hover:text-blue-800 text-sm font-medium"
                             >
-                              Ver detalles
+                              View Details
                             </Link>
                           </div>
                         </div>
@@ -160,7 +160,7 @@ export default function DashboardView() {
               </div>
           ) : (
               <p className="mt-12 text-center text-gray-500">
-                No existe ningún proyecto. ¡Crea uno nuevo!
+                No projects exist. Create a new one!
               </p>
           )}
         </div>
