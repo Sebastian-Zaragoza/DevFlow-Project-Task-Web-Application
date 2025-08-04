@@ -1,3 +1,36 @@
+## DevFlow App
+DevFlow is a web application for managing projects and tasks collaboratively. Access the live demo here: [https://devflow-theta-three.vercel.app](https://devflow-theta-three.vercel.app).
+
+**Note:** The app is currently deployed on Vercel for rapid prototyping and seamless frontend delivery, complemented by Railway for robust backend operations. I'm actively engineering a custom AWS infrastructure to elevate the application, delivering unparalleled scalability, reliability, performance, and robustness to support growing demands and ensure a superior user experience. Stay tuned for updates on this exciting transition!
+
+## Demos
+Below are animated demos showcasing key features of the app. Each GIF demonstrates specific views and functionalities.
+
+### Account View
+This demo covers account creation, email confirmation using the link sent via email, password recovery, resending the confirmation email if the account is not yet confirmed, and logging in with credentials.
+
+![Account View Demo](Resources/Account-view.gif)
+
+### Projects and Tasks View
+This demo shows how to create, update, and delete projects. It also illustrates adding collaborators and their views, how role permissions (administrator vs. collaborator) influence actions, adding tasks and their behavior, adding notes, deleting items if you are the creator, viewing task details, and how the project updates itself automatically.
+
+![Projects and Tasks View Demo](Resources/Projects_and_tasks_view.gif)
+
+### Email Notifications View
+This demo highlights how notifications for each important action (such as project updates, task assignments, or collaborations) are sent via email.
+
+![Email Notifications View Demo](Resources/Email_notifications_view.gif)
+
+### Delete Project View
+This demo explains how to delete a project, including system safeguards that invalidate the deletion if there are incomplete tasks or remaining collaborators.
+
+![Delete Project View Demo](Resources/Delete_project_view.gif)
+
+### Update Profile View
+This demo demonstrates how to update your user profile, including editing personal details and settings.
+
+![Update Profile View Demo](Resources/Update_profile_view.gif)
+
 ## Overview
 DevFlow is a comprehensive full-stack web application built to facilitate collaborative management of software development projects and tasks. It enables teams to create, edit, assign, and track projects and tasks efficiently, with a focus on security, scalability, and user-friendly interactions. The application features modular architecture, secure authentication mechanisms, and a responsive user interface, making it ideal for software development teams of any size.
 
