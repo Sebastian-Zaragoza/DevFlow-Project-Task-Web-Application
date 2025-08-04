@@ -3,7 +3,7 @@ DevFlow is a web application for managing projects and tasks collaboratively. Ac
 
 **Note:** The app is currently deployed on Vercel for rapid prototyping and seamless frontend delivery, complemented by Railway for robust backend operations. I'm actively engineering a custom AWS infrastructure to elevate the application, delivering unparalleled scalability, reliability, performance, and robustness to support growing demands and ensure a superior user experience. Stay tuned for updates on this exciting transition!
 
-## Demos
+## Demo Views
 Below are animated demos showcasing key features of the app. Each GIF demonstrates specific views and functionalities.
 
 ### Account View
