@@ -1,7 +1,7 @@
 ## Overview
-DevFlow is a comprehensive full-stack web application built to facilitate collaborative management of software development projects and tasks. It enables teams to create, edit, assign, and track projects and tasks efficiently, with a focus on security, scalability, and user-friendly interactions. The application features modular architecture, secure authentication mechanisms, and a responsive user interface, making it ideal for software development teams of any size. Access the live demo here: [https://devflow-theta-three.vercel.app](https://devflow-theta-three.vercel.app).
+DevFlow is a comprehensive full-stack web application built to facilitate collaborative management of software development projects and tasks. It enables teams to create, edit, assign, and track projects and tasks efficiently, with a focus on security, scalability, and user-friendly interactions. The application features modular architecture, secure authentication mechanisms, and a responsive user interface, making it ideal for software development teams of any size.
 
-**Note:** The app is currently deployed on Vercel for rapid prototyping and seamless frontend delivery, complemented by Railway for robust backend operations. I'm actively engineering a custom AWS infrastructure to elevate the application, delivering unparalleled scalability, reliability, performance, and robustness to support growing demands and ensure a superior user experience. Stay tuned for updates on this exciting transition!
+**Note:** I'm actively engineering a custom AWS infrastructure to elevate the application, delivering unparalleled scalability, reliability, performance, and robustness to support growing demands and ensure a superior user experience. Stay tuned for updates on this exciting transition!
 
 ## Demo Views
 Below are animated demos showcasing key features of the app. Each GIF demonstrates specific views and functionalities.
