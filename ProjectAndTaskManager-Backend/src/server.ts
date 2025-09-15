@@ -16,7 +16,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
     res.status(200).send("Connection to the server");
 });
 
