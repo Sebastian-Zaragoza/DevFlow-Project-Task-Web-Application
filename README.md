@@ -3,6 +3,7 @@ DevFlow is a comprehensive full-stack web application built to facilitate collab
 
 ## Note
 I’ve successfully deployed a live demo of the application at [app.devflow.site](https://app.devflow.site), leveraging AWS with S3 + CloudFront + ECS for a professional-grade setup. If you'd like a live demo of the app, please send me an email. Running it on AWS has high costs, so I don't keep it online all the time. Stay tuned for upcoming updates on this exciting journey!
+
 ![AWS Deployment](Resources/AWS_deployment_devflow.gif)
 
 ## Demo Views
